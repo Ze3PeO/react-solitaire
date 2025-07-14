@@ -55,8 +55,39 @@ function SolitaireBoard() {
           rank: 4,
           flipped: true,
         },
+        {
+          id: "7",
+          suit: "hearts",
+          rank: 5,
+          flipped: true,
+        },
+        {
+          id: "8",
+          suit: "hearts",
+          rank: 6,
+          flipped: true,
+        },
+        {
+          id: "9",
+          suit: "hearts",
+          rank: 7,
+          flipped: true,
+        },
+        {
+          id: "10",
+          suit: "hearts",
+          rank: 8,
+          flipped: true,
+        },
       ],
       type: "tableauPile",
+      suit: "hearts",
+    },
+    {
+      id: "3",
+      cards: [],
+      type: "tableauPile",
+      suit: "hearts",
     },
   ]);
 
@@ -98,7 +129,7 @@ function SolitaireBoard() {
   return (
     <DndProvider backend={HTML5Backend}>
       <div
-        className="aspect-square h-full grow overflow-hidden border flex"
+        className="aspect-square h-full grow overflow-hidden border flex bg-emerald-700 gap-2 p-2"
         style={
           {
             "--card-margin-top": `${cardMarginTop}px`,
@@ -113,7 +144,7 @@ function SolitaireBoard() {
             key={pile.id}
             cards={pile.cards}
             suit={pile.suit}
-            fanned={false}
+            fanned={true}
             id={pile.id}
             type={pile.type}
           />

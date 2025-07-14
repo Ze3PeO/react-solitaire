@@ -28,7 +28,7 @@ function SolitaireCard({ children, text = "Karte" }: CardProps) {
           width: "var(--card-width)",
           height: "var(--card-height)",
         }}
-        className="relative bg-card text-card-foreground flex flex-col justify-start gap-6 rounded-sm border shadow-sm"
+        className="relative bg-card text-card-foreground flex flex-col justify-start rounded-sm border shadow-sm"
       >
         <span>{text}</span>
       </div>

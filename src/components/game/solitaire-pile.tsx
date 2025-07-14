@@ -52,14 +52,20 @@ function SolitairePile({
 
   return (
     <div
+      className="bg-emerald-800 rounded-sm relative"
       style={
-        fanned
-          ? {}
-          : ({
-              "--card-margin-top": "calc(-1 * var(--card-height))",
-            } as React.CSSProperties)
+        {
+          height: "var(--card-height)",
+          width: "var(--card-width)",
+          ...(fanned
+            ? {}
+            : { "--card-margin-top": "calc(-1 * var(--card-height))" }),
+        } as React.CSSProperties
       }
     >
+      <div className="absolute inset-0 flex justify-center items-center">
+        {suit}
+      </div>
       {cards.length > 0 ? renderCards() : null}
     </div>
   );
