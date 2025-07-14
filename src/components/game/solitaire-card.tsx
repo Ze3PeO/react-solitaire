@@ -7,7 +7,7 @@ interface CardProps {
   text?: string;
 }
 
-function Card({ children, text = "Karte" }: CardProps) {
+function SolitaireCard({ children, text = "Karte" }: CardProps) {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ItemTypes.CARD,
     collect: (monitor) => ({
@@ -23,12 +23,20 @@ function Card({ children, text = "Karte" }: CardProps) {
       }}
       className="cursor-move select-none"
     >
-      <div className="relative w-16 aspect-[5/7] bg-card text-card-foreground flex flex-col justify-start gap-6 rounded-sm border shadow-sm">
+      <div
+        style={{
+          width: "var(--card-width)",
+          height: "var(--card-height)",
+        }}
+        className="relative bg-card text-card-foreground flex flex-col justify-start gap-6 rounded-sm border shadow-sm"
+      >
         <span>{text}</span>
       </div>
-      <div style={{ marginTop: "var(--card-margin-top)" }}>{children}</div>
+      {children && (
+        <div style={{ marginTop: "var(--card-margin-top)" }}>{children}</div>
+      )}
     </div>
   );
 }
 
-export default Card;
+export default SolitaireCard;

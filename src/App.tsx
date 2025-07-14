@@ -1,4 +1,4 @@
-import Board from "@/components/game/board";
+import SolitaireBoard from "@/components/game/solitaire-board";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/mode-toggle";
 
@@ -7,7 +7,7 @@ function App() {
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="flex min-h-svh flex-col items-center justify-center">
         <ModeToggle />
-        <Board />
+        <SolitaireBoard />
       </div>
     </ThemeProvider>
   );
