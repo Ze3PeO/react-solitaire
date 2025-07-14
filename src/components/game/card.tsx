@@ -23,10 +23,10 @@ function Card({ children, text = "Karte" }: CardProps) {
       }}
       className="cursor-move select-none"
     >
-      <div className="w-16 aspect-[5/7] bg-card text-card-foreground flex flex-col gap-6 rounded-sm border py-6 shadow-sm">
+      <div className="relative w-16 aspect-[5/7] bg-card text-card-foreground flex flex-col justify-start gap-6 rounded-sm border shadow-sm">
         <span>{text}</span>
       </div>
-      {children}
+      <div style={{ marginTop: "var(--card-margin-top)" }}>{children}</div>
     </div>
   );
 }
