@@ -8,7 +8,7 @@ import Card from "../ui/card";
 export default function Board() {
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="w-48 h-48 bg-gray-200">
+      <div className="aspect-square h-full grow border">
         <Card text="Card 1">
           <Card text="Card 2">
             <Card text="Card 3">
