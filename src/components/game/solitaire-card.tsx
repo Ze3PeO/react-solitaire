@@ -1,13 +1,37 @@
 import { ItemTypes } from "@/lib/constants";
 import { useDrag } from "react-dnd";
 import type { ReactNode } from "react";
+import type { Card } from "@/lib/types";
+import { formatRank, formatSuit } from "@/lib/utils";
 
 interface CardProps {
+  suit: Card["suit"];
+  rank: Card["rank"];
+  flipped: Card["flipped"];
+  id: Card["id"];
   children?: ReactNode;
-  text?: string;
 }
 
-function SolitaireCard({ children, text = "Karte" }: CardProps) {
+function SolitaireCard({ suit, rank, flipped, id, children }: CardProps) {
+  // --- Back of card ---
+  if (!flipped) {
+    return (
+      <div className="select-none">
+        <div
+          style={{
+            width: "var(--card-width)",
+            height: "var(--card-height)",
+          }}
+          className="relative border-blue-700 dark:border-indigo-700 bg-blue-600 dark:bg-indigo-900 text-card-foreground flex justify-between rounded-sm border shadow-sm px-1"
+        ></div>
+        {children && (
+          <div style={{ marginTop: "var(--card-margin-top)" }}>{children}</div>
+        )}
+      </div>
+    );
+  }
+
+  // --- Front of card ---
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ItemTypes.CARD,
     collect: (monitor) => ({
@@ -28,9 +52,14 @@ function SolitaireCard({ children, text = "Karte" }: CardProps) {
           width: "var(--card-width)",
           height: "var(--card-height)",
         }}
-        className="relative bg-card text-card-foreground flex flex-col justify-start rounded-sm border shadow-sm"
+        className="relative bg-card text-card-foreground flex justify-between rounded-sm border shadow-sm px-1"
       >
-        <span>{text}</span>
+        {flipped && (
+          <>
+            <span>{formatRank(rank)}</span>
+            <span>{formatSuit(suit)}</span>
+          </>
+        )}
       </div>
       {children && (
         <div style={{ marginTop: "var(--card-margin-top)" }}>{children}</div>

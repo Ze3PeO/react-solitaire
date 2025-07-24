@@ -5,105 +5,26 @@ import { useRef, useState, useLayoutEffect } from "react";
 
 import SolitairePile from "./solitaire-pile";
 
-import type { Pile } from "@/lib/types";
+import type { Game } from "@/lib/types";
+import { generateGame } from "@/lib/utils";
 
 // https://react-dnd.github.io/react-dnd/docs/tutorial
 function SolitaireBoard() {
-  const [piles, setPiles] = useState<Pile[]>([
-    {
-      id: "1",
-      cards: [
-        {
-          id: "1",
-          suit: "hearts",
-          rank: 1,
-          flipped: true,
-        },
-        {
-          id: "2",
-          suit: "hearts",
-          rank: 2,
-          flipped: true,
-        },
-      ],
-      type: "tableauPile",
-    },
-    {
-      id: "2",
-      cards: [
-        {
-          id: "3",
-          suit: "hearts",
-          rank: 1,
-          flipped: true,
-        },
-        {
-          id: "4",
-          suit: "hearts",
-          rank: 2,
-          flipped: true,
-        },
-        {
-          id: "5",
-          suit: "hearts",
-          rank: 3,
-          flipped: true,
-        },
-        {
-          id: "6",
-          suit: "hearts",
-          rank: 4,
-          flipped: true,
-        },
-        {
-          id: "7",
-          suit: "hearts",
-          rank: 5,
-          flipped: true,
-        },
-        {
-          id: "8",
-          suit: "hearts",
-          rank: 6,
-          flipped: true,
-        },
-        {
-          id: "9",
-          suit: "hearts",
-          rank: 7,
-          flipped: true,
-        },
-        {
-          id: "10",
-          suit: "hearts",
-          rank: 8,
-          flipped: true,
-        },
-      ],
-      type: "tableauPile",
-      suit: "hearts",
-    },
-    {
-      id: "3",
-      cards: [],
-      type: "tableauPile",
-      suit: "hearts",
-    },
-  ]);
+  const [game, setGame] = useState<Game>(generateGame());
 
   const parentRef = useRef<HTMLDivElement>(null);
 
-  const cardWidth = 64;
+  const cardWidth = 48;
   const cardAspect = 5 / 7;
   const cardHeight = Math.round(cardWidth / cardAspect);
   const numCards = Math.max(
-    ...piles
+    ...game.piles
       .filter((pile) => pile.type === "tableauPile")
       .map((pile) => pile.cards.length),
     0
   );
 
-  const maxCardMarginTop = -cardHeight * (2 / 3);
+  const maxCardMarginTop = -cardHeight * (3 / 5);
 
   const [cardMarginTop, setCardMarginTop] = useState(maxCardMarginTop);
 
@@ -129,7 +50,7 @@ function SolitaireBoard() {
   return (
     <DndProvider backend={HTML5Backend}>
       <div
-        className="aspect-square h-full grow overflow-hidden border flex bg-emerald-700 gap-2 p-2"
+        className="h-full max-sm:w-full flex justify-center grow overflow-hidden border bg-emerald-700 dark:bg-emerald-900 p-1 rounded-md"
         style={
           {
             "--card-margin-top": `${cardMarginTop}px`,
@@ -137,18 +58,44 @@ function SolitaireBoard() {
             "--card-height": `${cardHeight}px`,
           } as React.CSSProperties
         }
-        ref={parentRef}
       >
-        {piles.map((pile) => (
-          <SolitairePile
-            key={pile.id}
-            cards={pile.cards}
-            suit={pile.suit}
-            fanned={true}
-            id={pile.id}
-            type={pile.type}
-          />
-        ))}
+        <div className="grid w-fit grid-rows-[auto_1fr] grid-cols-7 gap-1 ">
+          <div className="col-span-4 grid grid-cols-4 gap-1">
+            {game.piles
+              .filter((pile) => pile.type === "foundation")
+              .map((pile) => (
+                <SolitairePile
+                  key={pile.id}
+                  cards={pile.cards}
+                  fanned={false}
+                  id={pile.id}
+                  type={pile.type}
+                  suit={pile.suit}
+                />
+              ))}
+          </div>
+          <div></div>
+          <div className="col-span-2 grid grid-cols-2 gap-1">
+            <SolitairePile cards={[]} fanned={false} id="waste" type="waste" />
+            <SolitairePile cards={[]} fanned={false} id="stock" type="stock" />
+          </div>
+          <div
+            className="col-span-7 grid grid-cols-7 gap-1 min-h-0"
+            ref={parentRef}
+          >
+            {game.piles
+              .filter((pile) => pile.type === "tableauPile")
+              .map((pile) => (
+                <SolitairePile
+                  key={pile.id}
+                  cards={pile.cards}
+                  fanned={true}
+                  id={pile.id}
+                  type={pile.type}
+                />
+              ))}
+          </div>
+        </div>
       </div>
     </DndProvider>
   );

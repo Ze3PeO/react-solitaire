@@ -1,19 +1,16 @@
 import SolitaireCard from "./solitaire-card";
-import type { Card, Pile, Suit } from "@/lib/types";
+import type { Pile } from "@/lib/types";
+import { formatSuit } from "@/lib/utils";
 
-function SolitairePile({
-  cards,
-  suit,
-  fanned = false,
-  id,
-  type,
-}: {
-  cards: Card[];
-  suit?: Suit;
-  fanned?: boolean;
+interface PileProps {
+  cards: Pile["cards"];
   id: Pile["id"];
   type: Pile["type"];
-}) {
+  suit?: Pile["suit"];
+  fanned?: boolean;
+}
+
+function SolitairePile({ cards, id, type, suit, fanned = false }: PileProps) {
   const renderCards = (): React.ReactNode => {
     return fanned ? renderFannedCards() : renderStackedCards();
   };
@@ -24,10 +21,15 @@ function SolitairePile({
     }
 
     const card = cards[cardIndex];
-    const cardText = `${card.rank}${card.suit}`; // You might want to format this better
 
     return (
-      <SolitaireCard key={card.id} text={cardText}>
+      <SolitaireCard
+        key={card.id}
+        suit={card.suit}
+        rank={card.rank}
+        flipped={card.flipped}
+        id={card.id}
+      >
         {renderFannedCards(cardIndex + 1)}
       </SolitaireCard>
     );
@@ -42,9 +44,16 @@ function SolitairePile({
 
     if (cardIndex === 0) {
       const card = cards[cardIndex];
-      const cardText = `${card.rank}${card.suit}`; // You might want to format this better
 
-      return <SolitaireCard key={card.id} text={cardText} />;
+      return (
+        <SolitaireCard
+          key={card.id}
+          suit={card.suit}
+          rank={card.rank}
+          flipped={card.flipped}
+          id={card.id}
+        />
+      );
     }
 
     return renderFannedCards(cardIndex - 1);
@@ -52,7 +61,7 @@ function SolitairePile({
 
   return (
     <div
-      className="bg-emerald-800 rounded-sm relative"
+      className="relative"
       style={
         {
           height: "var(--card-height)",
@@ -63,8 +72,8 @@ function SolitairePile({
         } as React.CSSProperties
       }
     >
-      <div className="absolute inset-0 flex justify-center items-center">
-        {suit}
+      <div className="absolute inset-0 bg-emerald-800 text-4xl rounded-sm border border-emerald-900 dark:border-emerald-700 dark:text-emerald-900 text-emerald-600 flex justify-center items-center">
+        {suit && formatSuit(suit)}
       </div>
       {cards.length > 0 ? renderCards() : null}
     </div>
