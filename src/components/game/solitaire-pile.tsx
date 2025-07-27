@@ -7,13 +7,19 @@ import { useSolitaire } from "@/components/game/solitaire-provider";
 
 interface PileProps {
   cards: Pile["cards"];
-  id: Pile["id"];
   type: Pile["type"];
   suit?: Pile["suit"];
+  index?: Pile["index"];
   fanned?: boolean;
 }
 
-function SolitairePile({ cards, id, type, suit, fanned = false }: PileProps) {
+function SolitairePile({
+  cards,
+  type,
+  suit,
+  index,
+  fanned = false,
+}: PileProps) {
   const { moveCardToFoundation, moveCardToTableau } = useSolitaire();
 
   const [, drop] = useDrop({
@@ -21,10 +27,10 @@ function SolitairePile({ cards, id, type, suit, fanned = false }: PileProps) {
     drop: (item: Card) => {
       switch (type) {
         case "foundation":
-          moveCardToFoundation(item, { id, type, cards, suit });
+          moveCardToFoundation(item, { type, cards, suit });
           break;
         case "tableauPile":
-          moveCardToTableau(item, { id, type, cards, suit });
+          moveCardToTableau(item, { type, cards, index });
           break;
         default:
           break;

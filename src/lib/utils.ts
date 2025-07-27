@@ -57,11 +57,12 @@ export function formatTime(timestamp: number): string {
 
 export function generateGame(): Game {
   const deck: Card[] = [];
-  const tableauPiles: Pile[] = [];
+  const tableauPiles = {} as Record<number, Pile>;
+  const foundations = {} as Record<Suit, Pile>;
 
   // Generate deck of 52 cards (https://en.wikipedia.org/wiki/Standard_52-card_deck)
   Suits.forEach((suit: Suit) => {
-    Array.from({ length: 13 }, (value, index) => index).forEach((rank) => {
+    Array.from({ length: 13 }, (_, index) => index).forEach((rank) => {
       deck.push({
         suit,
         rank,
@@ -75,59 +76,44 @@ export function generateGame(): Game {
   const shuffledDeck = shuffleArray(deck);
 
   // Create and fill the 7 tableauPiles with cards going from 1 card to 7 cards
-  Array.from({ length: 7 }, (value, index) => index + 1).forEach(
-    (pileLength) => {
-      tableauPiles.push({
-        cards: shuffledDeck
-          .splice(0, pileLength)
-          .map((card: Card, index: number) => {
-            card.flipped = index + 1 === pileLength;
-            return card;
-          }),
-        type: "tableauPile",
-        id: uuidv4(),
-      });
-    }
-  );
+  Array.from({ length: 7 }, (_, n) => n + 1).forEach((pileIndex) => {
+    tableauPiles[pileIndex] = {
+      cards: shuffledDeck
+        .splice(0, pileIndex)
+        .map((card: Card, cardIndex: number) => {
+          card.flipped = cardIndex + 1 === pileIndex;
+          return card;
+        }),
+      type: "tableauPile",
+      index: pileIndex,
+    };
+  });
 
+  // Create the foundation, stock and waste piles
+  Suits.forEach((suit: Suit) => {
+    foundations[suit] = {
+      cards: [],
+      suit,
+      type: "foundation",
+    };
+  });
+
+  const stock: Pile = {
+    cards: shuffledDeck,
+    type: "stock",
+  };
+
+  const waste: Pile = {
+    cards: [],
+    type: "waste",
+  };
+
+  // Assemble the game and return
   return {
-    piles: [
-      {
-        cards: [],
-        suit: "clubs",
-        type: "foundation",
-        id: uuidv4(),
-      },
-      {
-        cards: [],
-        suit: "diamonds",
-        type: "foundation",
-        id: uuidv4(),
-      },
-      {
-        cards: [],
-        suit: "hearts",
-        type: "foundation",
-        id: uuidv4(),
-      },
-      {
-        cards: [],
-        suit: "spades",
-        type: "foundation",
-        id: uuidv4(),
-      },
-      {
-        cards: shuffledDeck,
-        type: "stock",
-        id: uuidv4(),
-      },
-      {
-        cards: [],
-        type: "waste",
-        id: uuidv4(),
-      },
-      ...tableauPiles,
-    ],
+    foundations,
+    stock,
+    waste,
+    tableauPiles,
   };
 }
 

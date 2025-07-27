@@ -15,7 +15,7 @@ function SolitaireBoard() {
   const cardAspect = 5 / 7;
   const cardHeight = Math.round(cardWidth / cardAspect);
   const numCards = Math.max(
-    ...tableauPiles.map((pile) => pile.cards.length),
+    ...Object.values(tableauPiles).map((pile) => pile.cards.length),
     0
   );
 
@@ -55,11 +55,10 @@ function SolitaireBoard() {
     >
       <div className="grid w-fit grid-rows-[auto_1fr] grid-cols-7 gap-1 ">
         <div className="col-span-4 grid grid-cols-4 gap-1">
-          {foundations.map((pile) => (
+          {Object.values(foundations).map((pile) => (
             <SolitairePile
-              key={pile.id}
+              key={pile.suit}
               cards={pile.cards}
-              id={pile.id}
               type={pile.type}
               suit={pile.suit}
             />
@@ -67,7 +66,7 @@ function SolitaireBoard() {
         </div>
         <div></div>
         <div className="col-span-2 grid grid-cols-2 gap-1">
-          <SolitairePile cards={waste.cards} id={waste.id} type={waste.type} />
+          <SolitairePile cards={waste.cards} type={waste.type} />
           <div
             onClick={() => clickStock()}
             className={
@@ -76,24 +75,20 @@ function SolitaireBoard() {
                 : undefined
             }
           >
-            <SolitairePile
-              cards={stock.cards}
-              id={stock.id}
-              type={stock.type}
-            />
+            <SolitairePile cards={stock.cards} type={stock.type} />
           </div>
         </div>
         <div
           className="col-span-7 grid grid-cols-7 gap-1 min-h-0"
           ref={parentRef}
         >
-          {tableauPiles.map((pile) => (
+          {Object.values(tableauPiles).map((pile) => (
             <SolitairePile
-              key={pile.id}
+              key={pile.index}
               cards={pile.cards}
               fanned={true}
-              id={pile.id}
               type={pile.type}
+              index={pile.index}
             />
           ))}
         </div>
