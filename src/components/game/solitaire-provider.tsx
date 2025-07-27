@@ -6,7 +6,8 @@ import { cloneDeep } from "lodash";
 
 interface SolitaireProviderState {
   clickStock: () => void;
-  moveCard: (card: Card, pile: Pile) => void;
+  moveCardToFoundation: (card: Card, pile: Pile) => void;
+  moveCardToTableau: (card: Card, pile: Pile) => void;
   foundations: Pile[];
   waste: Pile;
   stock: Pile;
@@ -48,6 +49,14 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
+  const moveCardToFoundation = (card: Card, pile: Pile) => {
+    moveCard(card, pile);
+  };
+
+  const moveCardToTableau = (card: Card, pile: Pile) => {
+    moveCard(card, pile);
+  };
+
   const moveCard = (card: Card, pile: Pile) => {
     setGame((prevGame) => {
       const src = prevGame.piles.findIndex(
@@ -61,7 +70,7 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
       const destPile = cloneDeep(prevGame.piles[dest]);
 
       const cardIndex = srcPile.cards.findIndex((c: Card) => c.id === card.id);
-      const cardsToMove = srcPile.cards.splice(cardIndex, 1);
+      const cardsToMove = srcPile.cards.splice(cardIndex);
 
       destPile.cards.push(...cardsToMove);
 
@@ -82,7 +91,8 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
     <SolitaireContext.Provider
       value={{
         clickStock,
-        moveCard,
+        moveCardToFoundation,
+        moveCardToTableau,
         foundations: cloneDeep(foundations),
         waste: cloneDeep(waste),
         stock: cloneDeep(stock),

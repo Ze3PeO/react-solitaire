@@ -14,12 +14,21 @@ interface PileProps {
 }
 
 function SolitairePile({ cards, id, type, suit, fanned = false }: PileProps) {
-  const { moveCard } = useSolitaire();
+  const { moveCardToFoundation, moveCardToTableau } = useSolitaire();
 
   const [, drop] = useDrop({
     accept: ItemTypes.CARD,
     drop: (item: Card) => {
-      moveCard(item, { id, type, cards, suit });
+      switch (type) {
+        case "foundation":
+          moveCardToFoundation(item, { id, type, cards, suit });
+          break;
+        case "tableauPile":
+          moveCardToTableau(item, { id, type, cards, suit });
+          break;
+        default:
+          break;
+      }
     },
   });
 
