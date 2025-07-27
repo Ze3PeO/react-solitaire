@@ -1,5 +1,5 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 import { type Suit, type Card, type Pile, type Game } from "@/lib/types";
 import { v4 as uuidv4 } from "uuid";
 import { Suits } from "@/lib/constants";
@@ -7,7 +7,7 @@ import { Suits } from "@/lib/constants";
 // --- shadcn/ui ---
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 // --- Formatter ---
@@ -140,4 +140,3 @@ export function shuffleArray<T>(array: T[]): T[] {
 
   return array;
 }
-

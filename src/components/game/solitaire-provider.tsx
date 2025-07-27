@@ -20,24 +20,31 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
   const [game, setGame] = useState<Game>(generateGame());
 
   const clickStock = () => {
-    const stock = game.piles.find((pile) => pile.type === "stock");
-    const waste = game.piles.find((pile) => pile.type === "waste");
+    setGame((prevGame) => {
+      const stockIndex = prevGame.piles.findIndex((p) => p.type === "stock");
+      const wasteIndex = prevGame.piles.findIndex((p) => p.type === "waste");
 
-    if (!stock || !waste) return;
+      if (stockIndex === -1 || wasteIndex === -1) return prevGame;
 
-    if (stock.cards.length > 0) {
-      const uppermostCard = stock.cards[stock.cards.length - 1];
+      const stock: Pile = cloneDeep(prevGame.piles[stockIndex]);
+      const waste: Pile = cloneDeep(prevGame.piles[wasteIndex]);
 
-      stock.cards = stock.cards.slice(0, -1);
-      uppermostCard.flipped = true;
-      waste.cards.push(uppermostCard);
-    } else {
-      waste.cards.forEach((card) => (card.flipped = false));
-      stock.cards = waste.cards.reverse();
-      waste.cards = [];
-    }
+      if (stock.cards.length > 0) {
+        const uppermostCard = stock.cards.pop()!;
+        uppermostCard.flipped = true;
+        waste.cards.push(uppermostCard);
+      } else {
+        waste.cards.forEach((card) => (card.flipped = false));
+        stock.cards = waste.cards.reverse();
+        waste.cards = [];
+      }
 
-    setGame({ ...game });
+      const newPiles = [...prevGame.piles];
+      newPiles[stockIndex] = stock;
+      newPiles[wasteIndex] = waste;
+
+      return { piles: newPiles };
+    });
   };
 
   const foundations = game.piles.filter((pile) => pile.type === "foundation");
