@@ -13,6 +13,14 @@ interface CardProps {
 }
 
 function SolitaireCard({ suit, rank, flipped, id, children }: CardProps) {
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: ItemTypes.CARD,
+    item: { id, suit, rank, flipped },
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  }));
+
   // --- Back of card ---
   if (!flipped) {
     return (
@@ -32,13 +40,6 @@ function SolitaireCard({ suit, rank, flipped, id, children }: CardProps) {
   }
 
   // --- Front of card ---
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: ItemTypes.CARD,
-    collect: (monitor) => ({
-      isDragging: !!monitor.isDragging(),
-    }),
-  }));
-
   return (
     <div
       ref={drag}

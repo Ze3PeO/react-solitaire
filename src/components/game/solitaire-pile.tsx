@@ -1,6 +1,9 @@
+import { ItemTypes } from "@/lib/constants";
 import SolitaireCard from "./solitaire-card";
-import type { Pile } from "@/lib/types";
+import type { Card, Pile } from "@/lib/types";
 import { formatSuit } from "@/lib/utils";
+import { useDrop } from "react-dnd";
+import { useSolitaire } from "@/components/game/solitaire-provider";
 
 interface PileProps {
   cards: Pile["cards"];
@@ -11,6 +14,15 @@ interface PileProps {
 }
 
 function SolitairePile({ cards, id, type, suit, fanned = false }: PileProps) {
+  const { moveCard } = useSolitaire();
+
+  const [, drop] = useDrop({
+    accept: ItemTypes.CARD,
+    drop: (item: Card) => {
+      moveCard(item, { id, type, cards, suit });
+    },
+  });
+
   const renderCards = (): React.ReactNode => {
     return fanned ? renderFannedCards() : renderStackedCards();
   };
@@ -61,6 +73,7 @@ function SolitairePile({ cards, id, type, suit, fanned = false }: PileProps) {
 
   return (
     <div
+      ref={drop}
       className="relative"
       style={
         {

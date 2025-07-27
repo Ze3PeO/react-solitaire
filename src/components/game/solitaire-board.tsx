@@ -59,7 +59,6 @@ function SolitaireBoard() {
             <SolitairePile
               key={pile.id}
               cards={pile.cards}
-              fanned={false}
               id={pile.id}
               type={pile.type}
               suit={pile.suit}
@@ -68,12 +67,7 @@ function SolitaireBoard() {
         </div>
         <div></div>
         <div className="col-span-2 grid grid-cols-2 gap-1">
-          <SolitairePile
-            cards={waste.cards}
-            fanned={false}
-            id={waste.id}
-            type={waste.type}
-          />
+          <SolitairePile cards={waste.cards} id={waste.id} type={waste.type} />
           <div
             onClick={() => clickStock()}
             className={
@@ -84,7 +78,6 @@ function SolitaireBoard() {
           >
             <SolitairePile
               cards={stock.cards}
-              fanned={false}
               id={stock.id}
               type={stock.type}
             />
