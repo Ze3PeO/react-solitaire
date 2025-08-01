@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { generateGame } from "@/lib/utils";
+import { generateGame, getCardColor } from "@/lib/utils";
 import type { Card, Game, Pile } from "@/lib/types";
 import type { ReactNode } from "react";
 import { cloneDeep } from "lodash";
@@ -9,6 +9,7 @@ interface SolitaireProviderState {
   drawFromStock: () => void;
   moveCardToFoundation: (card: Card, dest: Pile) => void;
   moveCardToTableau: (card: Card, dest: Pile) => void;
+  restartGame: () => void;
   foundations: Readonly<Pile[]>;
   waste: Readonly<Pile>;
   stock: Readonly<Pile>;
@@ -21,6 +22,8 @@ const SolitaireContext = createContext<SolitaireProviderState | undefined>(
 
 export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
   const [game, setGame] = useState<Game>(generateGame());
+
+  // --- Actions ---
 
   const drawFromStock = () => {
     setGame((prevGame) => {
@@ -119,14 +122,16 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
+  const restartGame = () => {
+    setGame(generateGame());
+  };
+
+  // --- Helper ---
+
   const findSrcPile = (card: Card): Pile | undefined => {
     return Object.values(game.piles).find((pile: Pile) =>
       pile.cards.some((c) => c.id === card.id)
     );
-  };
-
-  const getCardColor = (card: Card) => {
-    return card.suit === "hearts" || card.suit === "diamonds" ? "red" : "black";
   };
 
   const foundations = Object.values(game.piles).filter(
@@ -151,6 +156,7 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
         drawFromStock,
         moveCardToFoundation,
         moveCardToTableau,
+        restartGame,
         foundations: Object.freeze(foundations),
         waste: Object.freeze(waste),
         stock: Object.freeze(stock),

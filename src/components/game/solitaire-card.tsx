@@ -2,7 +2,7 @@ import { ItemTypes } from "@/lib/constants";
 import { useDrag } from "react-dnd";
 import type { ReactNode } from "react";
 import type { Card } from "@/lib/types";
-import { formatRank, formatSuit } from "@/lib/utils";
+import { formatRank, formatSuit, isRedSuit } from "@/lib/utils";
 
 interface CardProps {
   suit: Card["suit"];
@@ -20,6 +20,10 @@ function SolitaireCard({ suit, rank, flipped, id, children }: CardProps) {
       isDragging: !!monitor.isDragging(),
     }),
   }));
+
+  const textColorClass = isRedSuit(suit)
+    ? "text-red-500"
+    : "text-card-foreground";
 
   // --- Back of card ---
   if (!flipped) {
@@ -53,7 +57,7 @@ function SolitaireCard({ suit, rank, flipped, id, children }: CardProps) {
           width: "var(--card-width)",
           height: "var(--card-height)",
         }}
-        className="relative bg-card text-card-foreground flex justify-between rounded-sm border shadow-sm px-1"
+        className={`relative bg-card ${textColorClass} flex justify-between rounded-sm border shadow-sm px-1`}
       >
         {flipped && (
           <>

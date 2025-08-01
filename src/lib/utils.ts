@@ -122,6 +122,14 @@ export function generateGame(): Game {
   };
 }
 
+export function isRedSuit(suit: Suit): boolean {
+  return suit === "hearts" || suit === "diamonds";
+}
+
+export function getCardColor(card: Card) {
+  return isRedSuit(card.suit) ? "red" : "black";
+}
+
 export function shuffleArray<T>(array: T[]): T[] {
   // Fisher–Yates shuffle (https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle)
   for (let i = array.length - 1; i > 0; i--) {

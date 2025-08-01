@@ -44,7 +44,7 @@ function SolitaireBoard() {
 
   return (
     <div
-      className="h-full max-sm:w-full flex justify-center grow overflow-hidden border bg-emerald-700 dark:bg-emerald-900 p-1 rounded-md"
+      className="h-full w-full flex justify-center grow overflow-hidden border bg-emerald-700 dark:bg-emerald-900 p-1 rounded-md"
       style={
         {
           "--card-margin-top": `${cardMarginTop}px`,

@@ -1,21 +1,33 @@
 import SolitaireBoard from "@/components/game/solitaire-board";
-import { ThemeProvider } from "@/components/theme-provider";
-import { ModeToggle } from "@/components/mode-toggle";
+import { ThemeProvider } from "@/components/theme/theme-provider";
+import { ModeToggle } from "@/components/theme/mode-toggle";
 import { SolitaireProvider } from "@/components/game/solitaire-provider";
 import { DndProvider } from "react-dnd";
 // import { TouchBackend } from 'react-dnd-touch-backend' // use for mobile
 import { HTML5Backend } from "react-dnd-html5-backend";
+import SolitaireScore from "@/components/game/solitaire-score";
+import SolitaireTimer from "@/components/game/solitaire-timer";
+import SolitaireControls from "@/components/game/solitaire-controls";
+import SolitaireMenu from "@/components/game/solitaire-menu";
 
 function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <DndProvider backend={HTML5Backend}>
         <SolitaireProvider>
-          <div className="flex min-h-svh flex-col items-center justify-center gap-2 p-2">
-            <div className="flex justify-end w-full">
+          <div className="flex min-h-svh flex-col items-center justify-center gap-2 p-2 max-w-prose mx-auto">
+            <div className="flex justify-between w-full gap-2">
+              <SolitaireMenu />
               <ModeToggle />
             </div>
             <SolitaireBoard />
+            <div className="flex justify-between items-center gap-2 w-full">
+              <div className="flex h-fit gap-2">
+                <SolitaireScore />
+                <SolitaireTimer />
+              </div>
+              <SolitaireControls />
+            </div>
           </div>
         </SolitaireProvider>
       </DndProvider>
