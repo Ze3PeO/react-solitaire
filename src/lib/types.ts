@@ -15,14 +15,11 @@ export type Pile = {
   cards: Card[];
   type: PileType;
   suit?: Suit;
-  index?: number;
+  id: string;
 };
 
 export type Game = {
-  foundations: Record<Suit, Pile>;
-  waste: Pile;
-  stock: Pile;
-  tableauPiles: Record<number, Pile>;
+  piles: Record<string, Pile>;
 };
 
 export type CardSelection = {

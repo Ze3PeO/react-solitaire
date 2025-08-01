@@ -57,8 +57,7 @@ export function formatTime(timestamp: number): string {
 
 export function generateGame(): Game {
   const deck: Card[] = [];
-  const tableauPiles = {} as Record<number, Pile>;
-  const foundations = {} as Record<Suit, Pile>;
+  const piles: Record<string, Pile> = {};
 
   // Generate deck of 52 cards (https://en.wikipedia.org/wiki/Standard_52-card_deck)
   Suits.forEach((suit: Suit) => {
@@ -77,7 +76,9 @@ export function generateGame(): Game {
 
   // Create and fill the 7 tableauPiles with cards going from 1 card to 7 cards
   Array.from({ length: 7 }, (_, n) => n + 1).forEach((pileIndex) => {
-    tableauPiles[pileIndex] = {
+    const id = uuidv4();
+
+    piles[id] = {
       cards: shuffledDeck
         .splice(0, pileIndex)
         .map((card: Card, cardIndex: number) => {
@@ -85,35 +86,41 @@ export function generateGame(): Game {
           return card;
         }),
       type: "tableauPile",
-      index: pileIndex,
+      id,
     };
   });
 
   // Create the foundation, stock and waste piles
   Suits.forEach((suit: Suit) => {
-    foundations[suit] = {
+    const id = uuidv4();
+
+    piles[id] = {
       cards: [],
       suit,
       type: "foundation",
+      id,
     };
   });
 
   const stock: Pile = {
     cards: shuffledDeck,
     type: "stock",
+    id: uuidv4(),
   };
+
+  piles[stock.id] = stock;
 
   const waste: Pile = {
     cards: [],
     type: "waste",
+    id: uuidv4(),
   };
+
+  piles[waste.id] = waste;
 
   // Assemble the game and return
   return {
-    foundations,
-    stock,
-    waste,
-    tableauPiles,
+    piles,
   };
 }
 

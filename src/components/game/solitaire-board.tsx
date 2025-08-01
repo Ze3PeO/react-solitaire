@@ -15,7 +15,7 @@ function SolitaireBoard() {
   const cardAspect = 5 / 7;
   const cardHeight = Math.round(cardWidth / cardAspect);
   const numCards = Math.max(
-    ...Object.values(tableauPiles).map((pile) => pile.cards.length),
+    ...tableauPiles.map((pile) => pile.cards.length),
     0
   );
 
@@ -55,18 +55,19 @@ function SolitaireBoard() {
     >
       <div className="grid w-fit grid-rows-[auto_1fr] grid-cols-7 gap-1 ">
         <div className="col-span-4 grid grid-cols-4 gap-1">
-          {Object.values(foundations).map((pile) => (
+          {foundations.map((pile) => (
             <SolitairePile
-              key={pile.suit}
+              key={pile.id}
               cards={pile.cards}
               type={pile.type}
               suit={pile.suit}
+              id={pile.id}
             />
           ))}
         </div>
         <div></div>
         <div className="col-span-2 grid grid-cols-2 gap-1">
-          <SolitairePile cards={waste.cards} type={waste.type} />
+          <SolitairePile cards={waste.cards} type={waste.type} id={waste.id} />
           <div
             onClick={() => clickStock()}
             className={
@@ -75,20 +76,24 @@ function SolitaireBoard() {
                 : undefined
             }
           >
-            <SolitairePile cards={stock.cards} type={stock.type} />
+            <SolitairePile
+              cards={stock.cards}
+              type={stock.type}
+              id={stock.id}
+            />
           </div>
         </div>
         <div
           className="col-span-7 grid grid-cols-7 gap-1 min-h-0"
           ref={parentRef}
         >
-          {Object.values(tableauPiles).map((pile) => (
+          {tableauPiles.map((pile) => (
             <SolitairePile
-              key={pile.index}
+              key={pile.id}
               cards={pile.cards}
               fanned={true}
               type={pile.type}
-              index={pile.index}
+              id={pile.id}
             />
           ))}
         </div>

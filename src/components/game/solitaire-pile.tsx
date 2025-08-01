@@ -9,17 +9,11 @@ interface PileProps {
   cards: Pile["cards"];
   type: Pile["type"];
   suit?: Pile["suit"];
-  index?: Pile["index"];
+  id: Pile["id"];
   fanned?: boolean;
 }
 
-function SolitairePile({
-  cards,
-  type,
-  suit,
-  index,
-  fanned = false,
-}: PileProps) {
+function SolitairePile({ cards, type, suit, id, fanned = false }: PileProps) {
   const { moveCardToFoundation, moveCardToTableau } = useSolitaire();
 
   const [, drop] = useDrop({
@@ -27,10 +21,10 @@ function SolitairePile({
     drop: (item: Card) => {
       switch (type) {
         case "foundation":
-          moveCardToFoundation(item, { type, cards, suit });
+          moveCardToFoundation(item, { type, cards, suit, id });
           break;
         case "tableauPile":
-          moveCardToTableau(item, { type, cards, index });
+          moveCardToTableau(item, { type, cards, id });
           break;
         default:
           break;
