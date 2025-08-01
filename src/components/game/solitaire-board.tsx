@@ -6,7 +6,7 @@ import { useSolitaire } from "@/components/game/solitaire-provider";
 
 // https://react-dnd.github.io/react-dnd/docs/tutorial
 function SolitaireBoard() {
-  const { foundations, waste, stock, tableauPiles, clickStock } =
+  const { foundations, waste, stock, tableauPiles, drawFromStock } =
     useSolitaire();
 
   const parentRef = useRef<HTMLDivElement>(null);
@@ -69,7 +69,7 @@ function SolitaireBoard() {
         <div className="col-span-2 grid grid-cols-2 gap-1">
           <SolitairePile cards={waste.cards} type={waste.type} id={waste.id} />
           <div
-            onClick={() => clickStock()}
+            onClick={() => drawFromStock()}
             className={
               stock.cards.length > 0 || waste.cards.length > 0
                 ? "cursor-pointer"

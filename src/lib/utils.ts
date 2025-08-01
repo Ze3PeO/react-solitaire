@@ -2,7 +2,7 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { type Suit, type Card, type Pile, type Game } from "@/lib/types";
 import { v4 as uuidv4 } from "uuid";
-import { Suits } from "@/lib/constants";
+import { Ranks, Suits } from "@/lib/constants";
 
 // --- shadcn/ui ---
 
@@ -13,22 +13,20 @@ export function cn(...inputs: ClassValue[]) {
 // --- Formatter ---
 
 export function formatRank(rank: number): string {
-  // ToDo Format rank label based on locale
-
   const rankLabels: { [key: number]: string } = {
-    0: "A",
-    1: "2",
-    2: "3",
-    3: "4",
-    4: "5",
-    5: "6",
-    6: "7",
-    7: "8",
-    8: "9",
-    9: "10",
-    10: "J",
-    11: "Q",
-    12: "K",
+    [Ranks.ACE]: "A",
+    [Ranks.TWO]: "2",
+    [Ranks.THREE]: "3",
+    [Ranks.FOUR]: "4",
+    [Ranks.FIVE]: "5",
+    [Ranks.SIX]: "6",
+    [Ranks.SEVEN]: "7",
+    [Ranks.EIGHT]: "8",
+    [Ranks.NINE]: "9",
+    [Ranks.TEN]: "10",
+    [Ranks.JACK]: "J",
+    [Ranks.QUEEN]: "Q",
+    [Ranks.KING]: "K",
   };
 
   return rankLabels[rank];
