@@ -19,3 +19,7 @@ export const Ranks = {
   QUEEN: 11,
   KING: 12,
 } as const;
+
+export const Events = {
+  GAME_WIN: "solitaire-game-win",
+};

@@ -9,6 +9,7 @@ import SolitaireScore from "@/components/game/solitaire-score";
 import SolitaireTimer from "@/components/game/solitaire-timer";
 import SolitaireControls from "@/components/game/solitaire-controls";
 import SolitaireMenu from "@/components/game/solitaire-menu";
+import SolitaireEventHandler from "@/components/game/solitaire-event-handler";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
               <SolitaireControls />
             </div>
           </div>
+          <SolitaireEventHandler />
         </SolitaireProvider>
       </DndProvider>
     </ThemeProvider>

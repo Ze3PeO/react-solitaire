@@ -1,9 +1,9 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect } from "react";
 import { generateGame, getCardColor } from "@/lib/utils";
 import type { Card, Game, Pile } from "@/lib/types";
 import type { ReactNode } from "react";
 import { cloneDeep } from "lodash";
-import { Ranks } from "@/lib/constants";
+import { Events, Ranks } from "@/lib/constants";
 import { useHistoryState } from "@/lib/hooks/use-history-state";
 
 interface SolitaireProviderState {
@@ -28,6 +28,18 @@ const SolitaireContext = createContext<SolitaireProviderState | undefined>(
 export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
   const { state, set, undo, redo, canUndo, canRedo, reset } =
     useHistoryState<Game>(generateGame());
+
+  useEffect(() => {
+    const isWin = Object.values(state.piles).every(
+      (pile: Pile) =>
+        (pile.type === "foundation" && pile.cards.length === 13) ||
+        (pile.type !== "foundation" && pile.cards.length === 0)
+    );
+
+    if (isWin) {
+      window.dispatchEvent(new CustomEvent(Events.GAME_WIN));
+    }
+  }, [state]);
 
   // --- Actions ---
 
