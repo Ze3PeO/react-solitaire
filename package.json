@@ -34,7 +34,6 @@
     "@types/lodash": "^4.17.20",
     "@types/node": "^24.0.13",
     "@types/react": "^19.1.8",
-    "@types/react-dnd": "^3.0.2",
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.6.0",
     "eslint": "^9.30.1",
@@ -44,6 +43,7 @@
     "tw-animate-css": "^1.3.5",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.35.1",
-    "vite": "^7.0.4"
+    "vite": "^7.0.4",
+    "vite-plugin-pwa": "^1.0.2"
   }
 }
