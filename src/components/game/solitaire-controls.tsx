@@ -3,20 +3,30 @@ import { useSolitaire } from "@/components/game/solitaire-provider";
 import { CheckCheck, Redo, RotateCcw, Undo } from "lucide-react";
 
 function SolitaireControls() {
-  const { restartGame } = useSolitaire();
+  const { resetGame, canUndo, canRedo, undo, redo } = useSolitaire();
 
   return (
     <div className="flex gap-2">
-      <Button variant="secondary" size="icon" onClick={restartGame}>
+      <Button variant="secondary" size="icon" onClick={resetGame}>
         <RotateCcw />
       </Button>
       <Button variant="secondary" size="icon" disabled>
         <CheckCheck />
       </Button>
-      <Button variant="secondary" size="icon" disabled>
+      <Button
+        variant="secondary"
+        size="icon"
+        disabled={!canUndo}
+        onClick={undo}
+      >
         <Undo />
       </Button>
-      <Button variant="secondary" size="icon" disabled>
+      <Button
+        variant="secondary"
+        size="icon"
+        disabled={!canRedo}
+        onClick={redo}
+      >
         <Redo />
       </Button>
     </div>

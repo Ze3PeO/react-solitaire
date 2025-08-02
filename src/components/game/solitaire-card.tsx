@@ -22,7 +22,7 @@ function SolitaireCard({ suit, rank, flipped, id, children }: CardProps) {
   }));
 
   const textColorClass = isRedSuit(suit)
-    ? "text-red-500"
+    ? "text-red-500 dark:text-red-400"
     : "text-card-foreground";
 
   // --- Back of card ---
