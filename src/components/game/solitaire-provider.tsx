@@ -4,7 +4,7 @@ import type { Card, Game, Pile } from "@/lib/types";
 import type { ReactNode } from "react";
 import { cloneDeep } from "lodash";
 import { Events, Ranks } from "@/lib/constants";
-import { useHistoryState } from "@/lib/hooks/use-history-state";
+import { useHistoryState } from "@/hooks/use-history-state";
 
 interface SolitaireProviderState {
   drawFromStock: () => void;
