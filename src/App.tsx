@@ -22,6 +22,7 @@ function App() {
           <div className="flex min-h-svh flex-col items-center justify-center gap-2 pt-2 p-2 pb-safe-2 max-w-prose mx-auto ">
             <div className="flex justify-between w-full gap-2">
               <SolitaireMenu />
+              <span>isTouchDevice: {isTouchDevice ? "true" : "false"}</span>
               <ModeToggle />
             </div>
             <SolitaireBoard />
