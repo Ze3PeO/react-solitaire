@@ -82,7 +82,7 @@ function SolitairePile({ cards, type, suit, id, fanned = false }: PileProps) {
 
   return (
     <div
-      ref={drop}
+      ref={drop as unknown as React.Ref<HTMLDivElement>}
       className="relative"
       style={
         {

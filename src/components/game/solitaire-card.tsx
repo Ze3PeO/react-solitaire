@@ -46,7 +46,7 @@ function SolitaireCard({ suit, rank, flipped, id, children }: CardProps) {
   // --- Front of card ---
   return (
     <div
-      ref={drag}
+      ref={drag as unknown as React.Ref<HTMLDivElement>}
       style={{
         opacity: isDragging ? 0 : 1,
       }}
