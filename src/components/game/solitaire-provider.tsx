@@ -26,7 +26,7 @@ const SolitaireContext = createContext<SolitaireProviderState | undefined>(
 );
 
 export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
-  const { state, set, undo, redo, canUndo, canRedo, reset } =
+  const { state, set, undo, redo, canUndo, canRedo, reset, clear } =
     useHistoryState<Game>(generateGame());
 
   useEffect(() => {
@@ -38,8 +38,9 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
 
     if (isWin) {
       window.dispatchEvent(new CustomEvent(Events.GAME_WIN));
+      clear();
     }
-  }, [state]);
+  }, [state, clear]);
 
   // --- Actions ---
 
