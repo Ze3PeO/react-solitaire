@@ -15,7 +15,7 @@ function SolitaireEventHandler() {
     };
   }, []);
 
-  return <Toaster />;
+  return <Toaster position="top-center" />;
 }
 
 export default SolitaireEventHandler;

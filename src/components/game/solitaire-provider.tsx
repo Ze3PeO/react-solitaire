@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { generateGame, getCardColor } from "@/lib/utils";
 import type { Card, Game, Pile } from "@/lib/types";
 import type { ReactNode } from "react";
@@ -28,6 +28,8 @@ const SolitaireContext = createContext<SolitaireProviderState | undefined>(
 export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
   const { state, set, undo, redo, canUndo, canRedo, reset, clear } =
     useHistoryState<Game>(generateGame());
+
+  const [wasFirstMovePlayed, setWasFirstMovePlayed] = useState(false);
 
   useEffect(() => {
     const isWin = Object.values(state.piles).every(
@@ -135,9 +137,21 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
     newState.piles[newDest.id] = newDest;
 
     set(newState);
+
+    if (!wasFirstMovePlayed) {
+      window.dispatchEvent(new CustomEvent(Events.GAME_FIRST_MOVE));
+
+      setWasFirstMovePlayed(true);
+    }
   };
 
-  const resetGame = () => reset(generateGame());
+  const resetGame = () => {
+    setWasFirstMovePlayed(false);
+
+    reset(generateGame());
+
+    window.dispatchEvent(new CustomEvent(Events.GAME_RESTART));
+  };
 
   // --- Helper ---
 

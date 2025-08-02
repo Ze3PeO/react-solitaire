@@ -22,4 +22,6 @@ export const Ranks = {
 
 export const Events = {
   GAME_WIN: "solitaire-game-win",
+  GAME_FIRST_MOVE: "solitaire-game-first-move",
+  GAME_RESTART: "solitaire-game-restart",
 };
