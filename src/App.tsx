@@ -2,23 +2,17 @@ import SolitaireBoard from "@/components/game/solitaire-board";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { ModeToggle } from "@/components/theme/mode-toggle";
 import { SolitaireProvider } from "@/components/game/solitaire-provider";
-import { DndProvider } from "react-dnd";
-import { TouchBackend } from "react-dnd-touch-backend";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import SolitaireScore from "@/components/game/solitaire-score";
 import SolitaireTimer from "@/components/game/solitaire-timer";
 import SolitaireControls from "@/components/game/solitaire-controls";
 import SolitaireMenu from "@/components/game/solitaire-menu";
 import SolitaireEventHandler from "@/components/game/solitaire-event-handler";
-import { useIsTouchDevice } from "@/hooks/use-is-touch-device";
 
 function App() {
-  const isTouchDevice = useIsTouchDevice();
-
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <DndProvider backend={isTouchDevice ? TouchBackend : HTML5Backend}>
-        <SolitaireProvider>
+      <SolitaireProvider>
+        <SolitaireEventHandler>
           <div className="flex min-h-svh flex-col items-center justify-center gap-2 pt-2 p-2 pb-safe-2 max-w-prose mx-auto ">
             <div className="flex justify-between w-full gap-2">
               <SolitaireMenu />
@@ -33,9 +27,8 @@ function App() {
               <SolitaireControls />
             </div>
           </div>
-          <SolitaireEventHandler />
-        </SolitaireProvider>
-      </DndProvider>
+        </SolitaireEventHandler>
+      </SolitaireProvider>
     </ThemeProvider>
   );
 }

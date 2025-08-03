@@ -1,8 +1,8 @@
 import { ItemTypes } from "@/lib/constants";
-import { useDrag } from "react-dnd";
 import type { ReactNode } from "react";
 import type { Card } from "@/lib/types";
 import { formatRank, formatSuit, isRedSuit } from "@/lib/utils";
+import { useDraggable } from "@dnd-kit/core";
 
 interface CardProps {
   suit: Card["suit"];
@@ -13,17 +13,25 @@ interface CardProps {
 }
 
 function SolitaireCard({ suit, rank, flipped, id, children }: CardProps) {
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: ItemTypes.CARD,
-    item: { id, suit, rank, flipped },
-    collect: (monitor) => ({
-      isDragging: !!monitor.isDragging(),
-    }),
-  }));
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id,
+    data: {
+      type: ItemTypes.CARD,
+      card: { id, suit, rank, flipped },
+    },
+  });
 
   const textColorClass = isRedSuit(suit)
     ? "text-red-500 dark:text-red-400"
     : "text-card-foreground";
+
+  const style = transform
+    ? {
+        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+        zIndex: 10,
+        position: "absolute",
+      }
+    : undefined;
 
   // --- Back of card ---
   if (!flipped) {
@@ -46,10 +54,10 @@ function SolitaireCard({ suit, rank, flipped, id, children }: CardProps) {
   // --- Front of card ---
   return (
     <div
-      ref={drag as unknown as React.Ref<HTMLDivElement>}
-      style={{
-        opacity: isDragging ? 0 : 1,
-      }}
+      ref={setNodeRef}
+      style={style}
+      {...listeners}
+      {...attributes}
       className="cursor-move select-none"
     >
       <div

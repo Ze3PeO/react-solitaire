@@ -1,9 +1,8 @@
 import { ItemTypes } from "@/lib/constants";
 import SolitaireCard from "./solitaire-card";
-import type { Card, Pile } from "@/lib/types";
+import type { Pile } from "@/lib/types";
 import { formatSuit } from "@/lib/utils";
-import { useDrop } from "react-dnd";
-import { useSolitaire } from "@/components/game/solitaire-provider";
+import { useDroppable } from "@dnd-kit/core";
 
 interface PileProps {
   cards: Pile["cards"];
@@ -14,23 +13,16 @@ interface PileProps {
 }
 
 function SolitairePile({ cards, type, suit, id, fanned = false }: PileProps) {
-  const { moveCardToFoundation, moveCardToTableau } = useSolitaire();
-
-  const [, drop] = useDrop({
-    accept: ItemTypes.CARD,
-    drop: (item: Card) => {
-      switch (type) {
-        case "foundation":
-          moveCardToFoundation(item, { type, cards, suit, id });
-          break;
-        case "tableauPile":
-          moveCardToTableau(item, { type, cards, id });
-          break;
-        default:
-          break;
-      }
+  const { setNodeRef } = useDroppable({
+    id,
+    data: {
+      accepts: [ItemTypes.CARD],
+      pile: { type, id, suit, cards },
     },
+    disabled: type === "stock" || type === "waste",
   });
+
+  const useDroppableRefOnCards = type === "tableauPile" && cards.length > 0;
 
   const renderCards = (): React.ReactNode => {
     return fanned ? renderFannedCards() : renderStackedCards();
@@ -82,7 +74,6 @@ function SolitairePile({ cards, type, suit, id, fanned = false }: PileProps) {
 
   return (
     <div
-      ref={drop as unknown as React.Ref<HTMLDivElement>}
       className="relative"
       style={
         {
@@ -94,10 +85,15 @@ function SolitairePile({ cards, type, suit, id, fanned = false }: PileProps) {
         } as React.CSSProperties
       }
     >
-      <div className="absolute inset-0 bg-emerald-800 text-4xl rounded-sm border border-emerald-900 dark:border-emerald-700 dark:text-emerald-900 text-emerald-600 flex justify-center items-center">
+      <div
+        ref={!useDroppableRefOnCards ? setNodeRef : undefined}
+        className="absolute inset-0 bg-emerald-800 text-4xl rounded-sm border border-emerald-900 dark:border-emerald-700 dark:text-emerald-900 text-emerald-600 flex justify-center items-center"
+      >
         {suit && formatSuit(suit)}
       </div>
-      {cards.length > 0 ? renderCards() : null}
+      <div ref={useDroppableRefOnCards ? setNodeRef : undefined}>
+        {cards.length > 0 ? renderCards() : null}
+      </div>
     </div>
   );
 }
