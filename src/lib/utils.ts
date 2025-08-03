@@ -54,97 +54,6 @@ export function formatTime(timestamp: number): string {
 // --- Helpers ---
 
 export function generateGame(): Game {
-  //const piles: Record<string, Pile> = {};
-  //
-  //Suits.forEach((suit: Suit) => {
-  //  const cards: Card[] = [];
-  //
-  //  Array.from({ length: 12 }, (_, index) => index).forEach((rank) => {
-  //    cards.push({
-  //      suit,
-  //      rank,
-  //      flipped: true,
-  //      id: uuidv4(),
-  //    });
-  //  });
-  //
-  //  const id = uuidv4();
-  //
-  //  piles[id] = {
-  //    cards,
-  //    suit,
-  //    type: "foundation",
-  //    id,
-  //  };
-  //});
-  //
-  //Array.from({ length: 7 }, (_, n) => n + 1).forEach((index) => {
-  //  const id = uuidv4();
-  //
-  //  const cards: Card[] = [];
-  //
-  //  if (index === 1) {
-  //    cards.push({
-  //      suit: "hearts",
-  //      rank: 12,
-  //      flipped: true,
-  //      id: uuidv4(),
-  //    });
-  //  }
-  //
-  //  if (index === 2) {
-  //    cards.push({
-  //      suit: "spades",
-  //      rank: 12,
-  //      flipped: true,
-  //      id: uuidv4(),
-  //    });
-  //  }
-  //
-  //  if (index === 3) {
-  //    cards.push({
-  //      suit: "clubs",
-  //      rank: 12,
-  //      flipped: true,
-  //      id: uuidv4(),
-  //    });
-  //  }
-  //
-  //  if (index === 4) {
-  //    cards.push({
-  //      suit: "diamonds",
-  //      rank: 12,
-  //      flipped: true,
-  //      id: uuidv4(),
-  //    });
-  //  }
-  //
-  //  piles[id] = {
-  //    cards,
-  //    type: "tableauPile",
-  //    id,
-  //  };
-  //});
-  //
-  //const stock: Pile = {
-  //  cards: [],
-  //  type: "stock",
-  //  id: uuidv4(),
-  //};
-  //
-  //piles[stock.id] = stock;
-  //
-  //const waste: Pile = {
-  //  cards: [],
-  //  type: "waste",
-  //  id: uuidv4(),
-  //};
-  //
-  //piles[waste.id] = waste;
-  //
-  //return {
-  //  piles,
-  //};
   const deck: Card[] = [];
   const piles: Record<string, Pile> = {};
 
@@ -193,6 +102,59 @@ export function generateGame(): Game {
 
   const stock: Pile = {
     cards: shuffledDeck,
+    type: "stock",
+    id: uuidv4(),
+  };
+
+  piles[stock.id] = stock;
+
+  const waste: Pile = {
+    cards: [],
+    type: "waste",
+    id: uuidv4(),
+  };
+
+  piles[waste.id] = waste;
+
+  // Assemble the game and return
+  return {
+    piles,
+  };
+}
+
+export function generateFinishedGame(): Game {
+  const piles: Record<string, Pile> = {};
+
+  // Create the 7 tableauPiles
+  Array.from({ length: 7 }, (_, index) => index).forEach(() => {
+    const id = uuidv4();
+
+    piles[id] = {
+      cards: [],
+      type: "tableauPile",
+      id,
+    };
+  });
+
+  // Create the foundation, stock and waste piles
+  Suits.forEach((suit: Suit) => {
+    const id = uuidv4();
+
+    piles[id] = {
+      cards: Array.from({ length: 13 }, (_, index) => index).map((rank) => ({
+        suit,
+        rank,
+        flipped: true,
+        id: uuidv4(),
+      })),
+      suit,
+      type: "foundation",
+      id,
+    };
+  });
+
+  const stock: Pile = {
+    cards: [],
     type: "stock",
     id: uuidv4(),
   };

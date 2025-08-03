@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { generateGame, getCardColor } from "@/lib/utils";
+import { generateGame, getCardColor, generateFinishedGame } from "@/lib/utils";
 import type { Card, Game, Pile } from "@/lib/types";
 import type { ReactNode } from "react";
 import { cloneDeep } from "lodash";
@@ -19,6 +19,8 @@ interface SolitaireProviderState {
   canRedo: boolean;
   undo: () => void;
   redo: () => void;
+  canAutoFinish: boolean;
+  autoFinish: () => void;
 }
 
 const SolitaireContext = createContext<SolitaireProviderState | undefined>(
@@ -30,6 +32,8 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
     useHistoryState<Game>(generateGame());
 
   const [wasFirstMovePlayed, setWasFirstMovePlayed] = useState(false);
+  const [canAutoFinish, setCanAutoFinish] = useState(false);
+  const [isAutoFinished, setIsAutoFinished] = useState(false);
 
   useEffect(() => {
     const isWin = Object.values(state.piles).every(
@@ -42,7 +46,19 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
       window.dispatchEvent(new CustomEvent(Events.GAME_WIN));
       clear();
     }
-  }, [state, clear]);
+
+    const canAutoFinish =
+      Object.values(state.piles).every(
+        (pile: Pile) =>
+          (pile.type === "waste" && pile.cards.length === 0) ||
+          (pile.type === "stock" && pile.cards.length === 0) ||
+          (pile.type === "tableauPile" &&
+            pile.cards.every((card: Card) => card.flipped)) ||
+          pile.type === "foundation"
+      ) && !isAutoFinished;
+
+    setCanAutoFinish(canAutoFinish);
+  }, [state, clear, setCanAutoFinish, isAutoFinished]);
 
   // --- Actions ---
 
@@ -65,6 +81,8 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
     newState.piles[newWaste.id] = newWaste;
 
     set(newState);
+
+    checkForFirstMove();
   };
 
   const moveCardToFoundation = (card: Card, dest: Pile) => {
@@ -138,19 +156,31 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
 
     set(newState);
 
-    if (!wasFirstMovePlayed) {
-      window.dispatchEvent(new CustomEvent(Events.GAME_FIRST_MOVE));
-
-      setWasFirstMovePlayed(true);
-    }
+    checkForFirstMove();
   };
 
   const resetGame = () => {
     setWasFirstMovePlayed(false);
+    setIsAutoFinished(false);
 
     reset(generateGame());
 
     window.dispatchEvent(new CustomEvent(Events.GAME_RESTART));
+  };
+
+  const autoFinish = () => {
+    if (!canAutoFinish) return;
+
+    set(generateFinishedGame());
+    setIsAutoFinished(true);
+  };
+
+  const checkForFirstMove = () => {
+    if (wasFirstMovePlayed) return;
+
+    window.dispatchEvent(new CustomEvent(Events.GAME_FIRST_MOVE));
+
+    setWasFirstMovePlayed(true);
   };
 
   // --- Helper ---
@@ -192,6 +222,8 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
         canRedo,
         undo,
         redo,
+        canAutoFinish,
+        autoFinish,
       }}
     >
       {children}
