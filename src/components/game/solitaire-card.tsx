@@ -1,5 +1,5 @@
 import { ItemTypes } from "@/lib/constants";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import type { Card } from "@/lib/types";
 import { formatRank, formatSuit, isRedSuit } from "@/lib/utils";
 import { useDraggable } from "@dnd-kit/core";
@@ -25,7 +25,7 @@ function SolitaireCard({ suit, rank, flipped, id, children }: CardProps) {
     ? "text-red-500 dark:text-red-400"
     : "text-card-foreground";
 
-  const style = transform
+  const style: CSSProperties | undefined = transform
     ? {
         transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
         zIndex: 10,
