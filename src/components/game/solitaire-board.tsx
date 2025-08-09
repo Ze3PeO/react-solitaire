@@ -4,7 +4,6 @@ import SolitairePile from "@/components/game/solitaire-pile";
 
 import { useSolitaire } from "@/components/game/solitaire-provider";
 
-// https://react-dnd.github.io/react-dnd/docs/tutorial
 function SolitaireBoard() {
   const { foundations, waste, stock, tableauPiles, drawFromStock } =
     useSolitaire();

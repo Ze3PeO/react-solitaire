@@ -6,6 +6,7 @@ import { Events } from "@/lib/constants";
 import { useEffect } from "react";
 
 function SolitaireTimer() {
+  // ToDo: Move timer to provider and expose only the elapsedTime
   const { elapsedTime, start, stop, restart } = useTimer();
 
   useEffect(() => {

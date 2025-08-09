@@ -8,8 +8,7 @@ import { useHistoryState } from "@/hooks/use-history-state";
 
 interface SolitaireProviderState {
   drawFromStock: () => void;
-  moveCardToFoundation: (card: Card, dest: Pile) => void;
-  moveCardToTableau: (card: Card, dest: Pile) => void;
+  handleCardMove: (card: Card, dest: Pile) => void;
   resetGame: () => void;
   foundations: Readonly<Pile[]>;
   waste: Readonly<Pile>;
@@ -83,6 +82,19 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
     set(newState);
 
     checkForFirstMove();
+  };
+
+  const handleCardMove = (card: Card, dest: Pile) => {
+    switch (dest.type) {
+      case "foundation":
+        moveCardToFoundation(card, dest);
+        break;
+      case "tableauPile":
+        moveCardToTableau(card, dest);
+        break;
+      default:
+        break;
+    }
   };
 
   const moveCardToFoundation = (card: Card, dest: Pile) => {
@@ -211,8 +223,7 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
     <SolitaireContext.Provider
       value={{
         drawFromStock,
-        moveCardToFoundation,
-        moveCardToTableau,
+        handleCardMove,
         resetGame,
         foundations: Object.freeze(foundations),
         waste: Object.freeze(waste),

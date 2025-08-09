@@ -33,6 +33,8 @@ function SolitaireCard({ suit, rank, flipped, id, children }: CardProps) {
       }
     : undefined;
 
+  const scale = transform ? 1.125 : 1;
+
   // --- Back of card ---
   if (!flipped) {
     return (
@@ -64,8 +66,9 @@ function SolitaireCard({ suit, rank, flipped, id, children }: CardProps) {
         style={{
           width: "var(--card-width)",
           height: "var(--card-height)",
+          transform: `scale(${scale})`,
         }}
-        className={`relative bg-card ${textColorClass} flex justify-between rounded-sm border shadow-sm px-1`}
+        className={`relative bg-card ${textColorClass} flex justify-between rounded-sm border shadow-sm px-1 transition-transform`}
       >
         {flipped && (
           <>

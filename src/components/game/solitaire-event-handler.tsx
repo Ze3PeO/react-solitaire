@@ -6,7 +6,7 @@ import { DndContext, type DragEndEvent } from "@dnd-kit/core";
 import { useSolitaire } from "@/components/game/solitaire-provider";
 
 function SolitaireEventHandler({ children }: { children: React.ReactNode }) {
-  const { moveCardToFoundation, moveCardToTableau } = useSolitaire();
+  const { handleCardMove } = useSolitaire();
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
@@ -17,16 +17,7 @@ function SolitaireEventHandler({ children }: { children: React.ReactNode }) {
     const pile = over.data.current?.pile;
     const card = active.data.current?.card;
 
-    switch (pile.type) {
-      case "foundation":
-        moveCardToFoundation(card, pile);
-        break;
-      case "tableauPile":
-        moveCardToTableau(card, pile);
-        break;
-      default:
-        break;
-    }
+    handleCardMove(card, pile);
   };
 
   useEffect(() => {
