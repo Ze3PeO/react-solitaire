@@ -32,3 +32,5 @@ export type Stat = {
   score: number;
   date: number;
 };
+
+export type Theme = "dark" | "light" | "system";

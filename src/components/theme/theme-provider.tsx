@@ -1,6 +1,6 @@
+import { ThemeColor } from "@/lib/constants";
+import type { Theme } from "@/lib/types";
 import { createContext, useContext, useEffect, useState } from "react";
-
-type Theme = "dark" | "light" | "system";
 
 type ThemeProviderProps = {
   children: React.ReactNode;
@@ -31,22 +31,27 @@ export function ThemeProvider({
   );
 
   useEffect(() => {
-    const root = window.document.documentElement;
-
-    root.classList.remove("light", "dark");
-
     if (theme === "system") {
       const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
         .matches
         ? "dark"
         : "light";
 
-      root.classList.add(systemTheme);
+      applyTheme(systemTheme);
       return;
     }
 
-    root.classList.add(theme);
+    applyTheme(theme);
   }, [theme]);
+
+  const applyTheme = (theme: Theme) => {
+    const root = window.document.documentElement;
+    const themeColor = document.querySelector('meta[name="theme-color"]');
+
+    root.classList.remove("light", "dark");
+    root.classList.add(theme);
+    themeColor?.setAttribute("content", ThemeColor[theme]);
+  };
 
   const value = {
     theme,
