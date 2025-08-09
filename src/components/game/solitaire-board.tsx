@@ -41,6 +41,12 @@ function SolitaireBoard() {
     return () => window.removeEventListener("resize", updateCardMarginTop);
   }, [cardHeight, maxCardMarginTop, numCards]);
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "Enter" || e.key === " ") {
+      drawFromStock();
+    }
+  };
+
   return (
     <div
       className="h-full w-full flex justify-center grow overflow-hidden border bg-emerald-700 dark:bg-emerald-900 p-1 rounded-md"
@@ -69,11 +75,13 @@ function SolitaireBoard() {
           <SolitairePile cards={waste.cards} type={waste.type} id={waste.id} />
           <div
             onClick={() => drawFromStock()}
+            onKeyDown={handleKeyDown}
             className={
               stock.cards.length > 0 || waste.cards.length > 0
                 ? "cursor-pointer"
                 : undefined
             }
+            tabIndex={stock.cards.length > 0 || waste.cards.length > 0 ? 0 : -1}
           >
             <SolitairePile
               cards={stock.cards}

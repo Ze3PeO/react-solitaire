@@ -43,7 +43,7 @@ function SolitaireCard({ suit, rank, flipped, id, children }: CardProps) {
             width: "var(--card-width)",
             height: "var(--card-height)",
           }}
-          className="relative border-blue-700 dark:border-indigo-700 bg-blue-600 dark:bg-indigo-900 text-card-foreground flex justify-between rounded-sm border shadow-sm px-1"
+          className="relative border-blue-700 dark:border-indigo-700 bg-blue-600 dark:bg-indigo-900 text-card-foreground flex justify-between rounded-sm border shadow-xl px-1"
         ></div>
         {children && (
           <div style={{ marginTop: "var(--card-margin-top)" }}>{children}</div>
@@ -67,7 +67,7 @@ function SolitaireCard({ suit, rank, flipped, id, children }: CardProps) {
           height: "var(--card-height)",
           transform: `scale(var(--card-scale))`,
         }}
-        className={`relative bg-card ${textColorClass} flex justify-between rounded-sm border shadow-sm px-1 transition-transform`}
+        className={`relative bg-card ${textColorClass} flex justify-between rounded-sm border shadow-xl px-1 transition-transform`}
       >
         {flipped && (
           <>
