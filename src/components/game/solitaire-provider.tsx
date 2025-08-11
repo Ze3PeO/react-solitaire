@@ -3,8 +3,9 @@ import { generateGame, getCardColor, generateFinishedGame } from "@/lib/utils";
 import type { Card, Game, Pile } from "@/lib/types";
 import type { ReactNode } from "react";
 import { cloneDeep } from "lodash";
-import { Events, Ranks } from "@/lib/constants";
+import { Ranks } from "@/lib/constants";
 import { useHistoryState } from "@/hooks/use-history-state";
+import { useTimer } from "@/hooks/use-timer";
 
 interface SolitaireProviderState {
   drawFromStock: () => void;
@@ -20,6 +21,8 @@ interface SolitaireProviderState {
   redo: () => void;
   canAutoFinish: boolean;
   autoFinish: () => void;
+  isFinished: boolean;
+  elapsedTime: number;
 }
 
 const SolitaireContext = createContext<SolitaireProviderState | undefined>(
@@ -29,10 +32,16 @@ const SolitaireContext = createContext<SolitaireProviderState | undefined>(
 export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
   const { state, set, undo, redo, canUndo, canRedo, reset, clear } =
     useHistoryState<Game>(generateGame());
+  const {
+    elapsedTime,
+    start: startTimer,
+    stop: stopTimer,
+    restart: restartTimer,
+  } = useTimer();
 
   const [wasFirstMovePlayed, setWasFirstMovePlayed] = useState(false);
   const [canAutoFinish, setCanAutoFinish] = useState(false);
-  const [isAutoFinished, setIsAutoFinished] = useState(false);
+  const [isFinished, setIsFinished] = useState(false);
 
   useEffect(() => {
     const isWin = Object.values(state.piles).every(
@@ -42,7 +51,8 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
     );
 
     if (isWin) {
-      window.dispatchEvent(new CustomEvent(Events.GAME_WIN));
+      setIsFinished(true);
+      stopTimer();
       clear();
     }
 
@@ -54,10 +64,10 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
           (pile.type === "tableauPile" &&
             pile.cards.every((card: Card) => card.flipped)) ||
           pile.type === "foundation"
-      ) && !isAutoFinished;
+      ) && !isFinished;
 
     setCanAutoFinish(canAutoFinish);
-  }, [state, clear, setCanAutoFinish, isAutoFinished]);
+  }, [state]);
 
   // --- Actions ---
 
@@ -173,24 +183,23 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
 
   const resetGame = () => {
     setWasFirstMovePlayed(false);
-    setIsAutoFinished(false);
+    setIsFinished(false);
 
     reset(generateGame());
 
-    window.dispatchEvent(new CustomEvent(Events.GAME_RESTART));
+    restartTimer();
   };
 
   const autoFinish = () => {
     if (!canAutoFinish) return;
 
     set(generateFinishedGame());
-    setIsAutoFinished(true);
   };
 
   const checkForFirstMove = () => {
     if (wasFirstMovePlayed) return;
 
-    window.dispatchEvent(new CustomEvent(Events.GAME_FIRST_MOVE));
+    startTimer();
 
     setWasFirstMovePlayed(true);
   };
@@ -235,6 +244,8 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
         redo,
         canAutoFinish,
         autoFinish,
+        isFinished,
+        elapsedTime,
       }}
     >
       {children}

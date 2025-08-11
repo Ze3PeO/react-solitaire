@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import { Events } from "@/lib/constants";
 import { DndContext, type DragEndEvent } from "@dnd-kit/core";
 import { useSolitaire } from "@/components/game/solitaire-provider";
 import Confetti from "react-confetti";
 import { useWindowSize } from "@/hooks/use-window-size";
 
 function SolitaireEventHandler({ children }: { children: React.ReactNode }) {
-  const { handleCardMove } = useSolitaire();
+  const { handleCardMove, isFinished } = useSolitaire();
   const { width, height } = useWindowSize();
   const [showConfetti, setShowConfetti] = useState(false);
 
@@ -23,14 +22,8 @@ function SolitaireEventHandler({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
-    const onGameWin = () => setShowConfetti(true);
-
-    window.addEventListener(Events.GAME_WIN, onGameWin);
-
-    return () => {
-      window.removeEventListener(Events.GAME_WIN, onGameWin);
-    };
-  }, []);
+    if (isFinished) setShowConfetti(true);
+  }, [isFinished]);
 
   return (
     <DndContext onDragEnd={handleDragEnd}>

@@ -22,12 +22,6 @@ export const Ranks = {
   KING: 12,
 } as const;
 
-export const Events = {
-  GAME_WIN: "solitaire-game-win",
-  GAME_FIRST_MOVE: "solitaire-game-first-move",
-  GAME_RESTART: "solitaire-game-restart",
-} as const;
-
 export const ThemeColor = {
   light: "#FFFFFF",
   dark: "#0A0A0A",
