@@ -1,12 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Events } from "@/lib/constants";
-import { Toaster } from "@/components/ui/sonner";
-import { toast } from "sonner";
 import { DndContext, type DragEndEvent } from "@dnd-kit/core";
 import { useSolitaire } from "@/components/game/solitaire-provider";
+import Confetti from "react-confetti";
+import { useWindowSize } from "@/hooks/use-window-size";
 
 function SolitaireEventHandler({ children }: { children: React.ReactNode }) {
   const { handleCardMove } = useSolitaire();
+  const { width, height } = useWindowSize();
+  const [showConfetti, setShowConfetti] = useState(false);
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
@@ -21,8 +23,7 @@ function SolitaireEventHandler({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
-    const onGameWin = () =>
-      toast.success("You win! Press the reset button to play again.");
+    const onGameWin = () => setShowConfetti(true);
 
     window.addEventListener(Events.GAME_WIN, onGameWin);
 
@@ -34,7 +35,14 @@ function SolitaireEventHandler({ children }: { children: React.ReactNode }) {
   return (
     <DndContext onDragEnd={handleDragEnd}>
       {children}
-      <Toaster position="top-center" />
+      {showConfetti && (
+        <Confetti
+          width={width}
+          height={height}
+          recycle={false}
+          onConfettiComplete={() => setShowConfetti(false)}
+        />
+      )}
     </DndContext>
   );
 }

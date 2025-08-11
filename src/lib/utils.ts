@@ -175,6 +175,25 @@ export function generateFinishedGame(): Game {
   };
 }
 
+export function generateAlmostFinishedGame(): Game {
+  const game = generateFinishedGame();
+
+  const foundation = Object.values(game.piles).find(
+    (pile) => pile.type === "foundation"
+  );
+
+  const tableauPile = Object.values(game.piles).find(
+    (pile) => pile.type === "tableauPile"
+  );
+
+  if (foundation?.cards.length && tableauPile) {
+    const card = foundation.cards.pop()!;
+    tableauPile.cards.push(card);
+  }
+
+  return game;
+}
+
 export function isRedSuit(suit: Suit): boolean {
   return suit === "hearts" || suit === "diamonds";
 }
