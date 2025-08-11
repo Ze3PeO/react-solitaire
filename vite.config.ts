@@ -18,20 +18,20 @@ export default defineConfig({
         theme_color: "#FFFFFF",
         display: "standalone",
         icons: [
+          { src: "/favicon.ico", type: "image/x-icon", sizes: "16x16 32x32" },
+          { src: "/icons/icon-192.png", type: "image/png", sizes: "192x192" },
+          { src: "/icons/icon-512.png", type: "image/png", sizes: "512x512" },
           {
-            src: "/icons/icon-192x192.png",
+            src: "/icons/icon-192-maskable.png",
+            type: "image/png",
             sizes: "192x192",
-            type: "image/png",
+            purpose: "maskable",
           },
           {
-            src: "/icons/icon-256x256.png",
-            sizes: "256x256",
+            src: "/icons/icon-512-maskable.png",
             type: "image/png",
-          },
-          {
-            src: "/icons/icon-512x512.png",
             sizes: "512x512",
-            type: "image/png",
+            purpose: "maskable",
           },
         ],
       },
