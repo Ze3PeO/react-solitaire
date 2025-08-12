@@ -71,6 +71,8 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
   // --- Actions ---
 
   const drawFromStock = () => {
+    if (isFinished) return;
+
     const newStock: Pile = cloneDeep(stock);
     const newWaste: Pile = cloneDeep(waste);
     const newState = cloneDeep(state);
@@ -95,6 +97,8 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const handleCardMove = (card: Card, dest: Pile) => {
+    if (isFinished) return;
+
     switch (dest.type) {
       case "foundation":
         moveCardToFoundation(card, dest);
