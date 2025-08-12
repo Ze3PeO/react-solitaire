@@ -43,7 +43,6 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
   const [wasFirstMovePlayed, setWasFirstMovePlayed] = useState(false);
   const [canAutoFinish, setCanAutoFinish] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
-  const [score, setScore] = useState(0);
 
   useEffect(() => {
     const isWin = Object.values(state.piles).every(
@@ -53,9 +52,7 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
     );
 
     if (isWin) {
-      setIsFinished(true);
-      stopTimer();
-      clear();
+      handleWin();
     }
 
     const canAutoFinish =
@@ -76,6 +73,7 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
   const drawFromStock = () => {
     const newStock: Pile = cloneDeep(stock);
     const newWaste: Pile = cloneDeep(waste);
+    const newState = cloneDeep(state);
 
     if (newStock.cards.length > 0) {
       const uppermostCard = newStock.cards.pop()!;
@@ -85,10 +83,9 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
       newWaste.cards.forEach((card) => (card.flipped = false));
       newStock.cards = newWaste.cards.reverse();
       newWaste.cards = [];
-      setScore(Math.max(0, score - 100));
+      newState.score = Math.max(0, newState.score - 100);
     }
 
-    const newState = cloneDeep(state);
     newState.piles[newStock.id] = newStock;
     newState.piles[newWaste.id] = newWaste;
 
@@ -166,49 +163,46 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
 
     const newSrc: Pile = cloneDeep(src);
     const newDest: Pile = cloneDeep(dest);
+    const newState = cloneDeep(state);
 
+    // Perform the move
     const cardIndex = newSrc.cards.findIndex((c) => c.id === card.id);
     const cardsToMove = newSrc.cards.splice(cardIndex);
     newDest.cards.push(...cardsToMove);
 
+    // Apply scores and flip uppermost card if necessary
     if (newSrc.cards.length > 0 && newSrc.type === "tableauPile") {
       newSrc.cards[newSrc.cards.length - 1].flipped = true;
-      setScore(score + 5);
+      newState.score = newState.score + 5;
     }
 
-    const newState = cloneDeep(state);
+    if (newSrc.type === "waste" && newDest.type === "tableauPile") {
+      newState.score = newState.score + 5;
+    }
+
+    if (newSrc.type === "waste" && newDest.type === "foundation") {
+      newState.score = newState.score + 10;
+    }
+
+    if (newSrc.type === "tableauPile" && newDest.type === "foundation") {
+      newState.score = newState.score + 10;
+    }
+
+    if (newSrc.type === "foundation" && newDest.type === "tableauPile") {
+      newState.score = Math.max(0, newState.score - 15);
+    }
+
     newState.piles[newSrc.id] = newSrc;
     newState.piles[newDest.id] = newDest;
 
     set(newState);
 
-    applyScoreForMove(newSrc, newDest);
-
     checkForFirstMove();
-  };
-
-  const applyScoreForMove = (src: Pile, dest: Pile) => {
-    if (src.type === "waste" && dest.type === "tableauPile") {
-      setScore(score + 5);
-    }
-
-    if (src.type === "waste" && dest.type === "foundation") {
-      setScore(score + 10);
-    }
-
-    if (src.type === "tableauPile" && dest.type === "foundation") {
-      setScore(score + 10);
-    }
-
-    if (src.type === "foundation" && dest.type === "tableauPile") {
-      setScore(Math.max(0, score - 15));
-    }
   };
 
   const resetGame = () => {
     setWasFirstMovePlayed(false);
     setIsFinished(false);
-    setScore(0);
 
     reset(generateGame());
 
@@ -219,6 +213,24 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
     if (!canAutoFinish) return;
 
     set(generateFinishedGame());
+  };
+
+  const handleWin = () => {
+    if (isFinished) return;
+
+    setIsFinished(true);
+    stopTimer();
+    clear();
+
+    const newState = cloneDeep(state);
+
+    // Award bonus points
+    if (elapsedTime > 30000) {
+      newState.score =
+        newState.score + Math.floor(700000 / Math.floor(elapsedTime / 1000));
+    }
+
+    set(newState);
   };
 
   const checkForFirstMove = () => {
@@ -271,7 +283,7 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
         autoFinish,
         isFinished,
         elapsedTime,
-        score,
+        score: Object.freeze(state.score),
       }}
     >
       {children}

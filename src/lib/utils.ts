@@ -119,6 +119,7 @@ export function generateGame(): Game {
   // Assemble the game and return
   return {
     piles,
+    score: 0,
   };
 }
 
@@ -172,6 +173,7 @@ export function generateFinishedGame(): Game {
   // Assemble the game and return
   return {
     piles,
+    score: 0,
   };
 }
 

@@ -20,6 +20,7 @@ export type Pile = {
 
 export type Game = {
   piles: Record<string, Pile>;
+  score: number;
 };
 
 export type CardSelection = {
