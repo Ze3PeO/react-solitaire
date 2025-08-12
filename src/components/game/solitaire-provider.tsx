@@ -216,7 +216,19 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
   const autoFinish = () => {
     if (!canAutoFinish) return;
 
-    set(generateFinishedGame());
+    const newState = cloneDeep(state);
+
+    // Calculate the score based on the remaining cards to be moved
+    const cardCount = Object.values(newState.piles).reduce((acc, pile) => {
+      return pile.type === "tableauPile" ? acc + pile.cards.length : acc;
+    }, 0);
+    newState.score = newState.score + cardCount * 10;
+
+    // Get the finished game pile state
+    const finishedGame = generateFinishedGame();
+    newState.piles = finishedGame.piles;
+
+    set(newState);
   };
 
   const handleWin = () => {
@@ -225,16 +237,6 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
     setIsFinished(true);
     stopTimer();
     clear();
-
-    const newState = cloneDeep(state);
-
-    // Award bonus points
-    if (elapsedTime > 30000) {
-      newState.score =
-        newState.score + Math.floor(700000 / Math.floor(elapsedTime / 1000));
-    }
-
-    set(newState);
   };
 
   const checkForFirstMove = () => {
