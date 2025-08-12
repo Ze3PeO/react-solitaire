@@ -23,6 +23,7 @@ interface SolitaireProviderState {
   autoFinish: () => void;
   isFinished: boolean;
   elapsedTime: number;
+  score: number;
 }
 
 const SolitaireContext = createContext<SolitaireProviderState | undefined>(
@@ -42,6 +43,7 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
   const [wasFirstMovePlayed, setWasFirstMovePlayed] = useState(false);
   const [canAutoFinish, setCanAutoFinish] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
     const isWin = Object.values(state.piles).every(
@@ -83,6 +85,7 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
       newWaste.cards.forEach((card) => (card.flipped = false));
       newStock.cards = newWaste.cards.reverse();
       newWaste.cards = [];
+      setScore(Math.max(0, score - 100));
     }
 
     const newState = cloneDeep(state);
@@ -170,6 +173,7 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
 
     if (newSrc.cards.length > 0 && newSrc.type === "tableauPile") {
       newSrc.cards[newSrc.cards.length - 1].flipped = true;
+      setScore(score + 5);
     }
 
     const newState = cloneDeep(state);
@@ -178,12 +182,33 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
 
     set(newState);
 
+    applyScoreForMove(newSrc, newDest);
+
     checkForFirstMove();
+  };
+
+  const applyScoreForMove = (src: Pile, dest: Pile) => {
+    if (src.type === "waste" && dest.type === "tableauPile") {
+      setScore(score + 5);
+    }
+
+    if (src.type === "waste" && dest.type === "foundation") {
+      setScore(score + 10);
+    }
+
+    if (src.type === "tableauPile" && dest.type === "foundation") {
+      setScore(score + 10);
+    }
+
+    if (src.type === "foundation" && dest.type === "tableauPile") {
+      setScore(Math.max(0, score - 15));
+    }
   };
 
   const resetGame = () => {
     setWasFirstMovePlayed(false);
     setIsFinished(false);
+    setScore(0);
 
     reset(generateGame());
 
@@ -246,6 +271,7 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
         autoFinish,
         isFinished,
         elapsedTime,
+        score,
       }}
     >
       {children}

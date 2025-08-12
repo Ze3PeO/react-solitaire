@@ -1,11 +1,14 @@
 import { Badge } from "@/components/ui/badge";
 import { Gauge } from "lucide-react";
+import { useSolitaire } from "@/components/game/solitaire-provider";
 
 function SolitaireScore() {
+  const { score } = useSolitaire();
+
   return (
     <Badge variant="secondary" className="flex items-center gap-2">
       <Gauge />
-      <span>0</span>
+      <span>{score}</span>
     </Badge>
   );
 }
