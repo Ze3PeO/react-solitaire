@@ -1,16 +1,17 @@
 import { ItemTypes } from "@/lib/constants";
 import type { CSSProperties, ReactNode } from "react";
 import type { Card } from "@/lib/types";
-import { formatRank, formatSuit, isRedSuit } from "@/lib/utils";
+import { formatRank, isRedSuit } from "@/lib/utils";
 import { useDraggable } from "@dnd-kit/core";
+import SolitaireSuit from "@/components/game/solitaire-suit";
 
-interface CardProps {
+type CardProps = {
   suit: Card["suit"];
   rank: Card["rank"];
   flipped: Card["flipped"];
   id: Card["id"];
   children?: ReactNode;
-}
+};
 
 function SolitaireCard({ suit, rank, flipped, id, children }: CardProps) {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
@@ -70,10 +71,10 @@ function SolitaireCard({ suit, rank, flipped, id, children }: CardProps) {
         className={`relative bg-card ${textColorClass} flex justify-between rounded-sm border shadow-xl px-1 transition-transform`}
       >
         {flipped && (
-          <>
+          <div className="flex items-center  justify-between w-full h-fit">
             <span>{formatRank(rank)}</span>
-            <span>{formatSuit(suit)}</span>
-          </>
+            <SolitaireSuit suit={suit} className="w-3 h-3" />
+          </div>
         )}
       </div>
       {children && (
