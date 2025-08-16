@@ -3,7 +3,7 @@ import type { CSSProperties, ReactNode } from "react";
 import type { Card } from "@/lib/types";
 import { formatRank, isRedSuit } from "@/lib/utils";
 import { useDraggable } from "@dnd-kit/core";
-import SolitaireSuit from "@/components/game/solitaire-suit";
+import Icon from "@/components/ui/icon";
 
 type CardProps = {
   suit: Card["suit"];
@@ -73,7 +73,7 @@ function SolitaireCard({ suit, rank, flipped, id, children }: CardProps) {
         {flipped && (
           <div className="flex items-center  justify-between w-full h-fit">
             <span>{formatRank(rank)}</span>
-            <SolitaireSuit suit={suit} className="w-3 h-3" />
+            <Icon name={suit} className="w-3 h-3" />
           </div>
         )}
       </div>

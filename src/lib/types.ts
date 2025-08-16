@@ -35,7 +35,3 @@ export type Stat = {
 };
 
 export type Theme = "dark" | "light" | "system";
-
-export type IconProps = {
-  className?: string;
-};

@@ -2,7 +2,7 @@ import { ItemTypes } from "@/lib/constants";
 import SolitaireCard from "./solitaire-card";
 import type { Pile } from "@/lib/types";
 import { useDroppable } from "@dnd-kit/core";
-import SolitaireSuit from "@/components/game/solitaire-suit";
+import Icon from "@/components/ui/icon";
 
 type PileProps = {
   cards: Pile["cards"];
@@ -89,7 +89,7 @@ function SolitairePile({ cards, type, suit, id, fanned = false }: PileProps) {
         ref={!useDroppableRefOnCards ? setNodeRef : undefined}
         className="absolute inset-0 bg-emerald-800 rounded-sm border border-emerald-900 dark:border-emerald-700 dark:text-emerald-900 text-emerald-600 flex justify-center items-center"
       >
-        {suit && <SolitaireSuit suit={suit} className="w-7 h-7" />}
+        {suit && <Icon name={suit} className="w-7 h-7" />}
       </div>
       <div ref={useDroppableRefOnCards ? setNodeRef : undefined}>
         {cards.length > 0 ? renderCards() : null}
