@@ -54,7 +54,9 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
     if (isWin) {
       handleWin();
     }
+  }, [state]);
 
+  useEffect(() => {
     const canAutoFinish =
       Object.values(state.piles).every(
         (pile: Pile) =>
@@ -66,7 +68,7 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
       ) && !isFinished;
 
     setCanAutoFinish(canAutoFinish);
-  }, [state]);
+  }, [state, isFinished]);
 
   // --- Actions ---
 
