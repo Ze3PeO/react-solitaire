@@ -5,9 +5,11 @@ import {
   SheetTitle,
   SheetDescription,
   SheetTrigger,
+  SheetFooter,
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import SolitaireStats from "@/components/game/solitaire-stats";
 
 function SolitaireMenu() {
   return (
@@ -27,6 +29,10 @@ function SolitaireMenu() {
             </span>
           </SheetDescription>
         </SheetHeader>
+        <div className="flex flex-col gap-4 p-4">
+          <SolitaireStats />
+        </div>
+        <SheetFooter></SheetFooter>
       </SheetContent>
     </Sheet>
   );
