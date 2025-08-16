@@ -26,3 +26,7 @@ export const ThemeColor = {
   light: "#FFFFFF",
   dark: "#0A0A0A",
 } as Record<Theme, string>;
+
+export const LocalStorageKey = {
+  STATS: "stats",
+} as const;

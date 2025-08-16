@@ -29,6 +29,7 @@ export type CardSelection = {
 };
 
 export type Stat = {
+  id: string;
   time: number;
   score: number;
   date: number;
