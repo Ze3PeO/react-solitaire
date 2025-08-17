@@ -1,4 +1,5 @@
 import { useLocalStorage } from "@/hooks/use-local-storage";
+import { useCsvExport } from "@/hooks/use-csv-export";
 import { LocalStorageKey } from "@/lib/constants";
 import type { Stat } from "@/lib/types";
 import { Button } from "@/components/ui/button";
@@ -28,6 +29,30 @@ function SolitaireStats() {
 }
 
 function SolitaireStatsDialog() {
+  const [stats, _] = useLocalStorage<Stat[]>(LocalStorageKey.STATS, []);
+  const { exportData } = useCsvExport();
+
+  const handleExportCSV = () => {
+    if (stats.length === 0) {
+      // ToDo: Add toast
+      return;
+    }
+
+    const data = stats
+      .sort((a: Stat, b: Stat) => b.date - a.date)
+      .map((stat: Stat) => ({
+        id: stat.id,
+        date: new Date(stat.date).toLocaleDateString(),
+        time: stat.time,
+        score: stat.score,
+      }));
+
+    exportData(data, {
+      filename: `solitaire-stats-${new Date().toISOString().split("T")[0]}.csv`,
+      headers: ["date", "time", "score"],
+    });
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -41,8 +66,15 @@ function SolitaireStatsDialog() {
             the game or the score.
           </DialogDescription>
         </DialogHeader>
-        <SolitaireStatsSelection />
-        <DialogFooter>
+        <SolitaireStatsSelection stats={stats} />
+        <DialogFooter className="flex gap-2">
+          <Button
+            variant="outline"
+            onClick={handleExportCSV}
+            disabled={stats.length === 0}
+          >
+            Export as CSV
+          </Button>
           <DialogClose asChild>
             <Button variant="outline">Close</Button>
           </DialogClose>
@@ -52,7 +84,7 @@ function SolitaireStatsDialog() {
   );
 }
 
-function SolitaireStatsSelection() {
+function SolitaireStatsSelection({ stats }: { stats: Stat[] }) {
   return (
     <Tabs defaultValue="time">
       <TabsList className="w-full">
@@ -60,18 +92,23 @@ function SolitaireStatsSelection() {
         <TabsTrigger value="score">Score</TabsTrigger>
       </TabsList>
       <TabsContent value="time">
-        <SolitaireStatsTable sortBy="time" />
+        <SolitaireStatsTable stats={stats} sortBy="time" />
       </TabsContent>
       <TabsContent value="score">
-        <SolitaireStatsTable sortBy="score" />
+        <SolitaireStatsTable stats={stats} sortBy="score" />
       </TabsContent>
     </Tabs>
   );
 }
 
-function SolitaireStatsTable({ sortBy }: { sortBy: "time" | "score" }) {
-  const [stats, _] = useLocalStorage<Stat[]>(LocalStorageKey.STATS, []);
-
+function SolitaireStatsTable({
+  stats,
+  sortBy,
+}: {
+  stats: Stat[];
+  sortBy: "time" | "score";
+}) {
+  // ToDo What if empty?
   return (
     <Table>
       <TableHeader>
