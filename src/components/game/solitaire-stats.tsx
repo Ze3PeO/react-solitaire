@@ -23,6 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Frown } from "lucide-react";
 
 function SolitaireStats() {
   return <SolitaireStatsDialog />;
@@ -33,11 +34,6 @@ function SolitaireStatsDialog() {
   const { exportData } = useCsvExport();
 
   const handleExportCSV = () => {
-    if (stats.length === 0) {
-      // ToDo: Add toast
-      return;
-    }
-
     const data = stats
       .sort((a: Stat, b: Stat) => b.date - a.date)
       .map((stat: Stat) => ({
@@ -60,13 +56,17 @@ function SolitaireStatsDialog() {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Stats</DialogTitle>
+          <DialogTitle>Statistics</DialogTitle>
           <DialogDescription>
             Here you can see your top 10 games. Either by time taken to complete
             the game or the score.
           </DialogDescription>
         </DialogHeader>
-        <SolitaireStatsSelection stats={stats} />
+        {stats.length === 0 ? (
+          <SolitaireStatsEmpty />
+        ) : (
+          <SolitaireStatsTabs stats={stats} />
+        )}
         <DialogFooter className="flex gap-2">
           <Button
             variant="outline"
@@ -84,7 +84,16 @@ function SolitaireStatsDialog() {
   );
 }
 
-function SolitaireStatsSelection({ stats }: { stats: Stat[] }) {
+function SolitaireStatsEmpty() {
+  return (
+    <div className=" flex flex-col items-center gap-2 px-2 py-8 text-muted-foreground">
+      <Frown />
+      <span>No stats available</span>
+    </div>
+  );
+}
+
+function SolitaireStatsTabs({ stats }: { stats: Stat[] }) {
   return (
     <Tabs defaultValue="time">
       <TabsList className="w-full">
@@ -108,7 +117,6 @@ function SolitaireStatsTable({
   stats: Stat[];
   sortBy: "time" | "score";
 }) {
-  // ToDo What if empty?
   return (
     <Table>
       <TableHeader>

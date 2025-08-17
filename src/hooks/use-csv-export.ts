@@ -18,25 +18,36 @@ function exportToCSV<T extends Record<string, any>>(
     return;
   }
 
+  // Get headers or extract from first object
   const csvHeaders = headers || (Object.keys(data[0]) as (keyof T)[]);
 
   const headerRow = csvHeaders.join(",");
 
+  // Create data rows by the headings
   const dataRows = data.map((item) => {
     return csvHeaders.map((header) => String(item[header])).join(",");
   });
 
   const csvContent = [headerRow, ...dataRows].join("\n");
+  downloadFile(csvContent, filename);
+}
 
-  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+function downloadFile(content: string, filename: string) {
+  // Create the file blob
+  const blob = new Blob([content], { type: "text/csv" });
+
+  // Create a temporary download link
   const link = document.createElement("a");
   const url = URL.createObjectURL(blob);
-  link.setAttribute("href", url);
-  link.setAttribute("download", filename);
-  link.style.visibility = "hidden";
-  document.body.appendChild(link);
+
+  // Set up the link for download
+  link.href = url;
+  link.download = filename;
+
+  // Trigger the download
   link.click();
-  document.body.removeChild(link);
+
+  // Clean up
   URL.revokeObjectURL(url);
 }
 
