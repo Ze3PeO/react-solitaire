@@ -1,7 +1,7 @@
 import { ItemTypes } from "@/lib/constants";
 import type { CSSProperties, ReactNode } from "react";
 import type { Card } from "@/lib/types";
-import { formatRank, isRedSuit } from "@/lib/utils";
+import { cn, formatRank, isRedSuit } from "@/lib/utils";
 import { useDraggable } from "@dnd-kit/core";
 import Icon from "@/components/ui/icon";
 
@@ -22,7 +22,7 @@ function SolitaireCard({ suit, rank, flipped, id, children }: CardProps) {
     },
   });
 
-  const textColorClass = isRedSuit(suit)
+  const className = isRedSuit(suit)
     ? "text-red-500 dark:text-red-400"
     : "text-card-foreground";
 
@@ -68,7 +68,10 @@ function SolitaireCard({ suit, rank, flipped, id, children }: CardProps) {
           height: "var(--card-height)",
           transform: `scale(var(--card-scale))`,
         }}
-        className={`relative bg-card ${textColorClass} flex justify-between rounded-sm border shadow-xl px-1 transition-transform`}
+        className={cn(
+          "relative bg-card flex justify-between rounded-sm border shadow-xl px-1 transition-transform",
+          className
+        )}
       >
         {flipped && (
           <div className="flex items-center  justify-between w-full h-fit">

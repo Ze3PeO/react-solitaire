@@ -14,6 +14,14 @@ import {
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { formatTime } from "@/lib/utils";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 function SolitaireStats() {
   return <SolitaireStatsDialog />;
@@ -23,13 +31,14 @@ function SolitaireStatsDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Stats</Button>
+        <Button variant="outline">Statistics</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Stats</DialogTitle>
           <DialogDescription>
-            Here you can see your top 10 games. Either by time or score.
+            Here you can see your top 10 games. Either by time taken to complete
+            the game or the score.
           </DialogDescription>
         </DialogHeader>
         <SolitaireStatsSelection />
@@ -46,7 +55,7 @@ function SolitaireStatsDialog() {
 function SolitaireStatsSelection() {
   return (
     <Tabs defaultValue="time">
-      <TabsList>
+      <TabsList className="w-full">
         <TabsTrigger value="time">Time</TabsTrigger>
         <TabsTrigger value="score">Score</TabsTrigger>
       </TabsList>
@@ -64,30 +73,32 @@ function SolitaireStatsTable({ sortBy }: { sortBy: "time" | "score" }) {
   const [stats, _] = useLocalStorage<Stat[]>(LocalStorageKey.STATS, []);
 
   return (
-    <table className="w-full">
-      <thead>
-        <tr className="text-left border border-x-0 border-t-0">
-          <th className="px-1">Date</th>
-          <th className="px-1">Time</th>
-          <th className="px-1">Score</th>
-        </tr>
-      </thead>
-      {stats
-        .sort((a: Stat, b: Stat) => {
-          if (sortBy === "time") {
-            return a.time - b.time;
-          }
-          return b.score - a.score;
-        })
-        .slice(0, 10)
-        .map((stat: Stat) => (
-          <tr key={stat.id}>
-            <td className="px-1">{new Date(stat.date).toLocaleDateString()}</td>
-            <td className="px-1">{formatTime(stat.time)}</td>
-            <td className="px-1">{stat.score}</td>
-          </tr>
-        ))}
-    </table>
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Date</TableHead>
+          <TableHead>Time</TableHead>
+          <TableHead>Score</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {stats
+          .sort((a: Stat, b: Stat) => {
+            if (sortBy === "time") {
+              return a.time - b.time;
+            }
+            return b.score - a.score;
+          })
+          .slice(0, 10)
+          .map((stat: Stat) => (
+            <TableRow key={stat.id}>
+              <TableCell>{new Date(stat.date).toLocaleDateString()}</TableCell>
+              <TableCell>{formatTime(stat.time)}</TableCell>
+              <TableCell>{stat.score}</TableCell>
+            </TableRow>
+          ))}
+      </TableBody>
+    </Table>
   );
 }
 
