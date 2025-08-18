@@ -68,6 +68,9 @@ function SolitaireStatsDialog() {
           <SolitaireStatsTabs stats={stats} />
         )}
         <DialogFooter className="flex gap-2">
+          <DialogClose asChild>
+            <Button variant="outline">Close</Button>
+          </DialogClose>
           <Button
             variant="outline"
             onClick={handleExportCSV}
@@ -75,9 +78,6 @@ function SolitaireStatsDialog() {
           >
             Export as CSV
           </Button>
-          <DialogClose asChild>
-            <Button variant="outline">Close</Button>
-          </DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -121,6 +121,7 @@ function SolitaireStatsTable({
     <Table>
       <TableHeader>
         <TableRow>
+          <TableHead>#</TableHead>
           <TableHead>Date</TableHead>
           <TableHead>Time</TableHead>
           <TableHead>Score</TableHead>
@@ -129,14 +130,12 @@ function SolitaireStatsTable({
       <TableBody>
         {stats
           .sort((a: Stat, b: Stat) => {
-            if (sortBy === "time") {
-              return a.time - b.time;
-            }
-            return b.score - a.score;
+            return sortBy === "time" ? a.time - b.time : b.score - a.score;
           })
           .slice(0, 10)
-          .map((stat: Stat) => (
+          .map((stat: Stat, index: number) => (
             <TableRow key={stat.id}>
+              <TableCell>{index + 1}</TableCell>
               <TableCell>{new Date(stat.date).toLocaleDateString()}</TableCell>
               <TableCell>{formatTime(stat.time)}</TableCell>
               <TableCell>{stat.score}</TableCell>
