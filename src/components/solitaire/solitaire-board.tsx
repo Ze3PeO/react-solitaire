@@ -1,8 +1,8 @@
 import { useRef, useState, useLayoutEffect } from "react";
 
-import SolitairePile from "@/components/game/solitaire-pile";
+import SolitairePile from "@/components/solitaire/solitaire-pile";
 
-import { useSolitaire } from "@/components/game/solitaire-provider";
+import { useSolitaire } from "@/components/solitaire/solitaire-provider";
 
 function SolitaireBoard() {
   const { foundations, waste, stock, tableauPiles, drawFromStock } =

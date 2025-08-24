@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import SolitaireStats from "@/components/game/solitaire-stats";
+import SolitaireStats from "@/components/solitaire/solitaire-stats";
 
 function SolitaireMenu() {
   return (

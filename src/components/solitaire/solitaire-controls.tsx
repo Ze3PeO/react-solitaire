@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { useSolitaire } from "@/components/game/solitaire-provider";
+import { useSolitaire } from "@/components/solitaire/solitaire-provider";
 import { CheckCheck, Redo, RotateCcw, Undo } from "lucide-react";
 
 function SolitaireControls() {

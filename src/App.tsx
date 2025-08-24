@@ -1,12 +1,12 @@
-import SolitaireBoard from "@/components/game/solitaire-board";
+import SolitaireBoard from "@/components/solitaire/solitaire-board";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { ModeToggle } from "@/components/theme/mode-toggle";
-import { SolitaireProvider } from "@/components/game/solitaire-provider";
-import SolitaireScore from "@/components/game/solitaire-score";
-import SolitaireTimer from "@/components/game/solitaire-timer";
-import SolitaireControls from "@/components/game/solitaire-controls";
-import SolitaireMenu from "@/components/game/solitaire-menu";
-import SolitaireEventHandler from "@/components/game/solitaire-event-handler";
+import { SolitaireProvider } from "@/components/solitaire/solitaire-provider";
+import SolitaireScore from "@/components/solitaire/solitaire-score";
+import SolitaireTimer from "@/components/solitaire/solitaire-timer";
+import SolitaireControls from "@/components/solitaire/solitaire-controls";
+import SolitaireMenu from "@/components/solitaire/solitaire-menu";
+import SolitaireEventHandler from "@/components/solitaire/solitaire-event-handler";
 import LanguageSelector from "@/components/lang/language-selector";
 
 function App() {
