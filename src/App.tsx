@@ -7,6 +7,7 @@ import SolitaireTimer from "@/components/game/solitaire-timer";
 import SolitaireControls from "@/components/game/solitaire-controls";
 import SolitaireMenu from "@/components/game/solitaire-menu";
 import SolitaireEventHandler from "@/components/game/solitaire-event-handler";
+import LanguageSelector from "@/components/lang/language-selector";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <div className="flex min-h-svh flex-col items-center justify-center gap-2 pt-2 px-2 pb-safe-2 max-w-prose mx-auto ">
             <div className="flex justify-between w-full gap-2">
               <SolitaireMenu />
+              <LanguageSelector />
               <ModeToggle />
             </div>
             <SolitaireBoard />

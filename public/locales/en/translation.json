@@ -1,0 +1,11 @@
+{
+    "game": {
+        "stats": {
+            "head": {
+                "date": "Date",
+                "time": "Time",
+                "score": "Score"
+            }
+        }
+    }
+}

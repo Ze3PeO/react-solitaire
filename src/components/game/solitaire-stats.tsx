@@ -24,6 +24,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Frown } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 function SolitaireStats() {
   return <SolitaireStatsDialog />;
@@ -117,14 +118,16 @@ function SolitaireStatsTable({
   stats: Stat[];
   sortBy: "time" | "score";
 }) {
+  const { t } = useTranslation();
+
   return (
     <Table>
       <TableHeader>
         <TableRow>
           <TableHead>#</TableHead>
-          <TableHead>Date</TableHead>
-          <TableHead>Time</TableHead>
-          <TableHead>Score</TableHead>
+          <TableHead>{t("game.stats.head.date")}</TableHead>
+          <TableHead>{t("game.stats.head.time")}</TableHead>
+          <TableHead>{t("game.stats.head.score")}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

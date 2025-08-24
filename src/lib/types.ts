@@ -36,3 +36,5 @@ export type Stat = {
 };
 
 export type Theme = "dark" | "light" | "system";
+
+export type LanguageOption = { language: string; code: string };

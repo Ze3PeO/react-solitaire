@@ -1,4 +1,4 @@
-import type { Theme } from "@/lib/types";
+import type { LanguageOption, Theme } from "@/lib/types";
 
 export const ItemTypes = {
   CARD: "card",
@@ -30,3 +30,8 @@ export const ThemeColor = {
 export const LocalStorageKey = {
   STATS: "stats",
 } as const;
+
+export const languageOptions: LanguageOption[] = [
+  { language: "English", code: "en" },
+  { language: "German", code: "de" },
+];
