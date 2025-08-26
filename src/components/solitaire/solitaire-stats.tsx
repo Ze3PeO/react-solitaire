@@ -23,7 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Frown } from "lucide-react";
+import { ChartLine, Frown } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 function SolitaireStats() {
@@ -33,6 +33,7 @@ function SolitaireStats() {
 function SolitaireStatsDialog() {
   const [stats, _] = useLocalStorage<Stat[]>(LocalStorageKey.STATS, []);
   const { exportData } = useCsvExport();
+  const { t } = useTranslation();
 
   const handleExportCSV = () => {
     const data = stats
@@ -53,14 +54,16 @@ function SolitaireStatsDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Statistics</Button>
+        <Button variant="outline">
+          <ChartLine />
+          {t("solitaire.stats.dialog.button")}
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Statistics</DialogTitle>
+          <DialogTitle>{t("solitaire.stats.dialog.title")}</DialogTitle>
           <DialogDescription>
-            Here you can see your top 10 games. Either by time taken to complete
-            the game or the score.
+            {t("solitaire.stats.dialog.description")}
           </DialogDescription>
         </DialogHeader>
         {stats.length === 0 ? (
@@ -70,14 +73,14 @@ function SolitaireStatsDialog() {
         )}
         <DialogFooter className="flex gap-2">
           <DialogClose asChild>
-            <Button variant="outline">Close</Button>
+            <Button variant="outline">{t("global.close")}</Button>
           </DialogClose>
           <Button
             variant="outline"
             onClick={handleExportCSV}
             disabled={stats.length === 0}
           >
-            Export as CSV
+            {t("solitaire.stats.dialog.export")}
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -95,11 +98,15 @@ function SolitaireStatsEmpty() {
 }
 
 function SolitaireStatsTabs({ stats }: { stats: Stat[] }) {
+  const { t } = useTranslation();
+
   return (
     <Tabs defaultValue="time">
       <TabsList className="w-full">
-        <TabsTrigger value="time">Time</TabsTrigger>
-        <TabsTrigger value="score">Score</TabsTrigger>
+        <TabsTrigger value="time">{t("solitaire.stats.tabs.time")}</TabsTrigger>
+        <TabsTrigger value="score">
+          {t("solitaire.stats.tabs.score")}
+        </TabsTrigger>
       </TabsList>
       <TabsContent value="time">
         <SolitaireStatsTable stats={stats} sortBy="time" />

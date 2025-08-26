@@ -11,29 +11,36 @@ import {
 } from "@/components/ui/dialog";
 import LanguageSelector from "@/components/lang/language-selector";
 import ThemeSelector from "@/components/theme/theme-selector";
+import { useTranslation } from "react-i18next";
+import { Settings } from "lucide-react";
 
 function GameSettings() {
   return <GameSettingsDialog />;
 }
 
 function GameSettingsDialog() {
+  const { t } = useTranslation();
+
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Settings</Button>
+        <Button variant="outline">
+          <Settings />
+          {t("game.settings.button")}
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Settings</DialogTitle>
+          <DialogTitle>{t("game.settings.title")}</DialogTitle>
           <DialogDescription>
-            Here you can change some settings.
+            {t("game.settings.description")}
           </DialogDescription>
         </DialogHeader>
         <LanguageSelector />
         <ThemeSelector />
         <DialogFooter className="flex gap-2">
           <DialogClose asChild>
-            <Button variant="outline">Close</Button>
+            <Button variant="outline">{t("global.close")}</Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>

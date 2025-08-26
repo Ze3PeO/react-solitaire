@@ -1,16 +1,42 @@
 {
+    "global": {
+        "close": "Close",
+        "title": "Better Solitaire"
+    },
+    "game": {
+        "menu": {
+            "title": "Menu",
+            "description": "This is the menu. Here you can find statistics about your past games, a how to play guide and some settings like the language and the color theme.",
+            "about": "Created by <a>Ze3PeO</a>"
+        },
+        "settings": {
+            "button": "Settings",
+            "title": "Settings",
+            "description": "Here you can change your language and color theme. You can also delete your data, such as statistics."
+        }
+    },
     "lang": {
         "selector": {
             "button": "Select language",
             "placeholder": "Language",
             "option": {
-                "english": "English",
-                "german": "German"
+                "en": "English",
+                "de": "German"
             }
         }
     },
     "solitaire": {
         "stats": {
+            "dialog": {
+                "button": "Statistics",
+                "title": "Statistics",
+                "description": "Here you can see your top 10 games. Either by time taken to complete the game or the score.",
+                "export": "Export as CSV"
+            },
+            "tabs": {
+                "time": "Time",
+                "score": "Score"
+            },
             "table": {
                 "date": "Date",
                 "time": "Time",

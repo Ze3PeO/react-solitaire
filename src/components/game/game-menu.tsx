@@ -11,8 +11,12 @@ import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SolitaireStats from "@/components/solitaire/solitaire-stats";
 import GameSettings from "@/components/game/game-settings";
+import { useTranslation, Trans } from "react-i18next";
+import { Separator } from "@/components/ui/separator";
 
 function GameMenu() {
+  const { t } = useTranslation();
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -22,19 +26,34 @@ function GameMenu() {
       </SheetTrigger>
       <SheetContent side="left">
         <SheetHeader>
-          <SheetTitle>Menu</SheetTitle>
+          <SheetTitle>
+            {t("global.title")} - {t("game.menu.title")}
+          </SheetTitle>
           <SheetDescription>
-            <span>
-              This is the menu for the solitaire game. Here you will find
-              statistics, how to play, about and other settings.
-            </span>
+            <span>{t("game.menu.description")}</span>
           </SheetDescription>
         </SheetHeader>
-        <div className="flex flex-col gap-4 p-4">
+        <Separator />
+        <div className="flex flex-col gap-4 px-4">
           <SolitaireStats />
           <GameSettings />
         </div>
-        <SheetFooter></SheetFooter>
+        <SheetFooter>
+          <p className="text-center">
+            <Trans
+              i18nKey="game.menu.about"
+              components={{
+                a: (
+                  <a
+                    className="underline"
+                    href="https://github.com/Ze3PeO"
+                    target="_blank"
+                  />
+                ),
+              }}
+            />
+          </p>
+        </SheetFooter>
       </SheetContent>
     </Sheet>
   );
