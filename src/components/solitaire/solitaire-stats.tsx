@@ -89,6 +89,8 @@ function SolitaireStatsDialog() {
 }
 
 function SolitaireStatsEmpty() {
+  const { t } = useTranslation();
+
   return (
     <div className=" flex flex-col items-center gap-2 px-2 py-8 text-muted-foreground">
       <Frown />
