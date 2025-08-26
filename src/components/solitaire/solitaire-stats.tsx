@@ -71,17 +71,17 @@ function SolitaireStatsDialog() {
         ) : (
           <SolitaireStatsTabs stats={stats} />
         )}
-        <DialogFooter className="flex gap-2">
-          <DialogClose asChild>
-            <Button variant="outline">{t("global.close")}</Button>
-          </DialogClose>
+        <DialogFooter className="flex gap-2 flex-col">
           <Button
-            variant="outline"
+            variant="secondary"
             onClick={handleExportCSV}
             disabled={stats.length === 0}
           >
             {t("solitaire.stats.dialog.export")}
           </Button>
+          <DialogClose asChild>
+            <Button variant="default">{t("global.close")}</Button>
+          </DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -92,7 +92,7 @@ function SolitaireStatsEmpty() {
   return (
     <div className=" flex flex-col items-center gap-2 px-2 py-8 text-muted-foreground">
       <Frown />
-      <span>No stats available</span>
+      <span>{t("solitaire.stats.empty")}</span>
     </div>
   );
 }

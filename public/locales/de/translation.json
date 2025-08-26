@@ -12,7 +12,7 @@
         "settings": {
             "button": "Einstellungen",
             "title": "Einstellungen",
-            "description": "Hier können Sie Ihre Sprache und Farbschema ändern. Außerdem können Sie ihre Daten, wie die Statistiken, löschen."
+            "description": "Hier können Sie Ihre Sprache und Farbschema ändern."
         }
     },
     "lang": {
@@ -33,6 +33,7 @@
                 "description": "Hier sehen Sie Ihre Top 10 Spiele. Entweder nach der Zeit, die Sie zum Beenden des Spiels benötigt haben, oder nach der Punktzahl.",
                 "export": "Als CSV exportieren"
             },
+            "empty": "Keine Statistiken verfügbar",
             "tabs": {
                 "time": "Zeit",
                 "score": "Punktzahl"

@@ -40,7 +40,7 @@ function GameSettingsDialog() {
         <ThemeSelector />
         <DialogFooter className="flex gap-2">
           <DialogClose asChild>
-            <Button variant="outline">{t("global.close")}</Button>
+            <Button variant="default">{t("global.close")}</Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>

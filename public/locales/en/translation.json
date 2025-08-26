@@ -12,7 +12,7 @@
         "settings": {
             "button": "Settings",
             "title": "Settings",
-            "description": "Here you can change your language and color theme. You can also delete your data, such as statistics."
+            "description": "Here you can change your language and color theme."
         }
     },
     "lang": {
@@ -33,6 +33,7 @@
                 "description": "Here you can see your top 10 games. Either by time taken to complete the game or the score.",
                 "export": "Export as CSV"
             },
+            "empty": "No stats available",
             "tabs": {
                 "time": "Time",
                 "score": "Score"
