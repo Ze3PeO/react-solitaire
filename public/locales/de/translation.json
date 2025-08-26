@@ -1,11 +1,31 @@
 {
-    "game": {
+    "lang": {
+        "selector": {
+            "button": "Sprache auswählen",
+            "placeholder": "Sprache",
+            "option": {
+                "english": "Englisch",
+                "german": "Deutsch"
+            }
+        }
+    },
+    "solitaire": {
         "stats": {
-            "head": {
+            "table": {
                 "date": "Datum",
                 "time": "Zeit",
                 "score": "Punktzahl"
             }
+        }
+    },
+    "theme": {
+        "option": {
+            "dark": "Dunkel",
+            "light": "Hell",
+            "system": "System"
+        },
+        "toggle": {
+            "button": "Farbschema umschalten"
         }
     }
 }

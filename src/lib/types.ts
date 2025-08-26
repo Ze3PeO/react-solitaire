@@ -1,4 +1,4 @@
-import { Suits } from "@/lib/constants";
+import { Languages, Suits, Themes } from "@/lib/constants";
 
 export type Suit = (typeof Suits)[number];
 
@@ -35,6 +35,6 @@ export type Stat = {
   date: number;
 };
 
-export type Theme = "dark" | "light" | "system";
+export type Theme = (typeof Themes)[number];
 
-export type LanguageOption = { language: string; code: string };
+export type Language = (typeof Languages)[number];

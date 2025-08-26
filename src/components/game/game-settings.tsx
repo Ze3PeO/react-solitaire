@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import LanguageSelector from "@/components/lang/language-selector";
-import ModeSelector from "@/components/theme/mode-selector";
+import ThemeSelector from "@/components/theme/theme-selector";
 
 function GameSettings() {
   return <GameSettingsDialog />;
@@ -30,7 +30,7 @@ function GameSettingsDialog() {
           </DialogDescription>
         </DialogHeader>
         <LanguageSelector />
-        <ModeSelector />
+        <ThemeSelector />
         <DialogFooter className="flex gap-2">
           <DialogClose asChild>
             <Button variant="outline">Close</Button>

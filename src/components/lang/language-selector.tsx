@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import i18next from "i18next";
 import { useTranslation } from "react-i18next";
-import { languageOptions } from "@/lib/constants";
 import {
   Select,
   SelectContent,
@@ -10,12 +9,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { Languages } from "lucide-react";
+import { Languages as LanguagesIcon } from "lucide-react";
+import { Languages } from "@/lib/constants";
 
 const LanguageSelector = () => {
   const [language, setLanguage] = useState(i18next.language);
 
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
 
   const handleLanguageChange = (language: string) => {
     setLanguage(language);
@@ -29,17 +29,17 @@ const LanguageSelector = () => {
   return (
     <div className="flex gap-2">
       <Label htmlFor="language">
-        <Languages />
-        <span className="sr-only">Language</span>
+        <LanguagesIcon />
+        <span className="sr-only">{t("lang.selector.button")}</span>
       </Label>
       <Select value={language} onValueChange={handleLanguageChange}>
         <SelectTrigger className="w-full" id="language">
-          <SelectValue placeholder="Language" />
+          <SelectValue placeholder={t("lang.selector.placeholder")} />
         </SelectTrigger>
         <SelectContent>
-          {languageOptions.map(({ language, code }, key) => (
-            <SelectItem value={code} key={key}>
-              {language}
+          {Languages.map((language, key) => (
+            <SelectItem value={language} key={key}>
+              {t(`lang.selector.option.${language}`)}
             </SelectItem>
           ))}
         </SelectContent>

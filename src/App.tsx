@@ -1,6 +1,6 @@
 import SolitaireBoard from "@/components/solitaire/solitaire-board";
 import { ThemeProvider } from "@/components/theme/theme-provider";
-import { ModeToggle } from "@/components/theme/mode-toggle";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { SolitaireProvider } from "@/components/solitaire/solitaire-provider";
 import SolitaireScore from "@/components/solitaire/solitaire-score";
 import SolitaireTimer from "@/components/solitaire/solitaire-timer";
@@ -16,7 +16,7 @@ function App() {
           <div className="flex min-h-svh flex-col items-center justify-center gap-2 pt-2 px-2 pb-safe-2 max-w-prose mx-auto ">
             <div className="flex justify-between w-full gap-2">
               <GameMenu />
-              <ModeToggle />
+              <ThemeToggle />
             </div>
             <SolitaireBoard />
             <div className="flex justify-between items-center gap-2 w-full">

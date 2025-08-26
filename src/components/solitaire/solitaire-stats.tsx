@@ -125,9 +125,9 @@ function SolitaireStatsTable({
       <TableHeader>
         <TableRow>
           <TableHead>#</TableHead>
-          <TableHead>{t("game.stats.head.date")}</TableHead>
-          <TableHead>{t("game.stats.head.time")}</TableHead>
-          <TableHead>{t("game.stats.head.score")}</TableHead>
+          <TableHead>{t("solitaire.stats.table.date")}</TableHead>
+          <TableHead>{t("solitaire.stats.table.time")}</TableHead>
+          <TableHead>{t("solitaire.stats.table.score")}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

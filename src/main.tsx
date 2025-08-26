@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 import IconSprite from "@/components/ui/icon-sprite";
-import "./i18n.tsx";
+import "./lib/i18n.ts";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

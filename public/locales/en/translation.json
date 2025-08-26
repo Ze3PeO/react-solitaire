@@ -1,11 +1,31 @@
 {
-    "game": {
+    "lang": {
+        "selector": {
+            "button": "Select language",
+            "placeholder": "Language",
+            "option": {
+                "english": "English",
+                "german": "German"
+            }
+        }
+    },
+    "solitaire": {
         "stats": {
-            "head": {
+            "table": {
                 "date": "Date",
                 "time": "Time",
                 "score": "Score"
             }
+        }
+    },
+    "theme": {
+        "option": {
+            "dark": "Dark",
+            "light": "Light",
+            "system": "System"
+        },
+        "toggle": {
+            "button": "Toggle color theme"
         }
     }
 }
