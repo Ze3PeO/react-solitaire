@@ -7,4 +7,5 @@ i18next.use(LanguageDetector).use(initReactI18next).use(Backend).init({
   returnObjects: true,
   fallbackLng: "en",
   debug: true,
+  supportedLngs: ["de", "en"],
 });

@@ -7,29 +7,32 @@ import SolitaireTimer from "@/components/solitaire/solitaire-timer";
 import SolitaireControls from "@/components/solitaire/solitaire-controls";
 import GameMenu from "@/components/game/game-menu";
 import SolitaireEventHandler from "@/components/solitaire/solitaire-event-handler";
+import { LanguageProvider } from "@/components/lang/language-provider";
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <SolitaireProvider>
-        <SolitaireEventHandler>
-          <div className="flex min-h-svh flex-col items-center justify-center gap-2 pt-2 px-2 pb-safe-2 max-w-prose mx-auto ">
-            <div className="flex justify-between w-full gap-2">
-              <GameMenu />
-              <ThemeToggle />
-            </div>
-            <SolitaireBoard />
-            <div className="flex justify-between items-center gap-2 w-full">
-              <div className="flex h-fit gap-2">
-                <SolitaireScore />
-                <SolitaireTimer />
+    <LanguageProvider defaultLanguage="en">
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <SolitaireProvider>
+          <SolitaireEventHandler>
+            <div className="flex min-h-svh flex-col items-center justify-center gap-2 pt-2 px-2 pb-safe-2 max-w-prose mx-auto ">
+              <div className="flex justify-between w-full gap-2">
+                <GameMenu />
+                <ThemeToggle />
               </div>
-              <SolitaireControls />
+              <SolitaireBoard />
+              <div className="flex justify-between items-center gap-2 w-full">
+                <div className="flex h-fit gap-2">
+                  <SolitaireScore />
+                  <SolitaireTimer />
+                </div>
+                <SolitaireControls />
+              </div>
             </div>
-          </div>
-        </SolitaireEventHandler>
-      </SolitaireProvider>
-    </ThemeProvider>
+          </SolitaireEventHandler>
+        </SolitaireProvider>
+      </ThemeProvider>
+    </LanguageProvider>
   );
 }
 

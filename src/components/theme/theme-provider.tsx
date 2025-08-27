@@ -45,6 +45,7 @@ export function ThemeProvider({
   }, [theme]);
 
   const applyTheme = (theme: Theme) => {
+    localStorage.setItem(storageKey, theme);
     const root = window.document.documentElement;
     const themeColor = document.querySelector('meta[name="theme-color"]');
 
@@ -56,7 +57,6 @@ export function ThemeProvider({
   const value = {
     theme,
     setTheme: (theme: Theme) => {
-      localStorage.setItem(storageKey, theme);
       setTheme(theme);
     },
   };

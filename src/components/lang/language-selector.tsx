@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import i18next from "i18next";
 import { useTranslation } from "react-i18next";
 import {
   Select,
@@ -11,20 +9,16 @@ import {
 import { Label } from "@/components/ui/label";
 import { Languages as LanguagesIcon } from "lucide-react";
 import { Languages } from "@/lib/constants";
+import { useLanguage } from "@/components/lang/language-provider";
+import type { Language } from "@/lib/types";
 
 const LanguageSelector = () => {
-  const [language, setLanguage] = useState(i18next.language);
-
-  const { i18n, t } = useTranslation();
+  const { language, setLanguage } = useLanguage();
+  const { t } = useTranslation();
 
   const handleLanguageChange = (language: string) => {
-    setLanguage(language);
-    i18next.changeLanguage(language);
+    setLanguage(language as Language);
   };
-
-  useEffect(() => {
-    document.body.dir = i18n.dir();
-  }, [i18n, i18n.language]);
 
   return (
     <div className="flex gap-2">
