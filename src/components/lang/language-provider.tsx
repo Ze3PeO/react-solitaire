@@ -24,7 +24,6 @@ export function LanguageProvider({
   defaultLanguage = "en",
   ...props
 }: LanguageProviderProps) {
-  console.log(i18next.language)
   const [language, setLanguage] = useState<Language>(
     () => (i18next.language as Language) || defaultLanguage
   );
