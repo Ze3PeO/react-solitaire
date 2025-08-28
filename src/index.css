@@ -40,6 +40,7 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   --spacing-safe-2: max(env(safe-area-inset-bottom), 0.5rem);
+  --spacing-safe: env(safe-area-inset-bottom, 0);
 }
 
 :root {
