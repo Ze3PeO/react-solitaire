@@ -22,6 +22,7 @@ function GameMenu() {
             <SheetTrigger asChild>
                 <Button variant="outline" size="icon">
                     <Menu />
+                    <span className="sr-only">{t("game.menu.button")}</span>
                 </Button>
             </SheetTrigger>
             <SheetContent side="left">
@@ -41,13 +42,15 @@ function GameMenu() {
                 <SheetFooter>
                     <p className="text-center">
                         <Trans
-                            i18nKey="game.menu.about"
+                            i18nKey="game.menu.about.text"
                             components={{
                                 a: (
                                     <a
                                         className="underline"
                                         href="https://github.com/Ze3PeO"
                                         target="_blank"
+                                        rel="noopener noreferrer"
+                                        aria-label={t("game.menu.about.label")}
                                     />
                                 ),
                             }}

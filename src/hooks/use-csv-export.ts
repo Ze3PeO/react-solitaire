@@ -5,7 +5,7 @@ export type CSVExportOptions<T> = {
     headers?: (keyof T)[];
 };
 
-function exportToCSV<T extends Record<string, any>>(
+function exportToCSV<T extends Record<string, unknown>>(
     data: T[],
     options: CSVExportOptions<T> = {},
 ): void {
@@ -51,7 +51,7 @@ function downloadFile(content: string, filename: string) {
     URL.revokeObjectURL(url);
 }
 
-export function useCsvExport<T extends Record<string, any>>() {
+export function useCsvExport<T extends Record<string, unknown>>() {
     const exportData = useCallback(
         (data: T[], options?: CSVExportOptions<T>) => {
             if (data.length === 0) {

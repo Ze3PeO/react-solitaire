@@ -5,9 +5,13 @@
     },
     "game": {
         "menu": {
+            "button": "Menü öffnen",
             "title": "Menü",
             "description": "Dies ist das Menü. Hier finden Sie Statistiken zu Ihren bisherigen Spielen, eine Spielanleitung und einige Einstellungen wie Sprache und Farbschema.",
-            "about": "Erstellt von <a>Ze3PeO</a>"
+            "about": {
+                "text": "Erstellt von <a>Ze3PeO</a>",
+                "label": "GitHub Profil von Ze3PeO"
+            }
         },
         "settings": {
             "button": "Einstellungen",
@@ -26,6 +30,17 @@
         }
     },
     "solitaire": {
+        "board": {
+            "stock": {
+                "button": "Vom Abnahmestapel ziehen"
+            }
+        },
+        "controls": {
+            "reset": "Spiel zurücksetzen",
+            "autoFinish": "Automatisch beenden",
+            "undo": "Zug rückgängig machen",
+            "redo": "Zug wiederherstellen"
+        },
         "stats": {
             "dialog": {
                 "button": "Statistiken",
@@ -53,6 +68,10 @@
         },
         "toggle": {
             "button": "Farbschema umschalten"
+        },
+        "selector": {
+            "button": "Farbschema auswählen",
+            "placeholder": "Farbschema"
         }
     }
 }

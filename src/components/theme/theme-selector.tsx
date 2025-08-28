@@ -24,11 +24,13 @@ const ThemeSelector = () => {
         <div className="flex gap-2">
             <Label htmlFor="mode">
                 <Paintbrush />
-                <span className="sr-only">Theme</span>
+                <span className="sr-only">{t("theme.selector.button")}</span>
             </Label>
             <Select value={theme} onValueChange={handleModeChange}>
                 <SelectTrigger className="w-full" id="mode">
-                    <SelectValue placeholder="Theme" />
+                    <SelectValue
+                        placeholder={t("theme.selector.placeholder")}
+                    />
                 </SelectTrigger>
                 <SelectContent>
                     {Themes.map((theme, key) => (

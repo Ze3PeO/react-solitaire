@@ -5,9 +5,13 @@
     },
     "game": {
         "menu": {
+            "button": "Open menu",
             "title": "Menu",
             "description": "This is the menu. Here you can find statistics about your past games, a how to play guide and some settings like the language and the color theme.",
-            "about": "Created by <a>Ze3PeO</a>"
+            "about": {
+                "text": "Created by <a>Ze3PeO</a>",
+                "label": "GitHub profile of Ze3PeO"
+            }
         },
         "settings": {
             "button": "Settings",
@@ -26,6 +30,17 @@
         }
     },
     "solitaire": {
+        "board": {
+            "stock": {
+                "button": "Draw from stock"
+            }
+        },
+        "controls": {
+            "reset": "Reset game",
+            "autoFinish": "Auto finish",
+            "undo": "Undo move",
+            "redo": "Redo move"
+        },
         "stats": {
             "dialog": {
                 "button": "Statistics",
@@ -53,6 +68,10 @@
         },
         "toggle": {
             "button": "Toggle color theme"
+        },
+        "selector": {
+            "button": "Select color theme",
+            "placeholder": "Color theme"
         }
     }
 }

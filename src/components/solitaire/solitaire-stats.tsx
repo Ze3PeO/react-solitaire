@@ -31,7 +31,7 @@ function SolitaireStats() {
 }
 
 function SolitaireStatsDialog() {
-    const [stats, _] = useLocalStorage<Stat[]>(LocalStorageKey.STATS, []);
+    const [stats] = useLocalStorage<Stat[]>(LocalStorageKey.STATS, []);
     const { exportData } = useCsvExport();
     const { t } = useTranslation();
 
