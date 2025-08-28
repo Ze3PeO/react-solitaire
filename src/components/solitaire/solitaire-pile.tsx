@@ -5,97 +5,100 @@ import { useDroppable } from "@dnd-kit/core";
 import Icon from "@/components/ui/icon";
 
 type PileProps = {
-  cards: Pile["cards"];
-  type: Pile["type"];
-  suit?: Pile["suit"];
-  id: Pile["id"];
-  fanned?: boolean;
+    cards: Pile["cards"];
+    type: Pile["type"];
+    suit?: Pile["suit"];
+    id: Pile["id"];
+    fanned?: boolean;
 };
 
 function SolitairePile({ cards, type, suit, id, fanned = false }: PileProps) {
-  const { setNodeRef } = useDroppable({
-    id,
-    data: {
-      accepts: [ItemTypes.CARD],
-      pile: { type, id, suit, cards },
-    },
-    disabled: type === "stock" || type === "waste",
-  });
+    const { setNodeRef } = useDroppable({
+        id,
+        data: {
+            accepts: [ItemTypes.CARD],
+            pile: { type, id, suit, cards },
+        },
+        disabled: type === "stock" || type === "waste",
+    });
 
-  const useDroppableRefOnCards = type === "tableauPile" && cards.length > 0;
+    const useDroppableRefOnCards = type === "tableauPile" && cards.length > 0;
 
-  const renderCards = (): React.ReactNode => {
-    return fanned ? renderFannedCards() : renderStackedCards();
-  };
+    const renderCards = (): React.ReactNode => {
+        return fanned ? renderFannedCards() : renderStackedCards();
+    };
 
-  const renderFannedCards = (cardIndex: number = 0): React.ReactNode => {
-    if (cardIndex >= cards.length) {
-      return null;
-    }
+    const renderFannedCards = (cardIndex: number = 0): React.ReactNode => {
+        if (cardIndex >= cards.length) {
+            return null;
+        }
 
-    const card = cards[cardIndex];
+        const card = cards[cardIndex];
+
+        return (
+            <SolitaireCard
+                key={card.id}
+                suit={card.suit}
+                rank={card.rank}
+                flipped={card.flipped}
+                id={card.id}
+            >
+                {renderFannedCards(cardIndex + 1)}
+            </SolitaireCard>
+        );
+    };
+
+    const renderStackedCards = (): React.ReactNode => {
+        const cardIndex = cards.length - 1;
+
+        if (cardIndex < 0) {
+            return null;
+        }
+
+        if (cardIndex === 0) {
+            const card = cards[cardIndex];
+
+            return (
+                <SolitaireCard
+                    key={card.id}
+                    suit={card.suit}
+                    rank={card.rank}
+                    flipped={card.flipped}
+                    id={card.id}
+                />
+            );
+        }
+
+        return renderFannedCards(cardIndex - 1);
+    };
 
     return (
-      <SolitaireCard
-        key={card.id}
-        suit={card.suit}
-        rank={card.rank}
-        flipped={card.flipped}
-        id={card.id}
-      >
-        {renderFannedCards(cardIndex + 1)}
-      </SolitaireCard>
+        <div
+            className="relative"
+            style={
+                {
+                    height: "var(--card-height)",
+                    width: "var(--card-width)",
+                    ...(fanned
+                        ? {}
+                        : {
+                              "--card-margin-top":
+                                  "calc(-1 * var(--card-height))",
+                          }),
+                } as React.CSSProperties
+            }
+        >
+            <div
+                ref={!useDroppableRefOnCards ? setNodeRef : undefined}
+                className="absolute inset-0 bg-emerald-800 rounded-sm border border-emerald-900 dark:border-emerald-700 dark:text-emerald-900 text-emerald-600 flex justify-center items-center"
+            >
+                {suit && <Icon name={suit} className="w-7 h-7" />}
+            </div>
+            <div ref={useDroppableRefOnCards ? setNodeRef : undefined}>
+                {cards.length > 0 ? renderCards() : null}
+            </div>
+        </div>
     );
-  };
-
-  const renderStackedCards = (): React.ReactNode => {
-    const cardIndex = cards.length - 1;
-
-    if (cardIndex < 0) {
-      return null;
-    }
-
-    if (cardIndex === 0) {
-      const card = cards[cardIndex];
-
-      return (
-        <SolitaireCard
-          key={card.id}
-          suit={card.suit}
-          rank={card.rank}
-          flipped={card.flipped}
-          id={card.id}
-        />
-      );
-    }
-
-    return renderFannedCards(cardIndex - 1);
-  };
-
-  return (
-    <div
-      className="relative"
-      style={
-        {
-          height: "var(--card-height)",
-          width: "var(--card-width)",
-          ...(fanned
-            ? {}
-            : { "--card-margin-top": "calc(-1 * var(--card-height))" }),
-        } as React.CSSProperties
-      }
-    >
-      <div
-        ref={!useDroppableRefOnCards ? setNodeRef : undefined}
-        className="absolute inset-0 bg-emerald-800 rounded-sm border border-emerald-900 dark:border-emerald-700 dark:text-emerald-900 text-emerald-600 flex justify-center items-center"
-      >
-        {suit && <Icon name={suit} className="w-7 h-7" />}
-      </div>
-      <div ref={useDroppableRefOnCards ? setNodeRef : undefined}>
-        {cards.length > 0 ? renderCards() : null}
-      </div>
-    </div>
-  );
 }
 
 export default SolitairePile;

@@ -4,14 +4,14 @@ import { formatTime } from "@/lib/utils";
 import { useSolitaire } from "@/components/solitaire/solitaire-provider";
 
 function SolitaireTimer() {
-  const { elapsedTime } = useSolitaire();
+    const { elapsedTime } = useSolitaire();
 
-  return (
-    <Badge variant="secondary" className="flex items-center gap-2">
-      <Timer />
-      <span>{formatTime(elapsedTime)}</span>
-    </Badge>
-  );
+    return (
+        <Badge variant="secondary" className="flex items-center gap-2">
+            <Timer />
+            <span>{formatTime(elapsedTime)}</span>
+        </Badge>
+    );
 }
 
 export default SolitaireTimer;

@@ -11,33 +11,33 @@ import { LanguageProvider } from "@/components/lang/language-provider";
 import { useTranslation } from "react-i18next";
 
 function App() {
-  const { t } = useTranslation();
+    const { t } = useTranslation();
 
-  return (
-    <LanguageProvider defaultLanguage="en">
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <SolitaireProvider>
-          <SolitaireEventHandler>
-            <h1 className="sr-only">{t("global.title")}</h1>
-            <div className="flex min-h-svh flex-col items-center justify-center gap-2 pt-2 px-2 pb-safe-2 max-w-prose mx-auto ">
-              <div className="flex justify-between items-center w-full gap-2">
-                <GameMenu />
-                <ThemeToggle />
-              </div>
-              <SolitaireBoard />
-              <div className="flex justify-between items-center gap-2 w-full">
-                <div className="flex h-fit gap-2">
-                  <SolitaireScore />
-                  <SolitaireTimer />
-                </div>
-                <SolitaireControls />
-              </div>
-            </div>
-          </SolitaireEventHandler>
-        </SolitaireProvider>
-      </ThemeProvider>
-    </LanguageProvider>
-  );
+    return (
+        <LanguageProvider defaultLanguage="en">
+            <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+                <SolitaireProvider>
+                    <SolitaireEventHandler>
+                        <h1 className="sr-only">{t("global.title")}</h1>
+                        <div className="flex min-h-svh flex-col items-center justify-center gap-2 pt-2 px-2 pb-safe-2 max-w-prose mx-auto ">
+                            <div className="flex justify-between items-center w-full gap-2">
+                                <GameMenu />
+                                <ThemeToggle />
+                            </div>
+                            <SolitaireBoard />
+                            <div className="flex justify-between items-center gap-2 w-full">
+                                <div className="flex h-fit gap-2">
+                                    <SolitaireScore />
+                                    <SolitaireTimer />
+                                </div>
+                                <SolitaireControls />
+                            </div>
+                        </div>
+                    </SolitaireEventHandler>
+                </SolitaireProvider>
+            </ThemeProvider>
+        </LanguageProvider>
+    );
 }
 
 export default App;

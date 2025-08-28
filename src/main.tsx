@@ -6,8 +6,8 @@ import IconSprite from "@/components/ui/icon-sprite";
 import "./lib/i18n.ts";
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <App />
-    <IconSprite />
-  </StrictMode>
+    <StrictMode>
+        <App />
+        <IconSprite />
+    </StrictMode>,
 );

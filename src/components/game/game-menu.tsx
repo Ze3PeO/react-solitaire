@@ -1,11 +1,11 @@
 import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-  SheetTrigger,
-  SheetFooter,
+    Sheet,
+    SheetContent,
+    SheetHeader,
+    SheetTitle,
+    SheetDescription,
+    SheetTrigger,
+    SheetFooter,
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -15,48 +15,48 @@ import { useTranslation, Trans } from "react-i18next";
 import { Separator } from "@/components/ui/separator";
 
 function GameMenu() {
-  const { t } = useTranslation();
+    const { t } = useTranslation();
 
-  return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="outline" size="icon">
-          <Menu />
-        </Button>
-      </SheetTrigger>
-      <SheetContent side="left">
-        <SheetHeader>
-          <SheetTitle>
-            {t("global.title")} - {t("game.menu.title")}
-          </SheetTitle>
-          <SheetDescription>
-            <span>{t("game.menu.description")}</span>
-          </SheetDescription>
-        </SheetHeader>
-        <Separator />
-        <div className="flex flex-col gap-4 px-4">
-          <SolitaireStats />
-          <GameSettings />
-        </div>
-        <SheetFooter>
-          <p className="text-center">
-            <Trans
-              i18nKey="game.menu.about"
-              components={{
-                a: (
-                  <a
-                    className="underline"
-                    href="https://github.com/Ze3PeO"
-                    target="_blank"
-                  />
-                ),
-              }}
-            />
-          </p>
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
-  );
+    return (
+        <Sheet>
+            <SheetTrigger asChild>
+                <Button variant="outline" size="icon">
+                    <Menu />
+                </Button>
+            </SheetTrigger>
+            <SheetContent side="left">
+                <SheetHeader>
+                    <SheetTitle>
+                        {t("global.title")} - {t("game.menu.title")}
+                    </SheetTitle>
+                    <SheetDescription>
+                        <span>{t("game.menu.description")}</span>
+                    </SheetDescription>
+                </SheetHeader>
+                <Separator />
+                <div className="flex flex-col gap-4 px-4">
+                    <SolitaireStats />
+                    <GameSettings />
+                </div>
+                <SheetFooter>
+                    <p className="text-center">
+                        <Trans
+                            i18nKey="game.menu.about"
+                            components={{
+                                a: (
+                                    <a
+                                        className="underline"
+                                        href="https://github.com/Ze3PeO"
+                                        target="_blank"
+                                    />
+                                ),
+                            }}
+                        />
+                    </p>
+                </SheetFooter>
+            </SheetContent>
+        </Sheet>
+    );
 }
 
 export default GameMenu;
