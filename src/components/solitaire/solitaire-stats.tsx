@@ -31,7 +31,8 @@ function SolitaireStats() {
 }
 
 function SolitaireStatsDialog() {
-    const [stats] = useLocalStorage<Stat[]>(LocalStorageKey.STATS, []);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [stats, _] = useLocalStorage<Stat[]>(LocalStorageKey.STATS, []);
     const { exportData } = useCsvExport();
     const { t } = useTranslation();
 

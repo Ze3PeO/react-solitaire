@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { generateGame, getCardColor, generateFinishedGame } from "@/lib/utils";
 import type { Card, Game, Pile, Stat } from "@/lib/types";
 import type { ReactNode } from "react";
@@ -11,6 +11,8 @@ import { useLocalStorage } from "@/hooks/use-local-storage";
 import { SolitaireProviderContext } from "./soliaitre-context";
 
 export function SolitaireProvider({ children }: { children: ReactNode }) {
+    // --- Hooks ---
+
     const { state, set, undo, redo, canUndo, canRedo, reset, clear } =
         useHistoryState<Game>(generateGame());
     const {
@@ -19,40 +21,17 @@ export function SolitaireProvider({ children }: { children: ReactNode }) {
         stop: stopTimer,
         restart: restartTimer,
     } = useTimer();
-    const [setStats] = useLocalStorage<Stat[]>(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [_, setStats] = useLocalStorage<Stat[]>(
         LocalStorageKey.STATS,
         [],
     );
 
+    // --- State ---
+
     const [wasFirstMovePlayed, setWasFirstMovePlayed] = useState(false);
     const [canAutoFinish, setCanAutoFinish] = useState(false);
     const [isFinished, setIsFinished] = useState(false);
-
-    useEffect(() => {
-        const isWin = Object.values(state.piles).every(
-            (pile: Pile) =>
-                (pile.type === "foundation" && pile.cards.length === 13) ||
-                (pile.type !== "foundation" && pile.cards.length === 0),
-        );
-
-        if (isWin) {
-            handleWin();
-        }
-    }, [state]);
-
-    useEffect(() => {
-        const canAutoFinish =
-            Object.values(state.piles).every(
-                (pile: Pile) =>
-                    (pile.type === "waste" && pile.cards.length === 0) ||
-                    (pile.type === "stock" && pile.cards.length === 0) ||
-                    (pile.type === "tableauPile" &&
-                        pile.cards.every((card: Card) => card.flipped)) ||
-                    pile.type === "foundation",
-            ) && !isFinished;
-
-        setCanAutoFinish(canAutoFinish);
-    }, [state, isFinished]);
 
     // --- Actions ---
 
@@ -218,7 +197,17 @@ export function SolitaireProvider({ children }: { children: ReactNode }) {
         set(newState);
     };
 
-    const handleWin = () => {
+    const checkForFirstMove = () => {
+        if (wasFirstMovePlayed) return;
+
+        startTimer();
+
+        setWasFirstMovePlayed(true);
+    };
+
+    // --- Callbacks ---
+
+    const handleWin = useCallback(() => {
         if (isFinished) return;
 
         setIsFinished(true);
@@ -236,15 +225,35 @@ export function SolitaireProvider({ children }: { children: ReactNode }) {
             ...prevStats,
             stat,
         ]);
-    };
+    }, [isFinished, stopTimer, clear, elapsedTime, state.score, setStats]);
 
-    const checkForFirstMove = () => {
-        if (wasFirstMovePlayed) return;
+    // --- Effects ---
 
-        startTimer();
+    useEffect(() => {
+        const isWin = Object.values(state.piles).every(
+            (pile: Pile) =>
+                (pile.type === "foundation" && pile.cards.length === 13) ||
+                (pile.type !== "foundation" && pile.cards.length === 0),
+        );
 
-        setWasFirstMovePlayed(true);
-    };
+        if (isWin) {
+            handleWin();
+        }
+    }, [state, handleWin]);
+
+    useEffect(() => {
+        const canAutoFinish =
+            Object.values(state.piles).every(
+                (pile: Pile) =>
+                    (pile.type === "waste" && pile.cards.length === 0) ||
+                    (pile.type === "stock" && pile.cards.length === 0) ||
+                    (pile.type === "tableauPile" &&
+                        pile.cards.every((card: Card) => card.flipped)) ||
+                    pile.type === "foundation",
+            ) && !isFinished;
+
+        setCanAutoFinish(canAutoFinish);
+    }, [state, isFinished]);
 
     // --- Helper ---
 

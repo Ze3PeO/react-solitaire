@@ -4,7 +4,7 @@ import { LocalStorageKey } from "@/lib/constants";
 function getStorageValue<T>(
     key: (typeof LocalStorageKey)[keyof typeof LocalStorageKey],
     defaultValue: T,
-): T {
+) {
     const item = localStorage.getItem(key);
 
     if (item === null) return defaultValue;
@@ -22,9 +22,7 @@ export const useLocalStorage = <T>(
     key: (typeof LocalStorageKey)[keyof typeof LocalStorageKey],
     defaultValue: T,
 ) => {
-    const [value, setValue] = useState(() => {
-        return getStorageValue(key, defaultValue);
-    });
+    const [value, setValue] = useState(() => getStorageValue(key, defaultValue));
 
     useEffect(() => {
         localStorage.setItem(key, JSON.stringify(value));
