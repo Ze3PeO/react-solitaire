@@ -1,7 +1,10 @@
 {
     "name": "react-solitaire",
     "private": true,
-    "version": "0.0.0",
+    "version": "0.0.1",
+    "homepage": "https://github.com/Ze3PeO/react-solitaire",
+    "license": "MIT",
+    "author": "Ze3PeO",
     "type": "module",
     "scripts": {
         "dev": "vite",

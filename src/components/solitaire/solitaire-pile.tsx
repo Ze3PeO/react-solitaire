@@ -41,6 +41,7 @@ function SolitairePile({ cards, type, suit, id, fanned = false }: PileProps) {
                 suit={card.suit}
                 rank={card.rank}
                 flipped={card.flipped}
+                covered={card.flipped && type === "waste" && cardIndex < cards.length - 1}
                 id={card.id}
             >
                 {renderFannedCards(cardIndex + 1)}

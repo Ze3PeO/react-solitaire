@@ -11,9 +11,10 @@ type CardProps = {
     flipped: Card["flipped"];
     id: Card["id"];
     children?: ReactNode;
+    covered?: boolean;
 };
 
-function SolitaireCard({ suit, rank, flipped, id, children }: CardProps) {
+function SolitaireCard({ suit, rank, flipped, id, children, covered = false }: CardProps) {
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
         id,
         data: {
@@ -62,6 +63,7 @@ function SolitaireCard({ suit, rank, flipped, id, children }: CardProps) {
             style={style}
             {...listeners}
             {...attributes}
+            tabIndex={covered ? -1 : attributes.tabIndex}
             className="cursor-move select-none"
         >
             <div
