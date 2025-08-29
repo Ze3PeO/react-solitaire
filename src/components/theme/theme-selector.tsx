@@ -5,7 +5,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { useTheme } from "@/components/theme/theme-provider";
+import { useTheme } from "@/hooks/use-theme";
 import { Themes } from "@/lib/constants";
 import type { Theme } from "@/lib/types";
 import { Paintbrush } from "lucide-react";
