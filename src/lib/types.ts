@@ -1,5 +1,7 @@
 import { Languages, Suits, Themes } from "@/lib/constants";
 
+// --- Solitaire ---
+
 export type Suit = (typeof Suits)[number];
 
 export type Card = {
@@ -34,6 +36,8 @@ export type Stat = {
     score: number;
     date: number;
 };
+
+// --- Settings ---
 
 export type Theme = (typeof Themes)[number];
 

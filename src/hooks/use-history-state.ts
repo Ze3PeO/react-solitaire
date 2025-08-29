@@ -1,6 +1,6 @@
 import { useReducer, useCallback } from "react";
 
-interface HistoryState<T> {
+type HistoryState<T> = {
     past: T[];
     present: T;
     future: T[];

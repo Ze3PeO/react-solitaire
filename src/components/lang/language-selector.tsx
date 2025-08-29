@@ -9,7 +9,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { Languages as LanguagesIcon } from "lucide-react";
 import { Languages } from "@/lib/constants";
-import { useLanguage } from "@/components/lang/language-provider";
+import { useLanguage } from "@/components/lang/language-context";
 import type { Language } from "@/lib/types";
 
 const LanguageSelector = () => {
