@@ -3,19 +3,11 @@ import { DndContext, type DragEndEvent } from "@dnd-kit/core";
 import { useSolitaire } from "@/components/solitaire/solitaire-provider";
 import Confetti from "react-confetti";
 import { useWindowSize } from "@/hooks/use-window-size";
-import type { Stat } from "@/lib/types";
-import { LocalStorageKey } from "@/lib/constants";
-import { useLocalStorage } from "@/hooks/use-local-storage";
-import { v4 as uuidv4 } from "uuid";
 
 function SolitaireEventHandler({ children }: { children: React.ReactNode }) {
-    const { handleCardMove, isFinished, elapsedTime, score } = useSolitaire();
+    const { handleCardMove, isFinished } = useSolitaire();
     const { width, height } = useWindowSize();
     const [showConfetti, setShowConfetti] = useState(false);
-    const [stats, setStats] = useLocalStorage<Stat[]>(
-        LocalStorageKey.STATS,
-        [],
-    );
 
     const handleDragEnd = (event: DragEndEvent) => {
         const { active, over } = event;
@@ -34,16 +26,6 @@ function SolitaireEventHandler({ children }: { children: React.ReactNode }) {
         if (!isFinished) return;
 
         setShowConfetti(true);
-
-        setStats([
-            ...stats,
-            {
-                id: uuidv4(),
-                time: elapsedTime,
-                score: score,
-                date: Date.now(),
-            },
-        ]);
     }, [isFinished]);
 
     return (

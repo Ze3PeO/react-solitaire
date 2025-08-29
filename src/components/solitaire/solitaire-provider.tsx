@@ -1,11 +1,13 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { generateGame, getCardColor, generateFinishedGame } from "@/lib/utils";
-import type { Card, Game, Pile } from "@/lib/types";
+import type { Card, Game, Pile, Stat } from "@/lib/types";
 import type { ReactNode } from "react";
 import { cloneDeep } from "lodash";
-import { Ranks } from "@/lib/constants";
+import { LocalStorageKey, Ranks } from "@/lib/constants";
 import { useHistoryState } from "@/hooks/use-history-state";
 import { useTimer } from "@/hooks/use-timer";
+import { v4 as uuidv4 } from "uuid";
+import { useLocalStorage } from "@/hooks/use-local-storage";
 
 interface SolitaireProviderState {
     drawFromStock: () => void;
@@ -39,6 +41,10 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
         stop: stopTimer,
         restart: restartTimer,
     } = useTimer();
+    const [setStats] = useLocalStorage<Stat[]>(
+        LocalStorageKey.STATS,
+        [],
+    );
 
     const [wasFirstMovePlayed, setWasFirstMovePlayed] = useState(false);
     const [canAutoFinish, setCanAutoFinish] = useState(false);
@@ -240,6 +246,18 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
         setIsFinished(true);
         stopTimer();
         clear();
+
+        const stat: Stat = {
+            id: uuidv4(),
+            time: elapsedTime,
+            score: state.score,
+            date: Date.now(),
+        }
+
+        setStats((prevStats: Stat[]) => [
+            ...prevStats,
+            stat,
+        ]);
     };
 
     const checkForFirstMove = () => {
