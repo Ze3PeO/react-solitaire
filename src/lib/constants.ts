@@ -31,6 +31,7 @@ export const ThemeColor = {
 
 export const LocalStorageKey = {
     STATS: "stats",
+    THEME: "vite-ui-theme"
 } as const;
 
 export const Languages = ["en", "de"] as const;

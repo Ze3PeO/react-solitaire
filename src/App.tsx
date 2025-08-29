@@ -15,7 +15,7 @@ function App() {
 
     return (
         <LanguageProvider defaultLanguage="en">
-            <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+            <ThemeProvider defaultTheme="dark">
                 <SolitaireProvider>
                     <SolitaireEventHandler>
                         <h1 className="sr-only">{t("global.title")}</h1>

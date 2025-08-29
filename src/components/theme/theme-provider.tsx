@@ -1,25 +1,38 @@
-import { ThemeColor } from "@/lib/constants";
+import { LocalStorageKey, ThemeColor, Themes } from "@/lib/constants";
 import type { Theme } from "@/lib/types";
 import { useEffect, useState } from "react";
 import { ThemeProviderContext } from "@/components/theme/theme-context";
+import { useLocalStorage } from "@/hooks/use-local-storage";
 
 type ThemeProviderProps = {
     children: React.ReactNode;
     defaultTheme?: Theme;
-    storageKey?: string;
 };
 
 export function ThemeProvider({
     children,
     defaultTheme = "system",
-    storageKey = "vite-ui-theme",
     ...props
 }: ThemeProviderProps) {
+    const [localStorageTheme, setLocalStorageTheme] = useLocalStorage<Theme>(
+        LocalStorageKey.THEME,
+        defaultTheme,
+    );
     const [theme, setTheme] = useState<Theme>(
-        () => (localStorage.getItem(storageKey) as Theme) || defaultTheme,
+        () => localStorageTheme || defaultTheme,
     );
 
     useEffect(() => {
+        const applyTheme = (theme: Theme) => {
+            setLocalStorageTheme(theme);
+            const root = window.document.documentElement;
+            const themeColor = document.querySelector('meta[name="theme-color"]');
+
+            root.classList.remove(...Themes);
+            root.classList.add(theme);
+            themeColor?.setAttribute("content", ThemeColor[theme]);
+        };
+
         if (theme === "system") {
             const systemTheme = window.matchMedia(
                 "(prefers-color-scheme: dark)",
@@ -32,17 +45,7 @@ export function ThemeProvider({
         }
 
         applyTheme(theme);
-    }, [theme]);
-
-    const applyTheme = (theme: Theme) => {
-        localStorage.setItem(storageKey, theme);
-        const root = window.document.documentElement;
-        const themeColor = document.querySelector('meta[name="theme-color"]');
-
-        root.classList.remove("light", "dark");
-        root.classList.add(theme);
-        themeColor?.setAttribute("content", ThemeColor[theme]);
-    };
+    }, [theme, setLocalStorageTheme]);
 
     const value = {
         theme,
