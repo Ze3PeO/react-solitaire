@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { useSolitaire } from "@/components/solitaire/solitaire-provider";
+import { useSolitaire } from "@/hooks/use-solitaire";
 import { CheckCheck, Redo, RotateCcw, Undo } from "lucide-react";
 import { useTranslation } from "react-i18next";
 

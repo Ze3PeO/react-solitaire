@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { generateGame, getCardColor, generateFinishedGame } from "@/lib/utils";
 import type { Card, Game, Pile, Stat } from "@/lib/types";
 import type { ReactNode } from "react";
@@ -8,31 +8,9 @@ import { useHistoryState } from "@/hooks/use-history-state";
 import { useTimer } from "@/hooks/use-timer";
 import { v4 as uuidv4 } from "uuid";
 import { useLocalStorage } from "@/hooks/use-local-storage";
+import { SolitaireProviderContext } from "./soliaitre-context";
 
-interface SolitaireProviderState {
-    drawFromStock: () => void;
-    handleCardMove: (card: Card, dest: Pile) => void;
-    resetGame: () => void;
-    foundations: Readonly<Pile[]>;
-    waste: Readonly<Pile>;
-    stock: Readonly<Pile>;
-    tableauPiles: Readonly<Pile[]>;
-    canUndo: boolean;
-    canRedo: boolean;
-    undo: () => void;
-    redo: () => void;
-    canAutoFinish: boolean;
-    autoFinish: () => void;
-    isFinished: boolean;
-    elapsedTime: number;
-    score: number;
-}
-
-const SolitaireContext = createContext<SolitaireProviderState | undefined>(
-    undefined,
-);
-
-export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
+export function SolitaireProvider({ children }: { children: ReactNode }) {
     const { state, set, undo, redo, canUndo, canRedo, reset, clear } =
         useHistoryState<Game>(generateGame());
     const {
@@ -293,7 +271,7 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
     );
 
     return (
-        <SolitaireContext.Provider
+        <SolitaireProviderContext.Provider
             value={{
                 drawFromStock,
                 handleCardMove,
@@ -314,18 +292,6 @@ export const SolitaireProvider = ({ children }: { children: ReactNode }) => {
             }}
         >
             {children}
-        </SolitaireContext.Provider>
+        </SolitaireProviderContext.Provider>
     );
-};
-
-export { SolitaireContext };
-
-export const useSolitaire = () => {
-    const context = useContext(SolitaireContext);
-
-    if (context === undefined) {
-        throw new Error("useSolitaire must be used within a SolitaireProvider");
-    }
-
-    return context;
 };

@@ -1,6 +1,6 @@
 import { useRef, useState, useLayoutEffect } from "react";
 import SolitairePile from "@/components/solitaire/solitaire-pile";
-import { useSolitaire } from "@/components/solitaire/solitaire-provider";
+import { useSolitaire } from "@/hooks/use-solitaire";
 import { useTranslation } from "react-i18next";
 
 function SolitaireBoard() {

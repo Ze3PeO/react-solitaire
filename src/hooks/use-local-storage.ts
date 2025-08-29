@@ -4,10 +4,18 @@ import { LocalStorageKey } from "@/lib/constants";
 function getStorageValue<T>(
     key: (typeof LocalStorageKey)[keyof typeof LocalStorageKey],
     defaultValue: T,
-) {
+): T {
     const item = localStorage.getItem(key);
-    const parsedItem = item ? JSON.parse(item) : null;
-    return parsedItem || defaultValue;
+
+    if (item === null) return defaultValue;
+
+    try {
+        const parsedItem = JSON.parse(item);
+
+        return parsedItem;
+    } catch {
+        return item as T;
+    }
 }
 
 export const useLocalStorage = <T>(

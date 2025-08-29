@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { DndContext, type DragEndEvent } from "@dnd-kit/core";
-import { useSolitaire } from "@/components/solitaire/solitaire-provider";
+import { useSolitaire } from "@/hooks/use-solitaire";
 import Confetti from "react-confetti";
 import { useWindowSize } from "@/hooks/use-window-size";
 

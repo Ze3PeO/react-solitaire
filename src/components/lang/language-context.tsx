@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext } from "react";
 import type { Language } from "@/lib/types";
 
 type LanguageProviderState = {
@@ -13,12 +13,3 @@ const initialState: LanguageProviderState = {
 
 export const LanguageProviderContext =
     createContext<LanguageProviderState>(initialState);
-
-export const useLanguage = () => {
-    const context = useContext(LanguageProviderContext);
-
-    if (context === undefined)
-        throw new Error("useLanguage must be used within a LanguageProvider");
-
-    return context;
-};

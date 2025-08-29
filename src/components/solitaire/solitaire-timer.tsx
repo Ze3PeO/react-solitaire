@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Timer } from "lucide-react";
 import { formatTime } from "@/lib/utils";
-import { useSolitaire } from "@/components/solitaire/solitaire-provider";
+import { useSolitaire } from "@/hooks/use-solitaire";
 
 function SolitaireTimer() {
     const { elapsedTime } = useSolitaire();

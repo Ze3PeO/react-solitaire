@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Gauge } from "lucide-react";
-import { useSolitaire } from "@/components/solitaire/solitaire-provider";
+import { useSolitaire } from "@/hooks/use-solitaire";
 
 function SolitaireScore() {
     const { score } = useSolitaire();
