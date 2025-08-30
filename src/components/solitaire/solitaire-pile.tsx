@@ -4,7 +4,6 @@ import type { Pile } from "@/lib/types";
 import { useDroppable } from "@dnd-kit/core";
 import Icon from "@/components/ui/icon";
 import { useTranslation } from "react-i18next";
-import { Profiler } from "react";
 
 type PileProps = {
     cards: Pile["cards"];
