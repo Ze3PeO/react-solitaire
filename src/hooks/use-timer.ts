@@ -5,6 +5,7 @@ export function useTimer() {
     const [isRunning, setIsRunning] = useState<boolean>(false);
     const startTimeRef = useRef<number | null>(null);
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
+    const delayRef = useRef<number>(1000);
 
     const start = useCallback(() => {
         if (!isRunning) {
@@ -14,7 +15,7 @@ export function useTimer() {
                 if (!startTimeRef.current) return;
 
                 setElapsedTime(Date.now() - startTimeRef.current);
-            }, 100);
+            }, delayRef.current);
 
             setIsRunning(true);
         }

@@ -16,14 +16,14 @@ function App() {
     return (
         <LanguageProvider defaultLanguage="en">
             <ThemeProvider defaultTheme="dark">
-                <SolitaireProvider>
-                    <SolitaireEventHandler>
-                        <h1 className="sr-only">{t("global.title")}</h1>
-                        <div className="flex min-h-svh flex-col items-center justify-center gap-2 pt-2 px-2 pb-safe-2 max-w-prose mx-auto ">
-                            <header className="flex justify-between items-center w-full gap-2">
-                                <GameMenu />
-                                <ThemeToggle />
-                            </header>
+                <h1 className="sr-only">{t("global.title")}</h1>
+                <div className="flex min-h-svh flex-col items-center justify-center gap-2 pt-2 px-2 pb-safe-2 max-w-prose mx-auto ">
+                    <header className="flex justify-between items-center w-full gap-2">
+                        <GameMenu />
+                        <ThemeToggle />
+                    </header>
+                    <SolitaireProvider>
+                        <SolitaireEventHandler>
                             <SolitaireBoard />
                             <footer className="flex justify-between items-center gap-2 w-full">
                                 <div className="flex h-fit gap-2">
@@ -32,9 +32,9 @@ function App() {
                                 </div>
                                 <SolitaireControls />
                             </footer>
-                        </div>
-                    </SolitaireEventHandler>
-                </SolitaireProvider>
+                        </SolitaireEventHandler>
+                    </SolitaireProvider>
+                </div>
             </ThemeProvider>
         </LanguageProvider>
     );
