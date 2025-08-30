@@ -4,6 +4,7 @@ import type { Pile } from "@/lib/types";
 import { useDroppable } from "@dnd-kit/core";
 import Icon from "@/components/ui/icon";
 import { useTranslation } from "react-i18next";
+import { Profiler } from "react";
 
 type PileProps = {
     cards: Pile["cards"];
@@ -36,7 +37,10 @@ function SolitairePile({
         data: {
             accepts: [ItemTypes.CARD],
             pile: { type, id, suit, cards },
-            label: t(labels[type], { index, suit: t(`solitaire.card.suit.${suit}`) }),
+            label: t(labels[type], {
+                index,
+                suit: suit ? t(`solitaire.card.suit.${suit}`) : "",
+            }),
         },
         disabled: type === "stock" || type === "waste",
     });
