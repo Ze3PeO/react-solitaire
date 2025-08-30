@@ -35,11 +35,60 @@
                 "button": "Vom Abnahmestapel ziehen"
             }
         },
+        "card": {
+            "rank": {
+                "A": "Ass",
+                "2": "2",
+                "3": "3",
+                "4": "4",
+                "5": "5",
+                "6": "6",
+                "7": "7",
+                "8": "8",
+                "9": "9",
+                "10": "10",
+                "J": "Bube",
+                "Q": "Dame",
+                "K": "König"
+            },
+            "suit": {
+                "clubs": "Kreuz",
+                "diamonds": "Karo",
+                "hearts": "Herz",
+                "spades": "Pik"
+            },
+            "label": "{{suit}} {{rank}}"
+        },
         "controls": {
             "reset": "Spiel zurücksetzen",
             "autoFinish": "Automatisch beenden",
             "undo": "Zug rückgängig machen",
             "redo": "Zug wiederherstellen"
+        },
+        "eventHandler": {
+            "dnd": {
+                "announcements": {
+                    "onDragStart": "Karte {{cardLabel}} aufgenommen.",
+                    "onDragOver": {
+                        "withPile": "Karte {{cardLabel}} wurde zu Stapel {{pileLabel}} bewegt.",
+                        "withoutPile": "Karte {{cardLabel}} ist nicht mehr über einem Stapel."
+                    },
+                    "onDragEnd": {
+                        "withPile": "Karte {{cardLabel}} wurde auf Stapel {{pileLabel}} abgelegt",
+                        "withoutPile": "Karte {{cardLabel}} wurde abgelegt."
+                    },
+                    "onDragCancel": "Bewegegung wurde abgebrochen. Karte {{cardLabel}} wurde abgelegt."
+                },
+                "instructions": "Um eine Karte aufzunehmen, drücken Sie Leertaste oder die Eingabetaste. Mit den Pfeiltasten können Sie sie in jede beliebige Richtung bewegen. Drücken Sie erneut Leertaste oder die Eingabetaste, um die Karte auf ihrem neuen Stapel abzulegen, oder drücken Sie die Escape-Taste, um den Vorgang abzubrechen."
+            }
+        },
+        "pile": {
+            "label": {
+                "tableauPile": "Auslagestapel Nummer {{index}}",
+                "waste": "Ablage",
+                "stock": "Abnahmestapel",
+                "foundation": "{{suit}} Basis"
+            }
         },
         "stats": {
             "dialog": {

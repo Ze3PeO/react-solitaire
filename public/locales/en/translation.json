@@ -35,11 +35,60 @@
                 "button": "Draw from stock"
             }
         },
+        "card": {
+            "rank": {
+                "A": "Ace",
+                "2": "2",
+                "3": "3",
+                "4": "4",
+                "5": "5",
+                "6": "6",
+                "7": "7",
+                "8": "8",
+                "9": "9",
+                "10": "10",
+                "J": "Jack",
+                "Q": "Queen",
+                "K": "King"
+            },
+            "suit": {
+                "clubs": "Clubs",
+                "diamonds": "Diamonds",
+                "hearts": "Hearts",
+                "spades": "Spades"
+            },
+            "label": "{{rank}} of {{suit}}"
+        },
         "controls": {
             "reset": "Reset game",
             "autoFinish": "Auto finish",
             "undo": "Undo move",
             "redo": "Redo move"
+        },
+        "eventHandler": {
+            "dnd": {
+                "announcements": {
+                    "onDragStart": "Picked up card {{cardLabel}}.",
+                    "onDragOver": {
+                        "withPile": "Card {{cardLabel}} was moved over pile {{pileLabel}}.",
+                        "withoutPile": "Card {{cardLabel}} is no longer over a pile."
+                    },
+                    "onDragEnd": {
+                        "withPile": "Card {{cardLabel}} was dropped over pile {{pileLabel}}",
+                        "withoutPile": "Card {{cardLabel}} was dropped."
+                    },
+                    "onDragCancel": "Dragging was cancelled. Card {{cardLabel}} was dropped."
+                },
+                "instructions": "To pick up a card, press space or enter. While dragging, use the arrow keys to move the card in any given direction. Press space or enter again to drop the card on its new pile, or press escape to cancel."
+            }
+        },
+        "pile": {
+            "label": {
+                "tableauPile": "Tableau Pile Number {{index}}",
+                "waste": "Waste",
+                "stock": "Stock",
+                "foundation": "{{suit}} Foundation"
+            }
         },
         "stats": {
             "dialog": {

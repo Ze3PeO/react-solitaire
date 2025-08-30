@@ -3,8 +3,11 @@ import { DndContext, type DragEndEvent } from "@dnd-kit/core";
 import { useSolitaire } from "@/hooks/use-solitaire";
 import Confetti from "react-confetti";
 import { useWindowSize } from "@/hooks/use-window-size";
+import { useTranslation } from "react-i18next";
+import type { Active, Over } from "@dnd-kit/core";
 
 function SolitaireEventHandler({ children }: { children: React.ReactNode }) {
+    const { t } = useTranslation();
     const { handleCardMove, isFinished } = useSolitaire();
     const { width, height } = useWindowSize();
     const [showConfetti, setShowConfetti] = useState(false);
@@ -22,6 +25,55 @@ function SolitaireEventHandler({ children }: { children: React.ReactNode }) {
         handleCardMove(card, pile);
     };
 
+    const announcements = {
+        onDragStart({ active }: { active: Active }) {
+            return t("solitaire.eventHandler.dnd.announcements.onDragStart", {
+                cardLabel: active.data.current?.label,
+            });
+        },
+        onDragOver({ active, over }: { active: Active; over: Over }) {
+            if (over) {
+                return t(
+                    "solitaire.eventHandler.dnd.announcements.onDragOver.withPile",
+                    {
+                        cardLabel: active.data.current?.label || "",
+                        pileLabel: over.data.current?.label || "",
+                    },
+                );
+            }
+
+            return t(
+                "solitaire.eventHandler.dnd.announcements.onDragOver.withoutPile",
+                {
+                    cardLabel: active.data.current?.label || "",
+                },
+            );
+        },
+        onDragEnd({ active, over }: { active: Active; over: Over }) {
+            if (over) {
+                return t(
+                    "solitaire.eventHandler.dnd.announcements.onDragEnd.withPile",
+                    {
+                        cardLabel: active.data.current?.label || "",
+                        pileLabel: over.data.current?.label || "",
+                    },
+                );
+            }
+
+            return t(
+                "solitaire.eventHandler.dnd.announcements.onDragEnd.withoutPile",
+                {
+                    cardLabel: active.data.current?.label || "",
+                },
+            );
+        },
+        onDragCancel({ active }: { active: Active }) {
+            return t("solitaire.eventHandler.dnd.announcements.onDragCancel", {
+                cardLabel: active.data.current?.label || "",
+            });
+        },
+    };
+
     useEffect(() => {
         if (!isFinished) return;
 
@@ -29,7 +81,15 @@ function SolitaireEventHandler({ children }: { children: React.ReactNode }) {
     }, [isFinished]);
 
     return (
-        <DndContext onDragEnd={handleDragEnd}>
+        <DndContext
+            onDragEnd={handleDragEnd}
+            accessibility={{
+                announcements,
+                screenReaderInstructions: {
+                    draggable: t("solitaire.eventHandler.dnd.instructions"),
+                },
+            }}
+        >
             {children}
             {showConfetti && (
                 <Confetti

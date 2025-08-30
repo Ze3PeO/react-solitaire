@@ -4,6 +4,7 @@ import type { Card } from "@/lib/types";
 import { cn, formatRank, isRedSuit } from "@/lib/utils";
 import { useDraggable } from "@dnd-kit/core";
 import Icon from "@/components/ui/icon";
+import { useTranslation } from "react-i18next";
 
 type CardProps = {
     suit: Card["suit"];
@@ -14,12 +15,27 @@ type CardProps = {
     covered?: boolean;
 };
 
-function SolitaireCard({ suit, rank, flipped, id, children, covered = false }: CardProps) {
+function SolitaireCard({
+    suit,
+    rank,
+    flipped,
+    id,
+    children,
+    covered = false,
+}: CardProps) {
+    const { t } = useTranslation();
+
+    const label = t("solitaire.card.label", {
+        rank: t(`solitaire.card.rank.${formatRank(rank)}`),
+        suit: t(`solitaire.card.suit.${suit}`),
+    });
+
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
         id,
         data: {
             type: ItemTypes.CARD,
             card: { id, suit, rank, flipped },
+            label,
         },
     });
 
@@ -63,6 +79,7 @@ function SolitaireCard({ suit, rank, flipped, id, children, covered = false }: C
             style={style}
             {...listeners}
             {...attributes}
+            aria-label={label}
             tabIndex={covered ? -1 : attributes.tabIndex}
             className="cursor-move select-none"
         >

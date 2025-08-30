@@ -3,6 +3,7 @@ import SolitaireCard from "./solitaire-card";
 import type { Pile } from "@/lib/types";
 import { useDroppable } from "@dnd-kit/core";
 import Icon from "@/components/ui/icon";
+import { useTranslation } from "react-i18next";
 
 type PileProps = {
     cards: Pile["cards"];
@@ -10,14 +11,32 @@ type PileProps = {
     suit?: Pile["suit"];
     id: Pile["id"];
     fanned?: boolean;
+    index?: number;
 };
 
-function SolitairePile({ cards, type, suit, id, fanned = false }: PileProps) {
+function SolitairePile({
+    cards,
+    type,
+    suit,
+    id,
+    fanned = false,
+    index = 0,
+}: PileProps) {
+    const { t } = useTranslation();
+
+    const labels: Record<Pile["type"], string> = {
+        tableauPile: "solitaire.pile.label.tableauPile",
+        waste: "solitaire.pile.label.waste",
+        stock: "solitaire.pile.label.stock",
+        foundation: "solitaire.pile.label.foundation",
+    };
+
     const { setNodeRef } = useDroppable({
         id,
         data: {
             accepts: [ItemTypes.CARD],
             pile: { type, id, suit, cards },
+            label: t(labels[type], { index, suit }),
         },
         disabled: type === "stock" || type === "waste",
     });
@@ -41,7 +60,11 @@ function SolitairePile({ cards, type, suit, id, fanned = false }: PileProps) {
                 suit={card.suit}
                 rank={card.rank}
                 flipped={card.flipped}
-                covered={card.flipped && type === "waste" && cardIndex < cards.length - 1}
+                covered={
+                    card.flipped &&
+                    type === "waste" &&
+                    cardIndex < cards.length - 1
+                }
                 id={card.id}
             >
                 {renderFannedCards(cardIndex + 1)}
