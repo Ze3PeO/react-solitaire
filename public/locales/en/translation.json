@@ -68,16 +68,16 @@
         "eventHandler": {
             "dnd": {
                 "announcements": {
-                    "onDragStart": "Picked up card {{cardLabel}}.",
+                    "onDragStart": "Picked up {{cardLabel}}.",
                     "onDragOver": {
-                        "withPile": "Card {{cardLabel}} was moved over pile {{pileLabel}}.",
-                        "withoutPile": "Card {{cardLabel}} is no longer over a pile."
+                        "withPile": "{{cardLabel}} was moved over {{pileLabel}}.",
+                        "withoutPile": "{{cardLabel}} is no longer over a pile."
                     },
                     "onDragEnd": {
-                        "withPile": "Card {{cardLabel}} was dropped over pile {{pileLabel}}",
-                        "withoutPile": "Card {{cardLabel}} was dropped."
+                        "withPile": "{{cardLabel}} was dropped over {{pileLabel}}",
+                        "withoutPile": "{{cardLabel}} was dropped."
                     },
-                    "onDragCancel": "Dragging was cancelled. Card {{cardLabel}} was dropped."
+                    "onDragCancel": "Dragging was cancelled. {{cardLabel}} was dropped."
                 },
                 "instructions": "To pick up a card, press space or enter. While dragging, use the arrow keys to move the card in any given direction. Press space or enter again to drop the card on its new pile, or press escape to cancel."
             }

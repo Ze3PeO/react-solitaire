@@ -68,16 +68,16 @@
         "eventHandler": {
             "dnd": {
                 "announcements": {
-                    "onDragStart": "Karte {{cardLabel}} aufgenommen.",
+                    "onDragStart": "{{cardLabel}} aufgenommen.",
                     "onDragOver": {
-                        "withPile": "Karte {{cardLabel}} wurde zu Stapel {{pileLabel}} bewegt.",
-                        "withoutPile": "Karte {{cardLabel}} ist nicht mehr über einem Stapel."
+                        "withPile": "{{cardLabel}} wurde zu {{pileLabel}} bewegt.",
+                        "withoutPile": "{{cardLabel}} ist nicht mehr über einem Stapel."
                     },
                     "onDragEnd": {
-                        "withPile": "Karte {{cardLabel}} wurde auf Stapel {{pileLabel}} abgelegt",
-                        "withoutPile": "Karte {{cardLabel}} wurde abgelegt."
+                        "withPile": "{{cardLabel}} wurde auf {{pileLabel}} abgelegt",
+                        "withoutPile": "{{cardLabel}} wurde abgelegt."
                     },
-                    "onDragCancel": "Bewegegung wurde abgebrochen. Karte {{cardLabel}} wurde abgelegt."
+                    "onDragCancel": "Bewegung wurde abgebrochen. {{cardLabel}} wurde abgelegt."
                 },
                 "instructions": "Um eine Karte aufzunehmen, drücken Sie Leertaste oder die Eingabetaste. Mit den Pfeiltasten können Sie sie in jede beliebige Richtung bewegen. Drücken Sie erneut Leertaste oder die Eingabetaste, um die Karte auf ihrem neuen Stapel abzulegen, oder drücken Sie die Escape-Taste, um den Vorgang abzubrechen."
             }

@@ -36,7 +36,7 @@ function SolitairePile({
         data: {
             accepts: [ItemTypes.CARD],
             pile: { type, id, suit, cards },
-            label: t(labels[type], { index, suit }),
+            label: t(labels[type], { index, suit: t(`solitaire.card.suit.${suit}`) }),
         },
         disabled: type === "stock" || type === "waste",
     });
