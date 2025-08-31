@@ -8,7 +8,7 @@ function SolitaireScore() {
     return (
         <Badge variant="secondary" className="flex items-center gap-2">
             <Gauge />
-            <span>{score}</span>
+            <span>{String(score).padStart(3, "0")}</span>
         </Badge>
     );
 }
