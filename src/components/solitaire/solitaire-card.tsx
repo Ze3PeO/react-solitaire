@@ -6,14 +6,14 @@ import { useDraggable } from "@dnd-kit/core";
 import Icon from "@/components/ui/icon";
 import { useTranslation } from "react-i18next";
 
-type CardProps = {
+interface CardProps {
     suit: Card["suit"];
     rank: Card["rank"];
     flipped: Card["flipped"];
     id: Card["id"];
     children?: ReactNode;
     covered?: boolean;
-};
+}
 
 function SolitaireCard({
     suit,

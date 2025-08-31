@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import i18next from "i18next";
 import { LanguageProviderContext } from "@/components/lang/language-context";
 
-type LanguageProviderProps = {
+interface LanguageProviderProps {
     children: React.ReactNode;
     defaultLanguage?: Language;
-};
+}
 
 export function LanguageProvider({
     children,
@@ -32,8 +32,8 @@ export function LanguageProvider({
     };
 
     return (
-        <LanguageProviderContext.Provider {...props} value={value}>
+        <LanguageProviderContext {...props} value={value}>
             {children}
-        </LanguageProviderContext.Provider>
+        </LanguageProviderContext>
     );
 }

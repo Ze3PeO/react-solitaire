@@ -1,10 +1,10 @@
 import { createContext } from "react";
 import type { Language } from "@/lib/types";
 
-type LanguageProviderState = {
+interface LanguageProviderState {
     language: Language;
     setLanguage: (language: Language) => void;
-};
+}
 
 const initialState: LanguageProviderState = {
     language: "en",

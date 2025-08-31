@@ -1,9 +1,9 @@
 import { useCallback } from "react";
 
-export type CSVExportOptions<T> = {
+export interface CSVExportOptions<T> {
     filename?: string;
     headers?: (keyof T)[];
-};
+}
 
 function exportToCSV<T extends Record<string, unknown>>(
     data: T[],

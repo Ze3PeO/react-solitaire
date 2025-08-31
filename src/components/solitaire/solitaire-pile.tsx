@@ -5,14 +5,14 @@ import { useDroppable } from "@dnd-kit/core";
 import Icon from "@/components/ui/icon";
 import { useTranslation } from "react-i18next";
 
-type PileProps = {
+interface PileProps {
     cards: Pile["cards"];
     type: Pile["type"];
     suit?: Pile["suit"];
     id: Pile["id"];
     fanned?: boolean;
     index?: number;
-};
+}
 
 function SolitairePile({
     cards,
@@ -50,7 +50,7 @@ function SolitairePile({
         return fanned ? renderFannedCards() : renderStackedCards();
     };
 
-    const renderFannedCards = (cardIndex: number = 0): React.ReactNode => {
+    const renderFannedCards = (cardIndex = 0): React.ReactNode => {
         if (cardIndex >= cards.length) {
             return null;
         }

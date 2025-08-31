@@ -13,7 +13,7 @@ export function cn(...inputs: ClassValue[]) {
 // --- Formatter ---
 
 export function formatRank(rank: number): string {
-    const rankLabels: { [key: number]: string } = {
+    const rankLabels: Record<number, string> = {
         [Ranks.ACE]: "A",
         [Ranks.TWO]: "2",
         [Ranks.THREE]: "3",
@@ -33,7 +33,7 @@ export function formatRank(rank: number): string {
 }
 
 export function formatSuit(suit: Suit): string {
-    const suitLabels: { [key in Suit]: string } = {
+    const suitLabels: Record<Suit, string> = {
         clubs: "♣",
         diamonds: "♦",
         hearts: "♥",

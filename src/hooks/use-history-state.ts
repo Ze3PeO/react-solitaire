@@ -1,10 +1,10 @@
 import { useReducer, useCallback } from "react";
 
-type HistoryState<T> = {
+interface HistoryState<T> {
     past: T[];
     present: T;
     future: T[];
-};
+}
 
 type HistoryAction<T> =
     | { type: "SET"; payload: T }

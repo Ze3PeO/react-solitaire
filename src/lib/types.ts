@@ -4,38 +4,38 @@ import { Languages, Suits, Themes } from "@/lib/constants";
 
 export type Suit = (typeof Suits)[number];
 
-export type Card = {
+export interface Card {
     suit: Suit;
     rank: number;
     flipped: boolean;
     id: string;
-};
+}
 
 export type PileType = "tableauPile" | "waste" | "stock" | "foundation";
 
-export type Pile = {
+export interface Pile {
     cards: Card[];
     type: PileType;
     suit?: Suit;
     id: string;
-};
+}
 
-export type Game = {
+export interface Game {
     piles: Record<string, Pile>;
     score: number;
-};
+}
 
-export type CardSelection = {
+export interface CardSelection {
     cardId?: string;
     pileId: string;
-};
+}
 
-export type Stat = {
+export interface Stat {
     id: string;
     time: number;
     score: number;
     date: number;
-};
+}
 
 // --- Settings ---
 

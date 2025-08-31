@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import { ThemeProviderContext } from "@/components/theme/theme-context";
 import { useLocalStorage } from "@/hooks/use-local-storage";
 
-type ThemeProviderProps = {
+interface ThemeProviderProps {
     children: React.ReactNode;
     defaultTheme?: Theme;
-};
+}
 
 export function ThemeProvider({
     children,
@@ -57,8 +57,8 @@ export function ThemeProvider({
     };
 
     return (
-        <ThemeProviderContext.Provider {...props} value={value}>
+        <ThemeProviderContext {...props} value={value}>
             {children}
-        </ThemeProviderContext.Provider>
+        </ThemeProviderContext>
     );
 }

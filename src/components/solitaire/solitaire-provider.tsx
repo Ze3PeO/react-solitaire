@@ -280,7 +280,7 @@ export function SolitaireProvider({ children }: { children: ReactNode }) {
     );
 
     return (
-        <SolitaireProviderContext.Provider
+        <SolitaireProviderContext
             value={{
                 drawFromStock,
                 handleCardMove,
@@ -302,6 +302,6 @@ export function SolitaireProvider({ children }: { children: ReactNode }) {
             }}
         >
             {children}
-        </SolitaireProviderContext.Provider>
+        </SolitaireProviderContext>
     );
 }

@@ -1,15 +1,15 @@
 import { createContext } from "react";
 import type { Card, Pile } from "@/lib/types";
 
-type SolitaireProviderState = {
+interface SolitaireProviderState {
     drawFromStock: () => void;
     handleCardMove: (card: Card, dest: Pile) => void;
     resetGame: () => void;
     restartGame: () => void;
-    foundations: Readonly<Pile[]>;
+    foundations: readonly Pile[];
     waste: Readonly<Pile>;
     stock: Readonly<Pile>;
-    tableauPiles: Readonly<Pile[]>;
+    tableauPiles: readonly Pile[];
     canUndo: boolean;
     canRedo: boolean;
     undo: () => void;
@@ -19,7 +19,7 @@ type SolitaireProviderState = {
     isFinished: boolean;
     elapsedTime: number;
     score: number;
-};
+}
 
 export const SolitaireProviderContext = createContext<
     SolitaireProviderState | undefined
