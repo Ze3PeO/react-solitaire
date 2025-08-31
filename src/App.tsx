@@ -14,7 +14,7 @@ function App() {
     const { t } = useTranslation();
 
     return (
-        <LanguageProvider defaultLanguage="en">
+        <LanguageProvider>
             <ThemeProvider defaultTheme="dark">
                 <h1 className="sr-only">{t("global.title")}</h1>
                 <div className="flex min-h-svh flex-col items-center justify-center gap-2 pt-2 px-2 pb-safe-2 max-w-prose mx-auto ">

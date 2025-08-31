@@ -38,7 +38,7 @@ function SolitaireBoard() {
 
         updateCardMarginTop();
 
-        return () => window.removeEventListener("resize", updateCardMarginTop);
+        return () => { window.removeEventListener("resize", updateCardMarginTop); };
     }, [cardHeight, maxCardMarginTop, numCards]);
 
     return (
@@ -73,7 +73,7 @@ function SolitaireBoard() {
                     />
                     <button
                         type="button"
-                        onClick={() => drawFromStock()}
+                        onClick={() => { drawFromStock(); }}
                         className={
                             stock.cards.length > 0 || waste.cards.length > 0
                                 ? "cursor-pointer"

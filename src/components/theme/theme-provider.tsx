@@ -18,9 +18,7 @@ export function ThemeProvider({
         LocalStorageKey.THEME,
         defaultTheme,
     );
-    const [theme, setTheme] = useState<Theme>(
-        () => localStorageTheme ?? defaultTheme,
-    );
+    const [theme, setTheme] = useState<Theme>(localStorageTheme);
 
     useEffect(() => {
         const applyTheme = (theme: Theme) => {

@@ -5,16 +5,14 @@ import { LanguageProviderContext } from "@/components/lang/language-context";
 
 interface LanguageProviderProps {
     children: React.ReactNode;
-    defaultLanguage?: Language;
 }
 
 export function LanguageProvider({
     children,
-    defaultLanguage = "en",
     ...props
 }: LanguageProviderProps) {
     const [language, setLanguage] = useState<Language>(
-        () => (i18next.language as Language) || defaultLanguage,
+        i18next.language as Language,
     );
 
     useEffect(() => {

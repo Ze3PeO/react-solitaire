@@ -99,7 +99,7 @@ function SolitaireEventHandler({ children }: { children: React.ReactNode }) {
                     width={width}
                     height={height}
                     recycle={false}
-                    onConfettiComplete={() => setShowConfetti(false)}
+                    onConfettiComplete={() => { setShowConfetti(false); }}
                 />
             )}
         </DndContext>

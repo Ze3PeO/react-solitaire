@@ -94,12 +94,10 @@ function SolitaireCard({
                     className,
                 )}
             >
-                {flipped && (
-                    <div className="flex items-center  justify-between w-full h-fit">
-                        <span>{formatRank(rank)}</span>
-                        <Icon name={suit} className="w-3 h-3" />
-                    </div>
-                )}
+                <div className="flex items-center  justify-between w-full h-fit">
+                    <span>{formatRank(rank)}</span>
+                    <Icon name={suit} className="w-3 h-3" />
+                </div>
             </div>
             {children && (
                 <div style={{ marginTop: "var(--card-margin-top)" }}>
