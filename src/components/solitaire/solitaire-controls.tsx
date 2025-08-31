@@ -8,6 +8,7 @@ function SolitaireControls() {
 
     const {
         resetGame,
+        restartGame,
         canUndo,
         canRedo,
         undo,
@@ -18,7 +19,11 @@ function SolitaireControls() {
 
     return (
         <div className="flex gap-2">
-            <Button variant="secondary" size="icon" onClick={resetGame}>
+            <Button
+                variant="secondary"
+                size="icon"
+                onClick={canUndo ? resetGame : restartGame}
+            >
                 <RotateCcw />
                 <span className="sr-only">{t("solitaire.controls.reset")}</span>
             </Button>

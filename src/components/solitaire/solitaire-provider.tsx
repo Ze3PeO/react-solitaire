@@ -13,7 +13,7 @@ import { SolitaireProviderContext } from "./soliaitre-context";
 export function SolitaireProvider({ children }: { children: ReactNode }) {
     // --- Hooks ---
 
-    const { state, set, undo, redo, canUndo, canRedo, reset, clear } =
+    const { state, set, undo, redo, canUndo, canRedo, reset, restart, clear } =
         useHistoryState<Game>(generateGame());
     const {
         elapsedTime,
@@ -22,10 +22,7 @@ export function SolitaireProvider({ children }: { children: ReactNode }) {
         restart: restartTimer,
     } = useTimer();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [_, setStats] = useLocalStorage<Stat[]>(
-        LocalStorageKey.STATS,
-        [],
-    );
+    const [_, setStats] = useLocalStorage<Stat[]>(LocalStorageKey.STATS, []);
 
     // --- State ---
 
@@ -171,10 +168,16 @@ export function SolitaireProvider({ children }: { children: ReactNode }) {
     };
 
     const resetGame = () => {
+        if (!canUndo) return;
+
+        reset();
+    };
+
+    const restartGame = () => {
         setWasFirstMovePlayed(false);
         setIsFinished(false);
 
-        reset(generateGame());
+        restart(generateGame());
 
         restartTimer();
     };
@@ -219,12 +222,9 @@ export function SolitaireProvider({ children }: { children: ReactNode }) {
             time: elapsedTime,
             score: state.score,
             date: Date.now(),
-        }
+        };
 
-        setStats((prevStats: Stat[]) => [
-            ...prevStats,
-            stat,
-        ]);
+        setStats((prevStats: Stat[]) => [...prevStats, stat]);
     }, [isFinished, stopTimer, clear, elapsedTime, state.score, setStats]);
 
     // --- Effects ---
@@ -285,6 +285,7 @@ export function SolitaireProvider({ children }: { children: ReactNode }) {
                 drawFromStock,
                 handleCardMove,
                 resetGame,
+                restartGame,
                 foundations: Object.freeze(foundations),
                 waste: Object.freeze(waste),
                 stock: Object.freeze(stock),
@@ -303,4 +304,4 @@ export function SolitaireProvider({ children }: { children: ReactNode }) {
             {children}
         </SolitaireProviderContext.Provider>
     );
-};
+}

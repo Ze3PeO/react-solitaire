@@ -5,6 +5,7 @@ type SolitaireProviderState = {
     drawFromStock: () => void;
     handleCardMove: (card: Card, dest: Pile) => void;
     resetGame: () => void;
+    restartGame: () => void;
     foundations: Readonly<Pile[]>;
     waste: Readonly<Pile>;
     stock: Readonly<Pile>;
@@ -18,8 +19,8 @@ type SolitaireProviderState = {
     isFinished: boolean;
     elapsedTime: number;
     score: number;
-}
+};
 
-export const SolitaireProviderContext = createContext<SolitaireProviderState | undefined>(
-    undefined,
-);
+export const SolitaireProviderContext = createContext<
+    SolitaireProviderState | undefined
+>(undefined);

@@ -4,13 +4,14 @@ type HistoryState<T> = {
     past: T[];
     present: T;
     future: T[];
-}
+};
 
 type HistoryAction<T> =
     | { type: "SET"; payload: T }
     | { type: "UNDO" }
     | { type: "REDO" }
-    | { type: "RESET"; payload: T }
+    | { type: "RESET" }
+    | { type: "RESTART"; payload: T }
     | { type: "CLEAR" };
 
 function historyReducer<T>(
@@ -39,6 +40,13 @@ function historyReducer<T>(
                 future: state.future.slice(1),
             };
         case "RESET":
+            if (state.past.length === 0) return state;
+            return {
+                past: [],
+                present: state.past[0],
+                future: [],
+            };
+        case "RESTART":
             return {
                 past: [],
                 present: action.payload,
@@ -74,8 +82,12 @@ export function useHistoryState<T>(initialState: T) {
         dispatch({ type: "REDO" });
     }, []);
 
-    const reset = useCallback((newState: T) => {
-        dispatch({ type: "RESET", payload: newState });
+    const reset = useCallback(() => {
+        dispatch({ type: "RESET" });
+    }, []);
+
+    const restart = useCallback((newState: T) => {
+        dispatch({ type: "RESTART", payload: newState });
     }, []);
 
     const clear = useCallback(() => {
@@ -91,6 +103,7 @@ export function useHistoryState<T>(initialState: T) {
         undo,
         redo,
         reset,
+        restart,
         clear,
         canUndo,
         canRedo,
