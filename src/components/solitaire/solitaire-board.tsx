@@ -49,6 +49,7 @@ function SolitaireBoard() {
                     "--card-margin-top": `${cardMarginTop}px`,
                     "--card-width": `${cardWidth}px`,
                     "--card-height": `${cardHeight}px`,
+                    "--card-scale": "1",
                 } as React.CSSProperties
             }
         >

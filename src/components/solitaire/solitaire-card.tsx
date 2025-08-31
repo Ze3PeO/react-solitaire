@@ -90,11 +90,11 @@ function SolitaireCard({
                     transform: `scale(var(--card-scale))`,
                 }}
                 className={cn(
-                    "relative bg-card flex justify-between rounded-sm border shadow-xl px-1 transition-transform",
+                    "relative bg-card flex justify-between items-start rounded-sm border shadow-xl px-1 transition-transform",
                     className,
                 )}
             >
-                <div className="flex items-center  justify-between w-full h-fit">
+                <div className="flex items-center justify-between w-full">
                     <span>{formatRank(rank)}</span>
                     <Icon name={suit} className="w-3 h-3" />
                 </div>
