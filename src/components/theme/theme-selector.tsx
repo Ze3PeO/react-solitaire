@@ -33,8 +33,8 @@ const ThemeSelector = () => {
                     />
                 </SelectTrigger>
                 <SelectContent>
-                    {Themes.map((theme, key) => (
-                        <SelectItem value={theme} key={key}>
+                    {Themes.map((theme) => (
+                        <SelectItem value={theme} key={theme}>
                             {t(`theme.option.${theme}`)}
                         </SelectItem>
                     ))}

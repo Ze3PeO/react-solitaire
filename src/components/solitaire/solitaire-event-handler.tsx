@@ -5,6 +5,7 @@ import Confetti from "react-confetti";
 import { useWindowSize } from "@/hooks/use-window-size";
 import { useTranslation } from "react-i18next";
 import type { Active, Over } from "@dnd-kit/core";
+import type { Card, Pile } from "@/lib/types";
 
 function SolitaireEventHandler({ children }: { children: React.ReactNode }) {
     const { t } = useTranslation();
@@ -16,11 +17,13 @@ function SolitaireEventHandler({ children }: { children: React.ReactNode }) {
         const { active, over } = event;
 
         if (!over) return;
-        if (!over.data.current?.accepts.includes(active.data.current?.type))
-            return;
 
-        const pile = over.data.current?.pile;
-        const card = active.data.current?.card;
+        const accepts = over.data.current?.accepts as string[];
+
+        if (!accepts.includes(active.data.current?.type as string)) return;
+
+        const pile = over.data.current?.pile as Pile;
+        const card = active.data.current?.card as Card;
 
         handleCardMove(card, pile);
     };
@@ -36,8 +39,8 @@ function SolitaireEventHandler({ children }: { children: React.ReactNode }) {
                 return t(
                     "solitaire.eventHandler.dnd.announcements.onDragOver.withPile",
                     {
-                        cardLabel: active.data.current?.label || "",
-                        pileLabel: over.data.current?.label || "",
+                        cardLabel: active.data.current?.label ?? "",
+                        pileLabel: over.data.current?.label ?? "",
                     },
                 );
             }
@@ -45,7 +48,7 @@ function SolitaireEventHandler({ children }: { children: React.ReactNode }) {
             return t(
                 "solitaire.eventHandler.dnd.announcements.onDragOver.withoutPile",
                 {
-                    cardLabel: active.data.current?.label || "",
+                    cardLabel: active.data.current?.label ?? "",
                 },
             );
         },
@@ -54,8 +57,8 @@ function SolitaireEventHandler({ children }: { children: React.ReactNode }) {
                 return t(
                     "solitaire.eventHandler.dnd.announcements.onDragEnd.withPile",
                     {
-                        cardLabel: active.data.current?.label || "",
-                        pileLabel: over.data.current?.label || "",
+                        cardLabel: active.data.current?.label ?? "",
+                        pileLabel: over.data.current?.label ?? "",
                     },
                 );
             }
@@ -63,13 +66,13 @@ function SolitaireEventHandler({ children }: { children: React.ReactNode }) {
             return t(
                 "solitaire.eventHandler.dnd.announcements.onDragEnd.withoutPile",
                 {
-                    cardLabel: active.data.current?.label || "",
+                    cardLabel: active.data.current?.label ?? "",
                 },
             );
         },
         onDragCancel({ active }: { active: Active }) {
             return t("solitaire.eventHandler.dnd.announcements.onDragCancel", {
-                cardLabel: active.data.current?.label || "",
+                cardLabel: active.data.current?.label ?? "",
             });
         },
     };

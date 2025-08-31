@@ -21,8 +21,10 @@ export function SolitaireProvider({ children }: { children: ReactNode }) {
         stop: stopTimer,
         restart: restartTimer,
     } = useTimer();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [_, setStats] = useLocalStorage<Stat[]>(LocalStorageKey.STATS, []);
+    const [stats, setStats] = useLocalStorage<Stat[]>(
+        LocalStorageKey.STATS,
+        [],
+    );
 
     // --- State ---
 
@@ -217,6 +219,8 @@ export function SolitaireProvider({ children }: { children: ReactNode }) {
         stopTimer();
         clear();
 
+        const newStats = cloneDeep(stats);
+
         const stat: Stat = {
             id: uuidv4(),
             time: elapsedTime,
@@ -224,8 +228,18 @@ export function SolitaireProvider({ children }: { children: ReactNode }) {
             date: Date.now(),
         };
 
-        setStats((prevStats: Stat[]) => [...prevStats, stat]);
-    }, [isFinished, stopTimer, clear, elapsedTime, state.score, setStats]);
+        newStats.push(stat);
+
+        setStats(newStats);
+    }, [
+        isFinished,
+        stopTimer,
+        clear,
+        elapsedTime,
+        state.score,
+        setStats,
+        stats,
+    ]);
 
     // --- Effects ---
 

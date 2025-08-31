@@ -31,8 +31,8 @@ const LanguageSelector = () => {
                     <SelectValue placeholder={t("lang.selector.placeholder")} />
                 </SelectTrigger>
                 <SelectContent>
-                    {Languages.map((language, key) => (
-                        <SelectItem value={language} key={key}>
+                    {Languages.map((language) => (
+                        <SelectItem value={language} key={language}>
                             {t(`lang.selector.option.${language}`)}
                         </SelectItem>
                     ))}

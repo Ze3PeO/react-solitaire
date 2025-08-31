@@ -1,5 +1,5 @@
 import type { Language } from "@/lib/types";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import i18next from "i18next";
 import { LanguageProviderContext } from "@/components/lang/language-context";
 
@@ -18,18 +18,21 @@ export function LanguageProvider({
     );
 
     useEffect(() => {
-        i18next.changeLanguage(language);
-
-        document.body.dir = i18next.dir();
-        document.documentElement.lang = i18next.language;
+        void i18next.changeLanguage(language).then(() => {
+            document.body.dir = i18next.dir();
+            document.documentElement.lang = i18next.language;
+        });
     }, [language]);
 
-    const value = {
-        language,
-        setLanguage: (language: Language) => {
-            setLanguage(language);
-        },
-    };
+    const value = useMemo(
+        () => ({
+            language,
+            setLanguage: (language: Language) => {
+                setLanguage(language);
+            },
+        }),
+        [language, setLanguage],
+    );
 
     return (
         <LanguageProviderContext {...props} value={value}>

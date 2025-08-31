@@ -72,6 +72,7 @@ function SolitaireBoard() {
                         id={waste.id}
                     />
                     <button
+                        type="button"
                         onClick={() => drawFromStock()}
                         className={
                             stock.cards.length > 0 || waste.cards.length > 0

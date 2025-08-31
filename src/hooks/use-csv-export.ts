@@ -19,7 +19,7 @@ function exportToCSV<T extends Record<string, unknown>>(
     }
 
     // Get headers or extract from first object
-    const csvHeaders = headers || (Object.keys(data[0]) as (keyof T)[]);
+    const csvHeaders = headers ?? (Object.keys(data[0]) as (keyof T)[]);
 
     const headerRow = csvHeaders.join(",");
 
