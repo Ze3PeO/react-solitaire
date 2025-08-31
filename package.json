@@ -28,6 +28,8 @@
         "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-jsx-a11y": "^6.10.2",
         "eslint-plugin-prettier": "^5.5.4",
+        "eslint-plugin-react-dom": "^1.52.9",
+        "eslint-plugin-react-x": "^1.52.9",
         "i18next": "^25.4.2",
         "i18next-browser-languagedetector": "^8.2.0",
         "i18next-http-backend": "^3.0.2",
