@@ -26,7 +26,9 @@ export function ThemeProvider({
         const applyTheme = (theme: Theme) => {
             setLocalStorageTheme(theme);
             const root = window.document.documentElement;
-            const themeColor = document.querySelector('meta[name="theme-color"]');
+            const themeColor = document.querySelector(
+                'meta[name="theme-color"]',
+            );
 
             root.classList.remove(...Themes);
             root.classList.add(theme);

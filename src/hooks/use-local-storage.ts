@@ -22,7 +22,9 @@ export const useLocalStorage = <T>(
     key: (typeof LocalStorageKey)[keyof typeof LocalStorageKey],
     defaultValue: T,
 ) => {
-    const [value, setValue] = useState(() => getStorageValue(key, defaultValue));
+    const [value, setValue] = useState(() =>
+        getStorageValue(key, defaultValue),
+    );
 
     useEffect(() => {
         localStorage.setItem(key, JSON.stringify(value));
