@@ -17,6 +17,49 @@
             "button": "Settings",
             "title": "Settings",
             "description": "Here you can change your language and color theme."
+        },
+        "tutorial": {
+            "button": "Tutorial",
+            "title": "Tutorial",
+            "description": "Here you can find a how to play guide for the game.",
+            "content": {
+                "introduction": {
+                    "title": "1. Introduction",
+                    "text": "Klondike Solitaire, often simply called Solitaire, is one of the most popular single-player card games in the world. Its classic design involves organizing a shuffled deck of 52 cards into four foundation piles in ascending order, each pile corresponding to one suit (Hearts, Diamonds, Clubs, and Spades). Players build these foundations starting with Aces and progressing up to Kings. The game combines strategy, skill, and a bit of luck, offering a relaxing yet engaging experience for players of all ages."
+                },
+                "rules": {
+                    "title": "2. Rules",
+                    "text": "<li><span>Setup</span>: The game begins with seven tableau piles, each containing an increasing number of cards from one to seven. Only the top card in each pile is flipped; the rest are face down. The remaining cards form the stock.</li><li><span>Objective</span>: Move all 52 cards to the four foundation piles, arranged by suit and in ascending order from Ace to King.</li><li><span>Gameplay</span>: Cards in the tableau can be moved in descending order and must alternate in color (e.g., a red 7 can only be placed on a black 8).</li><li><span>Stock</span>: Players draw from the stock one card at a time. Unplayable cards are moved to the waste, but they can be cycled through again.</li><li><span>Empty piles</span>: Only Kings (or stacks starting with a King) can be moved into an empty tableau pile.</li><li><span>Winning</span>: The game is won when all cards are successfully moved to the foundation piles.</li>"
+                },
+                "controls": {
+                    "title": "3. Controls",
+                    "description": "Playing Klondike Solitaire in your web browser is fairly simple, with controls designed to suit both mouse and keyboard users. Here's how you can interact with the game:",
+                    "types": {
+                        "mouse": "<span>Mouse Controls</span>: Use your mouse to drag and drop a card or stack of cards. The game will only allow valid moves, so if a move isn't allowed, the card will remain in its original position.",
+                        "keyboard": "<span>Keyboard Controls</span>: For keyboard navigation, use the Tab key to cycle through selectable cards and stacks. When your desired card or pile is highlighted, press Enter to move the card or stack of cards. Moving can be done via the arrow keys. When the card is over the destination, press Enter again to move the card or stack of cards.",
+                        "buttons": {
+                            "title": "<span>Button Controls</span>:",
+                            "description": "<li><span>Reset Button</span>: If you want to start fresh, click the reset button. This will restart the current game. Click the button again to completly reset the game. This will shuffle the cards and set up a new game, erasing all progress from the current session.</li><li><span>Auto Finish</span>: If you want to auto finish the game, click the button with the checkmark. This is only possible if all cards in the game are flipped and the waste and stock are empty.</li><li> <span>Undo/Redo</span>: Made a mistake or want to reconsider a move? Use the Undo button to reverse your last action, or the Redo button to reinstate a previously undone move. This allows you to experiment with strategies and refine your play.</li>"
+                        }
+                    }
+                }
+            }
+        },
+        "about": {
+            "button": "About the game",
+            "title": "About the game",
+            "description": "Here you can find background information about the game.",
+            "content": {
+                "why": {
+                    "title": "Why does this game exist?",
+                    "text": "Firstly, because there are many solitaire apps in the App Store that I didn't like. Either they were flooded with ads or they cost money, which I didn't want to pay for a simple card game. Especially since I couldn't be sure from the App Store page whether I would really like the app. So I decided to recreate the game myself.<br><br>Second, because I enjoy programming and needed an opportunity to explore some technologies. For example, Vite, React, shadcn/ui, dnd-kit, and vercel.<br><br>For this reason, my goal for this project is by no means perfection. The goal is, or rather was, to create a functioning game and explore the technologies mentioned above."
+                },
+                "where": {
+                    "title": "Where can I find the source code?",
+                    "text": "The source code can be found on <a>GitHub</a>. Further technical details can be found in README.md.",
+                    "githubLabel": "Source code on GitHub"
+                }
+            }
         }
     },
     "lang": {

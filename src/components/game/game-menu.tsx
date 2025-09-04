@@ -13,6 +13,8 @@ import SolitaireStats from "@/components/solitaire/solitaire-stats";
 import GameSettings from "@/components/game/game-settings";
 import { useTranslation, Trans } from "react-i18next";
 import { Separator } from "@/components/ui/separator";
+import GameTutorial from "@/components/game/game-tutorial";
+import GameAbout from "@/components/game/game-about";
 
 function GameMenu() {
     const { t } = useTranslation();
@@ -38,6 +40,8 @@ function GameMenu() {
                 <div className="flex flex-col gap-4 px-4">
                     <SolitaireStats />
                     <GameSettings />
+                    <GameTutorial />
+                    <GameAbout />
                 </div>
                 <SheetFooter>
                     <p className="text-center">

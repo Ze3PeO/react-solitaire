@@ -95,7 +95,7 @@ function SolitaireStatsEmpty() {
     const { t } = useTranslation();
 
     return (
-        <div className=" flex flex-col items-center gap-2 px-2 py-8 text-muted-foreground">
+        <div className="flex flex-col items-center gap-2 px-2 py-8 text-muted-foreground overflow-y-auto">
             <Frown />
             <span>{t("solitaire.stats.empty")}</span>
         </div>
@@ -106,7 +106,7 @@ function SolitaireStatsTabs({ stats }: { stats: Stat[] }) {
     const { t } = useTranslation();
 
     return (
-        <Tabs defaultValue="time">
+        <Tabs defaultValue="time" className="overflow-y-auto">
             <TabsList className="w-full">
                 <TabsTrigger value="time">
                     {t("solitaire.stats.tabs.time")}

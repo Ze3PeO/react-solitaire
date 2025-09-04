@@ -17,6 +17,49 @@
             "button": "Einstellungen",
             "title": "Einstellungen",
             "description": "Hier können Sie Ihre Sprache und Farbschema ändern."
+        },
+        "tutorial": {
+            "button": "Tutorial",
+            "title": "Tutorial",
+            "description": "Hier finden Sie eine Anleitung für das Spiel.",
+            "content": {
+                "introduction": {
+                    "title": "1. Einleitung",
+                    "text": "Solitaire ist eines der beliebtesten Einzelspieler-Kartenspiele der Welt. Das klassische Spielprinzip besteht darin, einen gemischten Stapel von 52 Karten in aufsteigender Reihenfolge auf vier Basisstapel zu verteilen, wobei jeder Stapel einer Farbe entspricht (Herz, Karo, Kreuz und Pik). Die Spieler bauen diese Stapel beginnend mit den Assen bis hin zu den Königen auf. Das Spiel verbindet Strategie, Geschicklichkeit und ein bisschen Glück und bietet Spielern jeden Alters ein entspannendes und dennoch fesselndes Erlebnis."
+                },
+                "rules": {
+                    "title": "2. Regeln",
+                    "text": "<li><span>Aufbau</span>: Das Spiel beginnt mit sieben Auslagestapeln, die jeweils eine steigende Anzahl von Karten von eins bis sieben enthalten. Nur die oberste Karte jedes Stapels wird aufgedeckt, die übrigen Karten bleiben verdeckt. Die restlichen Karten bilden den Abnahmestapel.</li><li><span>Ziel</span>: Alle 52 Karten müssen auf die vier Basisstapel verschoben werden, sortiert nach Farbe und in aufsteigender Reihenfolge von Ass bis König.</li><li><span>Spielablauf</span>: Die Karten in den Auslagestapeln können in absteigender Reihenfolge verschoben werden und müssen sich in ihrer Farbe abwechseln (z. B. kann eine rote 7 nur auf eine schwarze 8 gelegt werden).</li><li><span>Abnahmestapel</span>: Die Spieler ziehen aus dem Abnahmestapel entweder eine Karte nach der anderen. Nicht spielbare Karten werden auf den Ablagestapel gelegt, können aber erneut durchgespielt werden. </li><li><span>Leere Auslagestapel</span>: Nur Könige (oder Stapel, die mit einem König beginnen) können auf einen leeren Auslagestapel gelegt werden</li><li><span>Gewinnen</span>: Das Spiel ist gewonnen, wenn alle Karten erfolgreich auf die Basisstapel verschoben wurden.</li>"
+                },
+                "controls": {
+                    "title": "3. Steuerung",
+                    "description": "Das Spielen von Klondike Solitaire in Ihrem Webbrowser ist relativ einfach, da die Steuerung sowohl für Maus- als auch für Tastaturbenutzer ausgelegt ist. So können Sie mit dem Spiel interagieren:",
+                    "types": {
+                        "mouse": "<span>Maussteuerung</span>: Ziehen Sie eine Karte oder einen Kartenstapel mit der Maus und legen Sie ihn an der gewünschten Stelle ab. Das Spiel lässt nur gültige Züge zu. Ist ein Zug nicht zulässig, bleibt die Karte an ihrer ursprünglichen Position.",
+                        "keyboard": "<span>Tastatursteuerung</span>: Verwenden Sie für die Tastaturnavigation die Tabulatortaste, um durch die auswählbaren Karten und Stapel zu blättern. Wenn die gewünschte Karte oder der gewünschte Stapel markiert ist, drücken Sie die Eingabetaste, um die Karte oder den Kartenstapel zu verschieben. Das Verschieben erfolgt über die Pfeiltasten. Wenn sich die Karte über dem Ziel befindet, drücken Sie erneut die Eingabetaste, um die Karte oder den Kartenstapel zu verschieben.",
+                        "buttons": {
+                            "title": "<span>Knöpfe</span>:",
+                            "description": "<li><span>Zurücksetzen Knopf</span>: Wenn Sie neu beginnen möchten, klicken Sie auf die Zurücksetzen Schaltfläche. Dadurch wird das aktuelle Spiel neu gestartet. Klicken Sie erneut auf die Schaltfläche, um das Spiel vollständig zurückzusetzen. Dadurch werden die Karten gemischt und ein neues Spiel gestartet, wobei alle Fortschritte aus der aktuellen Sitzung gelöscht</li><li><span>Automatisch beenden</span>: Wenn Sie das Spiel automatisch beenden möchten, klicken Sie auf die Schaltfläche mit dem Häkchen. Dies ist nur möglich, wenn alle Karten im Spiel aufgedeckt sind und die Ablage und der Abnahmestapel leer sind.</li><li> <span>Undo/Redo</span>: Haben Sie einen Fehler gemacht oder möchten Sie einen Zug überdenken? Verwenden Sie die Rückgängig Schaltfläche, um Ihre letzte Aktion rückgängig zu machen, oder die Wiederherstellen Schaltfläche, um einen zuvor rückgängig gemachten Zug wiederherzustellen. So können Sie mit Strategien experimentieren und Ihr Spiel verfeinern.</li>"
+                        }
+                    }
+                }
+            }
+        },
+        "about": {
+            "button": "Über das Spiel",
+            "title": "Über das Spiel",
+            "description": "Hier finden Sie Hintergrundinformationen über das Spiel.",
+            "content": {
+                "why": {
+                    "title": "Warum gibt es dieses Spiel?",
+                    "text": "Erstens, weil es im App Store viele Soltaire Apps gibt,die mir nicht zugesagt haben. Entweder waren sie mit Werbung überflutet oder haben Geld gekostet, welches ichnicht für ein einfaches Kartenspiel zahlen wollte. Zumal ich ausgehend von der App Store Seite nicht sicherstellen konnte, ob mir die App wirklich gefallen würde. Daher habe ich beschlossen, das Spiel selbst zunachzubauen.<br><br>Zweitens, weil ich gerne programmiere und eine Gelegenheit brauchte, mich mit einigen Technologien auseinanderzusetzen. Bspw. Vite, React, shadcn/ui,dnd-kit und vercel.<br><br>Aufgrund dessen ist mein Anspruch bei diesem Projekt in keinster Weise Perfektion. Ziel ist bzw. war es, ein funktionierendes Spiel zu erstellen und mich mit den genannten Technologien auseinanderzusetzen."
+                },
+                "where": {
+                    "title": "Wo finde ich den Quellcode?",
+                    "text": "Der Quellcode ist auf <a>GitHub</a> zu finden. In der README.md befinden sich weitere technische Details.",
+                    "githubLabel": "Quellcode auf GitHub"
+                }
+            }
         }
     },
     "lang": {
