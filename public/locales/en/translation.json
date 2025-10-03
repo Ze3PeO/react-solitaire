@@ -1,7 +1,7 @@
 {
     "global": {
         "close": "Close",
-        "title": "Better Solitaire"
+        "title": "Simple Solitaire"
     },
     "game": {
         "menu": {
