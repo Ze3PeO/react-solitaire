@@ -165,5 +165,11 @@
             "button": "Farbschema auswählen",
             "placeholder": "Farbschema"
         }
+    },
+    "migration": {
+        "alert": {
+            "title": "Ich ziehe um!",
+            "text": "Aus better-solitaire.vercel.app wird <a>simple-solitaire.de</a>. Sie müssen nichts tun, außer Ihre Lesezeichen zu aktualisieren. Danke für Ihr Verständnis."
+        }
     }
 }

@@ -165,5 +165,11 @@
             "button": "Select color theme",
             "placeholder": "Color theme"
         }
+    },
+    "migration": {
+        "alert": {
+            "title": "I am moving!",
+            "text": "From better-solitaire.vercel.app to <a>simple-solitaire.de</a>. You don't need to do anything, just update your bookmarks. Thank you for your understanding."
+        }
     }
 }

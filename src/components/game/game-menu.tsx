@@ -7,7 +7,7 @@ import {
     SheetTrigger,
     SheetFooter,
 } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { Menu, AlertCircleIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SolitaireStats from "@/components/solitaire/solitaire-stats";
 import GameSettings from "@/components/game/game-settings";
@@ -15,6 +15,7 @@ import { useTranslation, Trans } from "react-i18next";
 import { Separator } from "@/components/ui/separator";
 import GameTutorial from "@/components/game/game-tutorial";
 import GameAbout from "@/components/game/game-about";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 function GameMenu() {
     const { t } = useTranslation();
@@ -22,9 +23,10 @@ function GameMenu() {
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button variant="outline" size="icon">
+                <Button variant="outline" size="icon" className="relative">
                     <Menu />
                     <span className="sr-only">{t("game.menu.button")}</span>
+                    <AlertCircleIcon className="absolute -top-2 -right-2 text-destructive size-4" />
                 </Button>
             </SheetTrigger>
             <SheetContent side="left">
@@ -42,6 +44,27 @@ function GameMenu() {
                     <GameSettings />
                     <GameTutorial />
                     <GameAbout />
+                    <Alert variant="destructive">
+                        <AlertCircleIcon />
+                        <AlertTitle>{t("migration.alert.title")}</AlertTitle>
+                        <AlertDescription>
+                            <p>
+                                <Trans
+                                    i18nKey="migration.alert.text"
+                                    components={{
+                                        a: (
+                                            <a
+                                                className="underline"
+                                                href="https://simple-solitaire.de"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            />
+                                        ),
+                                    }}
+                                />
+                            </p>
+                        </AlertDescription>
+                    </Alert>
                 </div>
                 <SheetFooter>
                     <p className="text-center">
