@@ -40,6 +40,7 @@ app.use((req, res, next) => {
             "upgrade-insecure-requests",
         ].join("; "),
     );
+    res.setHeader("Access-Control-Allow-Origin", "*"); // CORS
 
     next();
 });
