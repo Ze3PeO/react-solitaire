@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 
-export function useTimer() {
-    const [elapsedTime, setElapsedTime] = useState<number>(0);
+export function useTimer(initialElapsedTime = 0) {
+    const [elapsedTime, setElapsedTime] = useState<number>(initialElapsedTime);
     const [isRunning, setIsRunning] = useState<boolean>(false);
     const startTimeRef = useRef<number | null>(null);
     const intervalRef = useRef<NodeJS.Timeout | null>(null);

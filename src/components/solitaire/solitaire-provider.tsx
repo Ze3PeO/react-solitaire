@@ -13,14 +13,20 @@ import { SolitaireProviderContext } from "./soliaitre-context";
 export function SolitaireProvider({ children }: { children: ReactNode }) {
     // --- Hooks ---
 
+    const [initialSavedGame, setInitialSavedGame] =
+        useLocalStorage<Game | null>(LocalStorageKey.GAME_STATE, null);
+    const [initialElapsedTime, setInitialElapsedTime] = useLocalStorage<number>(
+        LocalStorageKey.GAME_ELAPSED_TIME,
+        0,
+    );
     const { state, set, undo, redo, canUndo, canRedo, reset, restart, clear } =
-        useHistoryState<Game>(generateGame());
+        useHistoryState<Game>(initialSavedGame ?? generateGame());
     const {
         elapsedTime,
         start: startTimer,
         stop: stopTimer,
         restart: restartTimer,
-    } = useTimer();
+    } = useTimer(initialElapsedTime);
     const [stats, setStats] = useLocalStorage<Stat[]>(
         LocalStorageKey.STATS,
         [],
@@ -28,7 +34,9 @@ export function SolitaireProvider({ children }: { children: ReactNode }) {
 
     // --- State ---
 
-    const [wasFirstMovePlayed, setWasFirstMovePlayed] = useState(false);
+    const [wasFirstMovePlayed, setWasFirstMovePlayed] = useState(
+        initialSavedGame !== null,
+    );
     const [canAutoFinish, setCanAutoFinish] = useState(false);
     const [isFinished, setIsFinished] = useState(false);
 
@@ -182,6 +190,8 @@ export function SolitaireProvider({ children }: { children: ReactNode }) {
         restart(generateGame());
 
         restartTimer();
+
+        clearSavedGameState();
     };
 
     const autoFinish = () => {
@@ -212,12 +222,18 @@ export function SolitaireProvider({ children }: { children: ReactNode }) {
 
     // --- Callbacks ---
 
+    const clearSavedGameState = useCallback(() => {
+        setInitialSavedGame(null);
+        setInitialElapsedTime(0);
+    }, [setInitialSavedGame, setInitialElapsedTime]);
+
     const handleWin = useCallback(() => {
         if (isFinished) return;
 
         setIsFinished(true);
         stopTimer();
         clear();
+        clearSavedGameState();
 
         const newStats = cloneDeep(stats);
 
@@ -239,6 +255,7 @@ export function SolitaireProvider({ children }: { children: ReactNode }) {
         state.score,
         setStats,
         stats,
+        clearSavedGameState,
     ]);
 
     // --- Effects ---
@@ -268,6 +285,33 @@ export function SolitaireProvider({ children }: { children: ReactNode }) {
 
         setCanAutoFinish(canAutoFinish);
     }, [state, isFinished]);
+
+    // ToDo: This Effect gets triggered every second
+    useEffect(() => {
+        if (initialSavedGame !== null) {
+            startTimer();
+        }
+    }, [initialSavedGame, startTimer]);
+
+    // ToDo: This Effect gets triggered every second
+    useEffect(() => {
+        const handleBeforeUnload = () => {
+            if (wasFirstMovePlayed && !isFinished) {
+                localStorage.setItem(
+                    LocalStorageKey.GAME_STATE,
+                    JSON.stringify(state),
+                );
+                localStorage.setItem(
+                    LocalStorageKey.GAME_ELAPSED_TIME,
+                    JSON.stringify(elapsedTime),
+                );
+            }
+        };
+
+        window.addEventListener("beforeunload", handleBeforeUnload);
+        return () =>
+            window.removeEventListener("beforeunload", handleBeforeUnload);
+    }, [state, elapsedTime, wasFirstMovePlayed, isFinished]);
 
     // --- Helper ---
 
