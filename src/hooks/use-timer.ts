@@ -1,14 +1,14 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 
-export function useTimer() {
-    const [elapsedTime, setElapsedTime] = useState<number>(0);
-    const [isRunning, setIsRunning] = useState<boolean>(false);
+export function useTimer(initialElapsedTime = 0) {
+    const [elapsedTime, setElapsedTime] = useState<number>(initialElapsedTime);
+    const isRunningRef = useRef<boolean>(false);
     const startTimeRef = useRef<number | null>(null);
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
     const delayRef = useRef<number>(1000);
 
     const start = useCallback(() => {
-        if (!isRunning) {
+        if (!isRunningRef.current) {
             startTimeRef.current = Date.now() - elapsedTime;
 
             intervalRef.current = setInterval(() => {
@@ -17,20 +17,20 @@ export function useTimer() {
                 setElapsedTime(Date.now() - startTimeRef.current);
             }, delayRef.current);
 
-            setIsRunning(true);
+            isRunningRef.current = true;
         }
-    }, [isRunning, elapsedTime]);
+    }, [elapsedTime]);
 
     const stop = useCallback(() => {
-        if (!isRunning) return;
+        if (!isRunningRef.current) return;
 
         if (intervalRef.current) {
             clearInterval(intervalRef.current);
             intervalRef.current = null;
         }
 
-        setIsRunning(false);
-    }, [isRunning]);
+        isRunningRef.current = false;
+    }, []);
 
     const restart = useCallback(() => {
         stop();

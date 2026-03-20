@@ -13,14 +13,22 @@ import { SolitaireProviderContext } from "./soliaitre-context";
 export function SolitaireProvider({ children }: { children: ReactNode }) {
     // --- Hooks ---
 
+    const [savedGame, setSavedGame] = useLocalStorage<Game | null>(
+        LocalStorageKey.GAME_STATE,
+        null,
+    );
+    const [savedElapsedTime, setSavedElapsedTime] = useLocalStorage<number>(
+        LocalStorageKey.GAME_ELAPSED_TIME,
+        0,
+    );
     const { state, set, undo, redo, canUndo, canRedo, reset, restart, clear } =
-        useHistoryState<Game>(generateGame());
+        useHistoryState<Game>(savedGame ?? generateGame());
     const {
         elapsedTime,
         start: startTimer,
         stop: stopTimer,
         restart: restartTimer,
-    } = useTimer();
+    } = useTimer(savedElapsedTime);
     const [stats, setStats] = useLocalStorage<Stat[]>(
         LocalStorageKey.STATS,
         [],
@@ -182,6 +190,8 @@ export function SolitaireProvider({ children }: { children: ReactNode }) {
         restart(generateGame());
 
         restartTimer();
+
+        clearSavedState();
     };
 
     const autoFinish = () => {
@@ -212,12 +222,18 @@ export function SolitaireProvider({ children }: { children: ReactNode }) {
 
     // --- Callbacks ---
 
+    const clearSavedState = useCallback(() => {
+        setSavedGame(null);
+        setSavedElapsedTime(0);
+    }, [setSavedGame, setSavedElapsedTime]);
+
     const handleWin = useCallback(() => {
         if (isFinished) return;
 
         setIsFinished(true);
         stopTimer();
         clear();
+        clearSavedState();
 
         const newStats = cloneDeep(stats);
 
@@ -239,6 +255,7 @@ export function SolitaireProvider({ children }: { children: ReactNode }) {
         state.score,
         setStats,
         stats,
+        clearSavedState,
     ]);
 
     // --- Effects ---
@@ -268,6 +285,26 @@ export function SolitaireProvider({ children }: { children: ReactNode }) {
 
         setCanAutoFinish(canAutoFinish);
     }, [state, isFinished]);
+
+    useEffect(() => {
+        const handleBeforeUnload = () => {
+            if (wasFirstMovePlayed && !isFinished) {
+                setSavedGame(state);
+                setSavedElapsedTime(elapsedTime);
+            }
+        };
+
+        window.addEventListener("beforeunload", handleBeforeUnload);
+        return () =>
+            window.removeEventListener("beforeunload", handleBeforeUnload);
+    }, [
+        state,
+        elapsedTime,
+        wasFirstMovePlayed,
+        isFinished,
+        setSavedGame,
+        setSavedElapsedTime,
+    ]);
 
     // --- Helper ---
 
