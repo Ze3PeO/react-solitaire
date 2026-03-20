@@ -41,7 +41,7 @@ State is accessed throughout components via the `useSolitaire()` hook.
 
 ### Timer Design
 
-`useTimer` exposes `startTime: number | null` and `accumulatedMs: number` rather than a ticking `elapsedTime`. No interval runs in the hook — the provider re-renders only when the timer starts or stops. Visual components (e.g. `SolitaireTimer`) own their own `setInterval` and compute `Date.now() - startTime` locally. When the timer is paused, `stop()` snapshots the elapsed ms into `accumulatedMs`; `start()` offsets the new `startTime` by `accumulatedMs` so elapsed time is continuous. A stable `getElapsedTime()` helper (reads refs, no stale closure) is used for point-in-time reads in event handlers (`handleWin`, `beforeunload`).
+`useTimer` exposes `startTime: number | null` and `elapsedTime: number`. No interval runs in the hook — the provider re-renders only when the timer starts or stops. Visual components (e.g. `SolitaireTimer`) have their own `setInterval` and compute `Date.now() - startTime` locally. When the timer is paused, `stop()` snapshots the elapsed ms into `elapsedTime`; `start()` offsets the new `startTime` by `elapsedTime` so elapsed time is continuous.
 
 ### Game Model
 
