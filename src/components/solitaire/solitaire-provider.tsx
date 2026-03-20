@@ -24,6 +24,7 @@ export function SolitaireProvider({ children }: { children: ReactNode }) {
     const { state, set, undo, redo, canUndo, canRedo, reset, restart, clear } =
         useHistoryState<Game>(savedGame ?? generateGame());
     const {
+        startTime,
         elapsedTime,
         start: startTimer,
         stop: stopTimer,
@@ -288,9 +289,9 @@ export function SolitaireProvider({ children }: { children: ReactNode }) {
 
     useEffect(() => {
         const handleBeforeUnload = () => {
-            if (wasFirstMovePlayed && !isFinished) {
+            if (wasFirstMovePlayed && !isFinished && startTime) {
                 setSavedGame(state);
-                setSavedElapsedTime(elapsedTime);
+                setSavedElapsedTime(Date.now() - startTime);
             }
         };
 
@@ -299,7 +300,7 @@ export function SolitaireProvider({ children }: { children: ReactNode }) {
             window.removeEventListener("beforeunload", handleBeforeUnload);
     }, [
         state,
-        elapsedTime,
+        startTime,
         wasFirstMovePlayed,
         isFinished,
         setSavedGame,
@@ -348,6 +349,7 @@ export function SolitaireProvider({ children }: { children: ReactNode }) {
                 canAutoFinish,
                 autoFinish,
                 isFinished,
+                startTime,
                 elapsedTime,
                 score: Object.freeze(state.score),
             }}

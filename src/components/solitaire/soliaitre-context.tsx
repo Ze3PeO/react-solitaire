@@ -17,6 +17,7 @@ interface SolitaireProviderState {
     canAutoFinish: boolean;
     autoFinish: () => void;
     isFinished: boolean;
+    startTime: number | null;
     elapsedTime: number;
     score: number;
 }
