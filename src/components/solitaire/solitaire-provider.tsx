@@ -240,7 +240,7 @@ export function SolitaireProvider({ children }: { children: ReactNode }) {
 
         const stat: Stat = {
             id: uuidv4(),
-            time: elapsedTime,
+            time: startTime ? Date.now() - startTime : elapsedTime,
             score: state.score,
             date: Date.now(),
         };
